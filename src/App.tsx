@@ -35,7 +35,6 @@ export default class AppContainer extends React.Component {
     this.history = createHistory();
     this.store = ConfigureStore(this.history);
 
-
     this.app = FirebaseProvider.getAppInstance();
 
     this.syncer = new StoreSyncer(this.store, FirebaseProvider.getFirestoreInstance());
