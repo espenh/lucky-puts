@@ -1,7 +1,9 @@
 # Lucky puts
 A simple scorekeeping application for one-put-per-day office minigolf.
 
-[TODO - Screenshot]
+![alt tag](https://github.com/espenh/lucky-puts/blob/master/docs/screenshots/lucky-puts_main.png)
+
+See running version at: https://luckyputs-f03bf.firebaseapp.com
 
 ## How to run
 Initial setup:
