@@ -1,0 +1,68 @@
+{
+    "extends": [
+        "tslint:recommended",
+        "tslint-react"
+    ],
+    "rules": {
+        "jsx-no-lambda": false, // This could be turned back on to highlight potential performance no-noes.
+        "jsx-wrap-multiline": false,
+        "jsx-no-multiline-js": false,
+        "trailing-comma": [
+            false
+        ],
+        "curly": [
+            true,
+            "ignore-same-line"
+        ],
+        "prefer-const": false,
+        "quotemark": [
+            false
+        ],
+        "max-line-length": [
+            false
+        ],
+        "class-name": false,
+        "ordered-imports": [
+            false
+        ],
+        "member-ordering": [
+            false
+        ],
+        "comment-format": [
+            false
+        ],
+        "arrow-parens": false,
+        "object-literal-sort-keys": false,
+        "object-literal-shorthand": false,
+        "no-angle-bracket-type-assertion": false,
+        "arrow-return-shorthand": [
+            false
+        ],
+        "array-type": [
+            false
+        ],
+        "whitespace": [
+            false
+        ],
+        "missing-whitespace": [
+            false
+        ],
+        "no-trailing-whitespace": false,
+        "no-consecutive-blank-lines": [
+            false
+        ],
+        "no-empty": false,
+        "no-empty-interface": false,
+        "max-classes-per-file": [
+            false
+        ],
+        "indent": [
+            false
+        ],
+        "no-namespace": [
+            false
+        ],
+        "prefer-for-of": false,
+        "no-string-literal": false
+    }
+}

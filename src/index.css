@@ -1,0 +1,11 @@
+body {
+  background: linear-gradient(to top, transparent, #eee), url("golf.jpg");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size:cover;
+  height: 100%;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+}

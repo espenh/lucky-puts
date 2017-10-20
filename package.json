@@ -1,0 +1,46 @@
+{
+  "name": "lucky-puts",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/highcharts": "5.0.7",
+    "@types/lodash": "4.14.78",
+    "@types/react-dates": "12.1.4",
+    "@types/react-redux": "5.0.10",
+    "@types/react-router-dom": "4.0.8",
+    "@types/react-router-redux": "5.0.8",
+    "@types/uuid": "3.4.3",
+    "bootstrap": "4.0.0-beta.2",
+    "firebase": "4.6.0",
+    "highcharts": "6.0.2",
+    "history": "4.7.2",
+    "lodash": "4.17.4",
+    "material-ui": "1.0.0-beta.17",
+    "material-ui-icons": "1.0.0-beta.17",
+    "moment": "2.19.1",
+    "react": "16.0.0",
+    "react-addons-shallow-compare": "15.6.2",
+    "react-dates": "13.0.6",
+    "react-dom": "16.0.0",
+    "react-redux": "5.0.6",
+    "react-router-dom": "4.2.2",
+    "react-router-redux": "5.0.0-alpha.8",
+    "react-scripts-ts": "2.8.0",
+    "react-with-styles": "2.2.0",
+    "redux": "3.7.2",
+    "redux-thunk": "2.2.0",
+    "uuid": "3.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "21.1.4",
+    "@types/node": "8.0.45",
+    "@types/react": "16.0.15",
+    "@types/react-dom": "16.0.2"
+  }
+}

@@ -1,0 +1,83 @@
+tr.score-row {
+  height: 30px;
+}
+
+tr.score-row:hover {
+  background-color: #eee;
+}
+
+td.score-cell {
+  text-align: center;
+  font-size: 1.4em;
+  border: 1px solid #dddddd;
+  transition: all 0.2s ease;
+  padding: 0px;
+  outline: 2px solid transparent;
+}
+
+th.score-header {
+  max-width: 60px;
+  min-width: 60px;
+  text-align: center;
+  padding: 0px;
+}
+
+td.score-sum {
+  text-align: right;
+  transition: all 0.2s ease;
+}
+
+td.score-cell:hover {
+  outline: 2px solid #6DA6BC;
+}
+
+td.score-high {
+  color: #3e5e6b;
+  font-weight: bold;
+  font-size: 1.8em;
+  text-shadow: 0 0 10px rgb(255,255,255) , 0 0 20px rgb(255,255,255) , 0 0 30px rgb(255,255,255) , 0 0 40px rgb(62, 94, 107) , 0 0 70px rgb(62, 94, 107) , 0 0 80px rgb(62, 94, 107) , 0 0 100px rgb(62, 94, 107) , 0 0 150px rgb(62, 94, 107) ;
+}
+
+td.score-medium {
+  color: #DDB144;
+  font-size: 1.4em;
+}
+
+td.score-low {
+  color: #4F5B3C;
+  font-size: 1.1em;
+}
+
+td.score-donut {
+  color: transparent;
+}
+
+.app > div {
+  margin: 20px;
+}
+
+.app {
+  overflow: auto;
+}
+
+.chart-picker {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffffff,
+    #ffffff 160px,
+    #fafafa 160px,
+    #fafafa 320px
+  );
+}
+
+.score-chart {
+  flex-grow: 1;
+}
+
+.top-putters {
+  flex-grow: 1;
+}
+
+button:focus {
+  outline: none;
+}
