@@ -89,9 +89,10 @@ class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
         });
 
         const putterAndScoreAboveZero = puttersAndScore.filter(putterAndScore => _.sumBy(putterAndScore.scores, s => s[1]) > 0);
+
         // Add any missing putter-series.
         putterAndScoreAboveZero.forEach(putterAndScore => {
-            const matchingSeries = this.chart.series.find(s => s.options.id === putterAndScore.putter.id);
+            const matchingSeries = this.chart.get(putterAndScore.putter.id) as Highcharts.SeriesObject;
             if (matchingSeries === undefined) {
                 this.chart.addSeries({
                     id: putterAndScore.putter.id,
@@ -102,6 +103,14 @@ class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
                 matchingSeries.update({
                     name: putterAndScore.putter.name
                 }, false);
+            }
+        });
+
+        // Remove series that shouldn't be there.
+        _.without(puttersAndScore, ...putterAndScoreAboveZero).forEach(putterAndScore => {
+            const matchingSeries = this.chart.get(putterAndScore.putter.id) as Highcharts.SeriesObject;
+            if (matchingSeries !== undefined) {
+                matchingSeries.remove();
             }
         });
 
