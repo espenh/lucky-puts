@@ -34,7 +34,7 @@ td.score-cell:hover {
 td.score-high {
   color: #3e5e6b;
   font-weight: bold;
-  font-size: 1.8em;
+  font-size: 1.5em;
   text-shadow: 0 0 10px rgb(255,255,255) , 0 0 20px rgb(255,255,255) , 0 0 30px rgb(255,255,255) , 0 0 40px rgb(62, 94, 107) , 0 0 70px rgb(62, 94, 107) , 0 0 80px rgb(62, 94, 107) , 0 0 100px rgb(62, 94, 107) , 0 0 150px rgb(62, 94, 107) ;
 }
 
