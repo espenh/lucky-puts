@@ -19,7 +19,7 @@ import ScoreChart from './components/scoreChart';
 import TopPutters from './components/topPutters';
 import FirebaseProvider from './firebaseProvider';
 import { StoreSyncer } from './storeSyncer';
-import { MuiThemeProvider, createMuiTheme, Tabs, Tab, Paper } from 'material-ui';
+import { MuiThemeProvider, createMuiTheme, Tabs, Tab, Paper, Contrast } from 'material-ui';
 
 export default class AppContainer extends React.Component {
 
@@ -29,8 +29,8 @@ export default class AppContainer extends React.Component {
   private history: History;
   private syncer: StoreSyncer;
 
-  constructor() {
-    super();
+  constructor(props: {}) {
+    super(props);
 
     this.history = createHistory();
     this.store = ConfigureStore(this.history);
@@ -63,9 +63,10 @@ export class AppMain extends React.Component {
   }
 }
 
+const paletteType: Contrast = "light";
 const theme = createMuiTheme({
   palette: {
-    type: "light"
+    type: paletteType
   }
 });
 
