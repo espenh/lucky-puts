@@ -11,11 +11,11 @@ interface ITopPuttersProps {
 }
 
 export class TopPuttersView extends React.Component<ITopPuttersProps, {}> {
-    private container: HTMLDivElement | null;
-    private chart: highcharts.ChartObject;
+    private container?: HTMLDivElement;
+    private chart?: highcharts.ChartObject;
 
     public componentDidMount() {
-        if (this.container !== null) {
+        if (this.container) {
             this.chart = highcharts.chart(this.container, {
                 credits: {
                     enabled: false
@@ -69,7 +69,9 @@ export class TopPuttersView extends React.Component<ITopPuttersProps, {}> {
     }
 
     public componentWillUnmount() {
-        this.chart.destroy();
+        if (this.chart) {
+            this.chart.destroy();
+        }
     }
 
     public componentDidUpdate() {
@@ -77,6 +79,9 @@ export class TopPuttersView extends React.Component<ITopPuttersProps, {}> {
     }
 
     private syncChartWithProps() {
+        if (!this.chart) {
+            return;
+        }
         const putters = _.sortBy(_.values(this.props.everything.putters.puttersById), putter => putter.name);
         const allRounds = _.sortBy(this.props.everything.round.rounds, round => round.dateInUnixMsTicks);
 
@@ -104,7 +109,7 @@ export class TopPuttersView extends React.Component<ITopPuttersProps, {}> {
     }
 
     public render() {
-        return <div className="top-putters" ref={(element) => this.container = element} />;
+        return <div className="top-putters" ref={(element) => this.container = element || undefined} />;
     }
 }
 

@@ -15,12 +15,11 @@ interface INewPlayerDialog {
 interface INewPlayerState {
     popover: {
         isOpen: boolean;
+        anchor?: HTMLElement;
     };
 }
 
 export default class NewRoundDialog extends React.Component<INewPlayerDialog, INewPlayerState> {
-
-    private button: HTMLDivElement | null;
 
     public state: INewPlayerState = {
         popover: {
@@ -28,10 +27,13 @@ export default class NewRoundDialog extends React.Component<INewPlayerDialog, IN
         }
     };
 
-    private handleNewRound = () => {
+    private handleNewRound = (event: React.MouseEvent<any>) => {
+        event.preventDefault();
+
         this.setState({
             popover: {
-                isOpen: true
+                isOpen: true,
+                anchor: event.currentTarget
             }
         });
     }
@@ -44,7 +46,11 @@ export default class NewRoundDialog extends React.Component<INewPlayerDialog, IN
         });
     }
 
-    private handleNewDate = (date: moment.Moment) => {
+    private handleNewDate = (date: moment.Moment | null) => {
+        if (date === null) {
+            return;
+        }
+
         this.props.handleNewRound(date.valueOf());
         this.handlePopoverClose();
     }
@@ -54,9 +60,9 @@ export default class NewRoundDialog extends React.Component<INewPlayerDialog, IN
     }
 
     public render() {
-        return <div ref={(element) => this.button = element} style={{ display: "inline-flex" }}><Button
+        return <><Button
             onClick={this.handleNewRound}
-            color="accent"
+            color="secondary"
             aria-label="add"
         >
             <GolfIcon />
@@ -65,15 +71,11 @@ export default class NewRoundDialog extends React.Component<INewPlayerDialog, IN
             {
                 <Popover
                     open={this.state.popover.isOpen}
-                    onRequestClose={this.handlePopoverClose}
-                    anchorEl={this.button || undefined}
+                    onClose={this.handlePopoverClose}
+                    anchorEl={this.state.popover.anchor}
                     anchorOrigin={{
                         vertical: 'bottom',
                         horizontal: 'center'
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left'
                     }}
                 >
                     <DayPickerSingleDateController
@@ -86,12 +88,11 @@ export default class NewRoundDialog extends React.Component<INewPlayerDialog, IN
                     />
                 </Popover>
             }
-        </div>;
+        </>;
     }
 }
 
 // Missing types for DayPickerSingleDateController. Fake it here.
 declare module 'react-dates' {
-    type DayPickerSingleDateControllerx = React.ClassicComponentClass<SingleDatePickerShape>;
     export let DayPickerSingleDateController: React.ClassicComponentClass<SingleDatePickerShape>;
 }

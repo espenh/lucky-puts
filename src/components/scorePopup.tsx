@@ -14,7 +14,7 @@ export class ScorePopup extends React.Component<IScorePopupProps, {}> {
     public render() {
         return <Popover
             open={this.props.isOpen}
-            onRequestClose={this.props.handleCancel}
+            onClose={this.props.handleCancel}
             anchorEl={this.props.anchorElement}
             anchorOrigin={{
                 vertical: 'bottom',
@@ -26,7 +26,7 @@ export class ScorePopup extends React.Component<IScorePopupProps, {}> {
             }}
         >
             {
-                [0, 1, 3, 6, 12].map(score => {
+                [0, 1, 3, 6, 12, 24].map(score => {
                     return <Button
                         key={"score-" + score}
                         onClick={() => this.props.handleSetScore(score)}

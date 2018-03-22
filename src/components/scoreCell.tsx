@@ -13,6 +13,10 @@ export default class ScoreCell extends React.Component<IScoreCellProps, {}> {
             return "";
         }
 
+        if (score >= 24) {
+            return "score-extreme";
+        }
+
         if (score >= 12) {
             return "score-high";
         }

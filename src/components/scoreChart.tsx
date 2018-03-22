@@ -11,11 +11,11 @@ interface IScoreTablePropFields {
 }
 
 class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
-    private container: HTMLDivElement | null;
-    private chart: highcharts.ChartObject;
+    private container?: HTMLDivElement;
+    private chart?: highcharts.ChartObject;
 
     public componentDidMount() {
-        if (this.container !== null) {
+        if (this.container) {
             this.chart = highcharts.chart(this.container, {
                 credits: {
                     enabled: false
@@ -59,7 +59,9 @@ class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
     }
 
     public componentWillUnmount() {
-        this.chart.destroy();
+        if (this.chart) {
+            this.chart.destroy();
+        }
     }
 
     public componentDidUpdate() {
@@ -67,6 +69,12 @@ class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
     }
 
     private syncChartWithProps() {
+        if (!this.chart) {
+            return;
+        }
+
+        const chartElement = this.chart;
+
         const putters = _.values(this.props.everything.putters.puttersById);
         const allRounds = _.sortBy(this.props.everything.round.rounds, round => round.dateInUnixMsTicks);
 
@@ -92,9 +100,9 @@ class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
 
         // Add any missing putter-series.
         putterAndScoreAboveZero.forEach(putterAndScore => {
-            const matchingSeries = this.chart.get(putterAndScore.putter.id) as Highcharts.SeriesObject;
+            const matchingSeries = chartElement.get(putterAndScore.putter.id) as Highcharts.SeriesObject;
             if (matchingSeries === undefined) {
-                this.chart.addSeries({
+                chartElement.addSeries({
                     id: putterAndScore.putter.id,
                     name: putterAndScore.putter.name
                 } as Highcharts.SeriesOptions, false);
@@ -108,7 +116,7 @@ class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
 
         // Remove series that shouldn't be there.
         _.without(puttersAndScore, ...putterAndScoreAboveZero).forEach(putterAndScore => {
-            const matchingSeries = this.chart.get(putterAndScore.putter.id) as Highcharts.SeriesObject;
+            const matchingSeries = chartElement.get(putterAndScore.putter.id) as Highcharts.SeriesObject;
             if (matchingSeries !== undefined) {
                 matchingSeries.remove();
             }
@@ -116,7 +124,7 @@ class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
 
         // Update score.
         _.sortBy(putterAndScoreAboveZero, p => p.putter.name.toLowerCase()).forEach((putterAndScore, index) => {
-            const series = this.chart.get(putterAndScore.putter.id) as Highcharts.SeriesObject;
+            const series = chartElement.get(putterAndScore.putter.id) as Highcharts.SeriesObject;
 
             if (series.options.index !== index) {
                 // Note reordering disables the nice animated transitions.
@@ -126,12 +134,15 @@ class ScoreChartView extends React.Component<IScoreTablePropFields, {}> {
             series.setData(putterAndScore.scores, false);
         });
 
-        this.chart.redraw();
+        chartElement.redraw();
         window.dispatchEvent(new Event('resize'));
     }
 
     public render() {
-        return <div className="score-chart" ref={(element) => this.container = element} />;
+        return <div
+            className="score-chart"
+            ref={(element) => this.container = element || undefined}
+        />;
     }
 }
 

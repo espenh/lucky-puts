@@ -6,7 +6,7 @@ const initialPutterState: IPutterState = {
     puttersById: {}
 };
 
-export const putterReducer: Reducer<IPutterState> = (state: IPutterState = initialPutterState, action: PutterAction) => {
+export const putterReducer: Reducer<IPutterState> = (state: IPutterState = initialPutterState, action: PutterAction | any) => {
     switch (action.type) {
         case PutterActionsType.addNewPutter:
             return {

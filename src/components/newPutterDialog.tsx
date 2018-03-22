@@ -11,7 +11,7 @@ interface INewPlayerDialog {
 }
 
 export default class NewPutterDialog extends React.Component<INewPlayerDialog, {}> {
-    private inputElement: HTMLInputElement;
+    private inputElement?: HTMLInputElement;
 
     private handleTextFieldKeyDown = (event: any) => {
         if (event.key === "Enter") {
@@ -20,6 +20,10 @@ export default class NewPutterDialog extends React.Component<INewPlayerDialog, {
     }
 
     private handleAddClick = () => {
+        if (!this.inputElement) {
+            return;
+        }
+
         const name = this.inputElement.value.trim();
         if (name.length > 0) {
             this.props.handleNewPutter(this.inputElement.value);
@@ -27,7 +31,7 @@ export default class NewPutterDialog extends React.Component<INewPlayerDialog, {
     }
 
     public render() {
-        return <Dialog open={this.props.isOpen} onRequestClose={this.props.handleCancel} >
+        return <Dialog open={this.props.isOpen} onClose={this.props.handleCancel} >
             <DialogTitle>Add new putter</DialogTitle>
             <DialogContent>
                 <TextField

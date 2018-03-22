@@ -7,7 +7,7 @@ const initialPutterState: IScoreState = {
     scores: []
 };
 
-export const scoreReducer: Reducer<IScoreState> = (state: IScoreState = initialPutterState, action: ScoreAction) => {
+export const scoreReducer: Reducer<IScoreState> = (state: IScoreState = initialPutterState, action: ScoreAction | any) => {
     switch (action.type) {
         case ScoreActionsType.setScoreForRound:
             const scoreToRemove = _.find(state.scores, (score) => score.putterId === action.score.putterId && score.roundId === action.score.roundId);

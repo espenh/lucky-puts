@@ -19,15 +19,16 @@ import ScoreChart from './components/scoreChart';
 import TopPutters from './components/topPutters';
 import FirebaseProvider from './firebaseProvider';
 import { StoreSyncer } from './storeSyncer';
-import { MuiThemeProvider, createMuiTheme, Tabs, Tab, Paper, Contrast } from 'material-ui';
+import { MuiThemeProvider, createMuiTheme, Tabs, Tab, Paper } from 'material-ui';
+import MonthlyPutter from './components/monthlyPutter';
 
 export default class AppContainer extends React.Component {
 
-  private app: firebase.app.App;
+  public app: firebase.app.App;
+  public syncer: StoreSyncer;
 
   private store: Store<any>;
   private history: History;
-  private syncer: StoreSyncer;
 
   constructor(props: {}) {
     super(props);
@@ -63,16 +64,15 @@ export class AppMain extends React.Component {
   }
 }
 
-const paletteType: Contrast = "light";
 const theme = createMuiTheme({
   palette: {
-    type: paletteType
+    type: "light"
   }
 });
 
 
 interface IOverviewState {
-  currentTab: "trend" | "top-putters";
+  currentTab: "trend" | "top-putters" | "monthly-putters";
 }
 
 export class OverviewArea extends React.Component<{}, IOverviewState> {
@@ -81,7 +81,7 @@ export class OverviewArea extends React.Component<{}, IOverviewState> {
     currentTab: "trend"
   };
 
-  private handleTabSelection = (event: React.ChangeEvent<{}>, tab: "trend" | "top-putters") => {
+  private handleTabSelection = (event: React.ChangeEvent<{}>, tab: "trend" | "top-putters" | "monthly-putters") => {
     this.setState({
       currentTab: tab
     });
@@ -104,9 +104,11 @@ export class OverviewArea extends React.Component<{}, IOverviewState> {
         >
           <Tab label="Trend" value={"trend"} />
           <Tab label="Top putters" value={"top-putters"} />
+          <Tab label="Monthly" value={"monthly-putters"} />
         </Tabs>
         {currentTab === "trend" && <ScoreChart />}
         {currentTab === "top-putters" && <TopPutters />}
+        {currentTab === "monthly-putters" && <MonthlyPutter />}
       </Paper>
     </div>;
   }

@@ -1,5 +1,5 @@
 tr.score-row {
-  height: 30px;
+  height: 32px;
 }
 
 tr.score-row:hover {
@@ -8,7 +8,7 @@ tr.score-row:hover {
 
 td.score-cell {
   text-align: center;
-  font-size: 1.4em;
+  font-size: 1.1em;
   border: 1px solid #dddddd;
   transition: all 0.2s ease;
   padding: 0px;
@@ -31,16 +31,23 @@ td.score-cell:hover {
   outline: 2px solid #6DA6BC;
 }
 
+td.score-extreme {
+  color: red;
+  font-weight: bold;
+  font-size: 1.3em;
+  text-shadow: 0 0 10px rgb(255,255,255) , 0 0 20px rgb(255,255,255) , 0 0 30px rgb(255,255,255) , 0 0 40px rgb(255, 94, 107) , 0 0 70px rgb(255, 94, 107) , 0 0 80px rgb(255, 94, 107) , 0 0 100px rgb(255, 94, 107) , 0 0 150px rgb(255, 94, 107) ;
+}
+
 td.score-high {
   color: #3e5e6b;
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.25em;
   text-shadow: 0 0 10px rgb(255,255,255) , 0 0 20px rgb(255,255,255) , 0 0 30px rgb(255,255,255) , 0 0 40px rgb(62, 94, 107) , 0 0 70px rgb(62, 94, 107) , 0 0 80px rgb(62, 94, 107) , 0 0 100px rgb(62, 94, 107) , 0 0 150px rgb(62, 94, 107) ;
 }
 
 td.score-medium {
   color: #DDB144;
-  font-size: 1.4em;
+  font-size: 1.2em;
 }
 
 td.score-low {
