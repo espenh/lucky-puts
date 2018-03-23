@@ -36,6 +36,16 @@ td.score-extreme {
   font-weight: bold;
   font-size: 1.3em;
   text-shadow: 0 0 10px rgb(255,255,255) , 0 0 20px rgb(255,255,255) , 0 0 30px rgb(255,255,255) , 0 0 40px rgb(255, 94, 107) , 0 0 70px rgb(255, 94, 107) , 0 0 80px rgb(255, 94, 107) , 0 0 100px rgb(255, 94, 107) , 0 0 150px rgb(255, 94, 107) ;
+  animation: pulse 1.1s ease-out 0s alternate infinite;
+}
+
+@keyframes pulse {
+  0% {
+    color: red;
+  }
+  100% {
+    color: rgb(255, 174, 0);
+  }
 }
 
 td.score-high {
@@ -87,4 +97,19 @@ td.score-donut {
 
 button:focus {
   outline: none;
+}
+
+td.podium-cell {
+  
+}
+
+td.podium-cell > .name {
+  font-size: 1.5em;
+}
+
+td.podium-cell > .score {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-left: 10px;
+  opacity: 0.5;
 }

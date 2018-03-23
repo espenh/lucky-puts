@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IApplicationState } from '../contracts/common';
-import { Table, TableBody, TableCell, TableRow, Avatar } from "material-ui";
+import { Table, TableBody, TableCell, TableRow } from "material-ui";
 
 interface IMontlyPutterPropFields {
     everything: IApplicationState;
@@ -62,11 +62,11 @@ class MonthlyPutterView extends React.Component<IMontlyPutterPropFields, {}> {
                         const top3Players = _.take(_.orderBy(sumScoreByPlayer, score => score.score, "desc"), 3);
 
                         return <TableRow>
-                            <TableCell>{month} <span style={{ opacity: 0.5, fontWeight: "bold" }}>{year}</span></TableCell>
+                            <TableCell>{month} <span style={{ opacity: 0.4, fontWeight: "bold" }}>{year}</span></TableCell>
 
                             {_.map(top3Players, topPlayer => {
                                 const putter = puttersById[topPlayer.putter];
-                                return (<TableCell>{putter.name} <Avatar sizes="small">{topPlayer.score}</Avatar></TableCell>);
+                                return (<TableCell className="podium-cell"><span className="name">{putter.name}</span><span className="score">{topPlayer.score}</span></TableCell>);
                             })}
                         </TableRow>;
                     })}
