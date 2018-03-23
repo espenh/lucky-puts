@@ -11,7 +11,6 @@ import { ConnectedRouter } from 'react-router-redux';
 import * as firebase from "firebase";
 import "firebase/firestore";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import ScoreTable from './components/scoreTable';
@@ -19,8 +18,10 @@ import ScoreChart from './components/scoreChart';
 import TopPutters from './components/topPutters';
 import FirebaseProvider from './firebaseProvider';
 import { StoreSyncer } from './storeSyncer';
-import { MuiThemeProvider, createMuiTheme, Tabs, Tab, Paper } from 'material-ui';
+import { Tabs, Tab, Paper } from 'material-ui';
 import MonthlyPutter from './components/monthlyPutter';
+import TotalPuts from './components/totalPuts';
+// import { Spinner, Intent } from "@blueprintjs/core";
 
 export default class AppContainer extends React.Component {
 
@@ -45,9 +46,7 @@ export default class AppContainer extends React.Component {
     return (
       <Provider store={this.store}>
         <ConnectedRouter history={this.history}>
-          <MuiThemeProvider theme={theme}>
-            <AppMain />
-          </MuiThemeProvider>
+          <AppMain />
         </ConnectedRouter>
       </Provider>
     );
@@ -58,21 +57,22 @@ export class AppMain extends React.Component {
   public render() {
     return <Switch>
       <Route>
-        <OverviewArea />
+        <OverviewAreaDeux />
       </Route>
     </Switch>;
   }
 }
 
-const theme = createMuiTheme({
-  palette: {
-    type: "light"
-  }
-});
-
-
 interface IOverviewState {
   currentTab: "trend" | "top-putters" | "monthly-putters";
+}
+
+export class OverviewAreaDeux extends React.Component<{}, IOverviewState> {
+  public render() {
+    return <div>
+      <TotalPuts />
+    </div>;
+  }
 }
 
 export class OverviewArea extends React.Component<{}, IOverviewState> {
