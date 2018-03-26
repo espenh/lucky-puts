@@ -19,6 +19,5 @@ const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
     };
 };
 
-
 const TotalPuts = connect(mapStateToProps)(TotalPutsView);
 export default TotalPuts;

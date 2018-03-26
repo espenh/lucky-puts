@@ -64,3 +64,8 @@ Possble features and improvements:
 - Show score and trend for period (by month, year etc.). "Putter of the month!" kind of thing.
 - Make it possible to rename and remove putter.
 - Clean up styling. It's currently a messy mix of css and in-component styling.
+
+### Widgets
+- Total score
+- Average score per round
+- Weekly average (graph)

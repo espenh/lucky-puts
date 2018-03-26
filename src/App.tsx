@@ -21,7 +21,7 @@ import { StoreSyncer } from './storeSyncer';
 import { Tabs, Tab, Paper } from 'material-ui';
 import MonthlyPutter from './components/monthlyPutter';
 import TotalPuts from './components/totalPuts';
-// import { Spinner, Intent } from "@blueprintjs/core";
+import { Button } from "@blueprintjs/core";
 
 export default class AppContainer extends React.Component {
 
@@ -70,7 +70,15 @@ interface IOverviewState {
 export class OverviewAreaDeux extends React.Component<{}, IOverviewState> {
   public render() {
     return <div>
-      <TotalPuts />
+      <nav>
+        <Button>x</Button>
+        <Button>y</Button>
+      </nav>
+      <main>
+        <section>
+          <TotalPuts />
+        </section>
+      </main>
     </div>;
   }
 }
