@@ -48,3 +48,9 @@ export interface IPutterScore {
 }
 
 export type Score = number;
+
+export interface IRoundScore {
+    round: IRound;
+    putter: IPutter;
+    score: IPutterScore;
+}

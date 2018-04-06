@@ -69,3 +69,55 @@ Possble features and improvements:
 - Total score
 - Average score per round
 - Weekly average (graph)
+
+
+Lucky Puts
+-----------------------------------------------------------------
+    146        | Montly average
+Total puts     | <sparkline>
+
+
+Distance distribution
+-----------------------------------------------------------------
+        4
+3       |   3
+|   2   |   |    2
+|   |   |   |    |
+|   |   |   |    |
+1 - 3 - 6 - 12 - 24
+
+Distance distribution over time
+-----------------------------------------------------------------
+*  1
+*  3
+*  6   <linechart>
+* 12
+* 24
+x: round
+y: count
+
+Department weekly score
+-----------------------------------------------------------------
+<stackedcolumnchart>
+x: week
+y: total score, grouped by score (distance)
+
+Monthly winners
+-----------------------------------------------------------------
+       April *        |         March          
+Svein  Erlend Marius  |  Svein  Erlend Marius  
+ 36      24     12    |   36      24     12    
+ ***      !     ##    |   ***      !     ##    
+
+- Fade 2. and 3. place points. 0.7 and 0.5 opacity perhaps.
+- Highlight winner. Bold? Trophy icon?
+
+Records
+-----------------------------------------------------------------
+* Best week:     24 Erlend | 13-20. dec. 2017
+* Best month:    36 Svein  | feb. 2018
+* Most puts:      9 Svein  |
+* Longest streak: 3 Erlend | **# from 12h dec. 2017 
+
+- Streak. Try to ignore weekends and red days. Include red day if a score/round exists on that day.
+- Highlight that most puts are in the cup, not just attempts. Cup icon?

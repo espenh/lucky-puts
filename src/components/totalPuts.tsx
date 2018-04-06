@@ -9,7 +9,9 @@ interface ITotalPutsPropFields {
 class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
 
     public render() {
-        return <span>Total puts: <span>{this.props.totalPuts}</span></span>;
+        return <div className="widget totalPuts">
+            <span>Total puts: <span>{this.props.totalPuts}</span></span>
+        </div>;
     }
 }
 

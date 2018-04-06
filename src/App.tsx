@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Provider, Store } from 'react-redux';
 import { Route, Switch } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { ConfigureStore } from './configureStore';
 import createHistory from 'history/createBrowserHistory';
@@ -21,7 +22,8 @@ import { StoreSyncer } from './storeSyncer';
 import { Tabs, Tab, Paper } from 'material-ui';
 import MonthlyPutter from './components/monthlyPutter';
 import TotalPuts from './components/totalPuts';
-import { Button } from "@blueprintjs/core";
+import LatestPuts from './components/latestPuts';
+import MonthlyWinner from './components/monthlyWinner';
 
 export default class AppContainer extends React.Component {
 
@@ -55,11 +57,23 @@ export default class AppContainer extends React.Component {
 
 export class AppMain extends React.Component {
   public render() {
-    return <Switch>
-      <Route>
-        <OverviewAreaDeux />
-      </Route>
-    </Switch>;
+    return <div className="app">
+      <nav>
+        <h3>Lucky puts</h3>
+        <Link to="/grid">Grid</Link>
+        <Link to="/dash">Dash</Link>
+      </nav>
+      <main>
+        <Switch>
+          <Route path="/grid">
+            <DataGrid />
+          </Route>
+          <Route>
+            <Dashboard />
+          </Route>
+        </Switch>
+      </main>
+    </div>;
   }
 }
 
@@ -67,19 +81,20 @@ interface IOverviewState {
   currentTab: "trend" | "top-putters" | "monthly-putters";
 }
 
-export class OverviewAreaDeux extends React.Component<{}, IOverviewState> {
+export class DataGrid extends React.Component<{}, {}> {
   public render() {
-    return <div>
-      <nav>
-        <Button>x</Button>
-        <Button>y</Button>
-      </nav>
-      <main>
-        <section>
-          <TotalPuts />
-        </section>
-      </main>
-    </div>;
+    return <h1>GRID</h1>;
+  }
+}
+
+export class Dashboard extends React.Component<{}, {}> {
+  public render() {
+    return <section className="stats-container">
+      <div className="header">header</div>
+      <TotalPuts />
+      <LatestPuts />
+      <MonthlyWinner />
+    </section>;
   }
 }
 

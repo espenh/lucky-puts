@@ -1,118 +1,111 @@
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
 
-tr.score-row {
-  height: 32px;
-}
-
-tr.score-row:hover {
-  background-color: #eee;
-}
-
-td.score-cell {
-  text-align: center;
-  font-size: 1.1em;
-  border: 1px solid #dddddd;
-  transition: all 0.2s ease;
-  padding: 0px;
-  outline: 2px solid transparent;
-}
-
-th.score-header {
-  max-width: 60px;
-  min-width: 60px;
-  text-align: center;
-  padding: 0px;
-}
-
-td.score-sum {
-  text-align: right;
-  transition: all 0.2s ease;
-}
-
-td.score-cell:hover {
-  outline: 2px solid #6DA6BC;
-}
-
-td.score-extreme {
-  color: red;
-  font-weight: bold;
-  font-size: 1.3em;
-  text-shadow: 0 0 10px rgb(255,255,255) , 0 0 20px rgb(255,255,255) , 0 0 30px rgb(255,255,255) , 0 0 40px rgb(255, 94, 107) , 0 0 70px rgb(255, 94, 107) , 0 0 80px rgb(255, 94, 107) , 0 0 100px rgb(255, 94, 107) , 0 0 150px rgb(255, 94, 107) ;
-  animation: pulse 1.1s ease-out 0s alternate infinite;
-}
-
-@keyframes pulse {
-  0% {
-    color: red;
-  }
-  100% {
-    color: rgb(255, 174, 0);
-  }
-}
-
-td.score-high {
-  color: #3e5e6b;
-  font-weight: bold;
-  font-size: 1.25em;
-  text-shadow: 0 0 10px rgb(255,255,255) , 0 0 20px rgb(255,255,255) , 0 0 30px rgb(255,255,255) , 0 0 40px rgb(62, 94, 107) , 0 0 70px rgb(62, 94, 107) , 0 0 80px rgb(62, 94, 107) , 0 0 100px rgb(62, 94, 107) , 0 0 150px rgb(62, 94, 107) ;
-}
-
-td.score-medium {
-  color: #DDB144;
-  font-size: 1.2em;
-}
-
-td.score-low {
-  color: #4F5B3C;
-  font-size: 1.1em;
-}
-
-td.score-donut {
-  color: transparent;
-}
-
-.app > div {
-  margin: 20px;
+.app {
+  width: 100%;
+  height: 100%;
 }
 
 .app {
+  border: 2px solid yellow;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-auto-columns: minmax(100px, auto);
+}
+
+.app nav {
+background: pink;
+grid-row: 1;
+}
+
+.app main {
+grid-row: 2;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.stats-container > .widget {
+  border: 1px solid red;
+}
+
+.stats-container > .header {
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+
+.stats-container > .widget.totalPuts {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.stats-container > .widget.latestPuts {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.stats-container > .widget.monthlyWinners {
+  grid-column: 1 / 2;
+  grid-row: 3;
+  display: flex;
+  flex-direction: row;
   overflow: auto;
 }
 
-.chart-picker {
-  background: repeating-linear-gradient(
-    -45deg,
-    #ffffff,
-    #ffffff 160px,
-    #fafafa 160px,
-    #fafafa 320px
-  );
+.monthly-winner-month-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  border:1px solid green;
 }
 
-.score-chart {
-  flex-grow: 1;
+.monthly-winner-month-container > .header {
+  grid-column: 1/4;
+  grid-row: 1;
+  text-align: center;
 }
 
-.top-putters {
-  flex-grow: 1;
+.monthly-winner-month-container > .podium > .name {
+  white-space: nowrap;
+  text-align: center;
+  padding: 2px;
 }
 
-button:focus {
-  outline: none;
+.monthly-winner-month-container > .podium > .scoreSum {
+  text-align: center;
 }
 
-td.podium-cell {
-  
+.monthly-winner-month-container > .podium > .scores {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-td.podium-cell > .name {
-  font-size: 1.5em;
+.monthly-winner-month-container > .podium.gold {
+  grid-column: 1;
+  grid-row: 2;
 }
 
-td.podium-cell > .score {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-left: 10px;
+.monthly-winner-month-container > .podium.silver {
+  grid-column: 2;
+  grid-row: 2;
+  opacity: 0.7;
+}
+
+.monthly-winner-month-container > .podium.bronze {
+  grid-column: 3;
+  grid-row: 2;
   opacity: 0.5;
+}
+
+.scoreBullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: gray;
+  margin: 1px;
 }
