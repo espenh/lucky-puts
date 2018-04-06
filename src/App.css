@@ -60,13 +60,26 @@ grid-row: 2;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, auto);
-  border:1px solid green;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.monthly-winner-month-container:nth-of-type(odd) {
+  background-color: #eee;
 }
 
 .monthly-winner-month-container > .header {
   grid-column: 1/4;
   grid-row: 1;
   text-align: center;
+}
+
+.monthly-winner-month-container > .header >span.ongoing {
+  font-style: italic;
+}
+
+.monthly-winner-month-container > .podium {
+  padding: 5px;
 }
 
 .monthly-winner-month-container > .podium > .name {
@@ -77,6 +90,7 @@ grid-row: 2;
 
 .monthly-winner-month-container > .podium > .scoreSum {
   text-align: center;
+  font-size: 1.2em;
 }
 
 .monthly-winner-month-container > .podium > .scores {
@@ -88,6 +102,7 @@ grid-row: 2;
 .monthly-winner-month-container > .podium.gold {
   grid-column: 1;
   grid-row: 2;
+  font-weight: bold;
 }
 
 .monthly-winner-month-container > .podium.silver {

@@ -22,12 +22,16 @@ interface IScoreGrouping {
 class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, {}> {
     public render() {
         const sortedScores = _.orderBy(this.props.bestPuttersMonthly, s => s.tick, "desc");
+        const currentMonthTick = moment().startOf("month").valueOf();
 
         return <div className="widget monthlyWinners">
             {sortedScores.map(monthAndPutters => {
-                const month = moment(monthAndPutters.tick).format("MMM");
-                return <div className="monthly-winner-month-container" key={month}>
-                    <div className="header">{month}</div>
+                const scoreMonth = moment(monthAndPutters.tick);
+                const monthName = scoreMonth.format("MMM");
+                const isCurrent = currentMonthTick === monthAndPutters.tick;
+
+                return <div className="monthly-winner-month-container" key={monthName}>
+                    <div className="header"><span className={isCurrent ? "ongoing" : ""}>{monthName}</span></div>
                     {monthAndPutters.bestPutters.map((putterAndScore, index) => {
                         const classes = {
                             0: "gold",
@@ -63,11 +67,14 @@ const mapStateToProps = (state: IApplicationState): IMonthlyWinnerPropFields => 
             return {
                 scoreSum: _.sumBy(scoresForPutter, s => s.score.score),
                 scores: scoresForPutter,
+                highestScore: _.maxBy(scoresForPutter, s => s.score.score),
                 putter: state.putters.puttersById[putterId]
             };
         });
 
-        const bestPutters = _.take(_.orderBy(scoresAndPutters, s => s.scoreSum, "desc"), 3);
+        // Sort by score. If equal, take whoever has the longest put.
+        // TODO - What if multiple putters have the longest put. Sort by count?
+        const bestPutters = _.take(_.orderBy(scoresAndPutters, [s => s.scoreSum, s => s.highestScore], "desc"), 3);
 
         return {
             tick: monthTick,
