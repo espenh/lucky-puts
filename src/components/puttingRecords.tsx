@@ -10,6 +10,8 @@ interface IPuttingRecordsPropFields {
     longestStreak?: { putter: IPutter, streak: { length: number, start: moment.Moment } };
     bestWeek?: { week: moment.Moment, score: IScoreAggregation };
     bestMonth?: { month: moment.Moment, score: IScoreAggregation };
+    bestQuarter?: { quarter: moment.Moment, score: IScoreAggregation };
+    bestYear?: { year: moment.Moment, score: IScoreAggregation };
 }
 
 class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> {
@@ -42,6 +44,18 @@ class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> 
                         <td>{this.props.bestMonth.score.putter.name}</td>
                         <td>{this.props.bestMonth.month.format("MMMM YY")}</td>
                     </tr>}
+                    {this.props.bestQuarter && <tr>
+                        <td>Best quarter</td>
+                        <td>{this.props.bestQuarter.score.scoreSum}</td>
+                        <td>{this.props.bestQuarter.score.putter.name}</td>
+                        <td>Q{this.props.bestQuarter.quarter.quarter() + " " + this.props.bestQuarter.quarter.format("YY")}</td>
+                    </tr>}
+                    {this.props.bestYear && <tr>
+                        <td>Best year</td>
+                        <td>{this.props.bestYear.score.scoreSum}</td>
+                        <td>{this.props.bestYear.score.putter.name}</td>
+                        <td>{this.props.bestYear.year.format("YYYY")}</td>
+                    </tr>}
                 </tbody>
             </table>
         </div>;
@@ -63,6 +77,8 @@ const mapStateToProps = (state: IApplicationState): IPuttingRecordsPropFields =>
     // Best week and month.
     const bestWeek = ScoreSelectors.getBestPartition(state, "isoWeek");
     const bestMonth = ScoreSelectors.getBestPartition(state, "month");
+    const bestQuarter = ScoreSelectors.getBestPartition(state, "quarter");
+    const bestYear = ScoreSelectors.getBestPartition(state, "year");
 
     return {
         // Prefer the last putter, if equal.
@@ -75,6 +91,14 @@ const mapStateToProps = (state: IApplicationState): IPuttingRecordsPropFields =>
         bestMonth: bestMonth && {
             month: moment(bestMonth.partitionTick),
             score: bestMonth.score
+        },
+        bestQuarter: bestQuarter && {
+            quarter: moment(bestQuarter.partitionTick),
+            score: bestQuarter.score
+        },
+        bestYear: bestYear && {
+            year: moment(bestYear.partitionTick),
+            score: bestYear.score
         }
     };
 };
