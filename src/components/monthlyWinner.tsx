@@ -1,8 +1,8 @@
+import * as _ from 'lodash';
 import * as moment from "moment";
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
-import * as _ from 'lodash';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import ScoreBullet from "./scoreBullet";
 

@@ -2,13 +2,14 @@ import * as _ from 'lodash';
 import * as moment from "moment";
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IApplicationState, IPutter } from '../contracts/common';
+import { IApplicationState, IPutter, IScoreAggregation } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 
 interface IPuttingRecordsPropFields {
     mostPuts?: { count: number, putter: IPutter };
     longestStreak?: { putter: IPutter, streak: { length: number, start: moment.Moment } };
-    bestWeek?: { week: string, putter: IPutter }
+    bestWeek?: { week: moment.Moment, score: IScoreAggregation };
+    bestMonth?: { month: moment.Moment, score: IScoreAggregation };
 }
 
 class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> {
@@ -29,6 +30,18 @@ class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> 
                         <td>{this.props.longestStreak.putter.name}</td>
                         <td>{this.props.longestStreak.streak.start.format("DD MMM YY")}</td>
                     </tr>}
+                    {this.props.bestWeek && <tr>
+                        <td>Best week</td>
+                        <td>{this.props.bestWeek.score.scoreSum}</td>
+                        <td>{this.props.bestWeek.score.putter.name}</td>
+                        <td>From: {this.props.bestWeek.week.format("DD MMM YY")}</td>
+                    </tr>}
+                    {this.props.bestMonth && <tr>
+                        <td>Best month</td>
+                        <td>{this.props.bestMonth.score.scoreSum}</td>
+                        <td>{this.props.bestMonth.score.putter.name}</td>
+                        <td>{this.props.bestMonth.month.format("MMMM YY")}</td>
+                    </tr>}
                 </tbody>
             </table>
         </div>;
@@ -47,15 +60,22 @@ const mapStateToProps = (state: IApplicationState): IPuttingRecordsPropFields =>
         };
     });
 
-    // Best week.
-    const bestWeeks = ScoreSelectors.getBest(state, "isoWeek");
-    
+    // Best week and month.
+    const bestWeek = ScoreSelectors.getBestPartition(state, "isoWeek");
+    const bestMonth = ScoreSelectors.getBestPartition(state, "month");
 
     return {
-        // Prefer the last putter, if equal
+        // Prefer the last putter, if equal.
         mostPuts: _.first(_.orderBy(countForPlayer, [s => s.count, s => s.latestScore], "desc")),
         longestStreak: _.maxBy(ScoreSelectors.getStreaks(state), p => p.streak.length),
-        bestWeek: bestWeeks && bestWeeks.scoresAndPutters
+        bestWeek: bestWeek && {
+            week: moment(bestWeek.partitionTick),
+            score: bestWeek.score
+        },
+        bestMonth: bestMonth && {
+            month: moment(bestMonth.partitionTick),
+            score: bestMonth.score
+        }
     };
 };
 

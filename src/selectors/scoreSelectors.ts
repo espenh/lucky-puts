@@ -1,7 +1,7 @@
-import * as moment from "moment";
 import * as _ from "lodash";
-import { IApplicationState, IRoundScore } from "../contracts/common";
-import { DateUtils, Continuous } from "../utils/dateUtils";
+import * as moment from "moment";
+import { IApplicationState, IRoundScore, IScoreAggregation } from "../contracts/common";
+import { Continuous, DateUtils } from "../utils/dateUtils";
 
 export class ScoreSelectors {
 
@@ -73,19 +73,9 @@ export class ScoreSelectors {
         return playersAndStreaks;
     }
 
-    public static getBest(state: IApplicationState, partition: "isoWeek" | "month" | "quarter" | "year") {
-        const roundsSorted = _.orderBy(state.round.rounds, r => r.dateInUnixMsTicks, "asc");
-        const firstRound = _.first(roundsSorted);
-        const lastRound = _.last(roundsSorted);
-
-        if (!firstRound || !lastRound) {
-            return undefined;
-        }
-
+    public static getBestPartition(state: IApplicationState, partition: "isoWeek" | "month" | "quarter" | "year") {
         const allNonZeroScores = ScoreSelectors.getScoresMapped(state).filter(score => score.score.score > 0);
-
         const scoresByPartition = _.groupBy(allNonZeroScores, s => moment(s.round.dateInUnixMsTicks).startOf(partition).valueOf());
-
         const bestByPartition = _.map(scoresByPartition, (scoresForParition, partitionTickAsString) => {
             const scoresAndPutters = ScoreSelectors.getBestByPlayer(scoresForParition);
             return {
@@ -98,23 +88,21 @@ export class ScoreSelectors {
 
         return bestPartition && {
             partitionTick: bestPartition.partitionTick,
-            score: _.maxBy(bestPartition.scoresAndPutters, p => p.scoreSum)
+            score: _.maxBy(bestPartition.scoresAndPutters, p => p.scoreSum) as IScoreAggregation
         };
     }
 
     public static getBestByPlayer(monthlyScores: IRoundScore[]) {
-        // Find the best x putters for the month.
         const monthScoresByPutter = _.groupBy(monthlyScores, score => score.putter.id);
-        const scoresAndPutters = _.map(monthScoresByPutter, (scoresForPutter, putterId) => {
+        const scoresAndPutters = _.map(monthScoresByPutter, (scoresForPutter): IScoreAggregation => {
             return {
                 scoreSum: _.sumBy(scoresForPutter, s => s.score.score),
                 scores: scoresForPutter,
-                highestScore: _.maxBy(scoresForPutter, s => s.score.score),
+                highestScore: _.maxBy(scoresForPutter, s => s.score.score) as IRoundScore,
                 putter: scoresForPutter[0].putter
             };
         });
 
         return scoresAndPutters;
     }
-
 }

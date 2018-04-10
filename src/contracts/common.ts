@@ -54,3 +54,10 @@ export interface IRoundScore {
     putter: IPutter;
     score: IPutterScore;
 }
+
+export interface IScoreAggregation {
+    scores: IRoundScore[];
+    scoreSum: number;
+    highestScore: IRoundScore;
+    putter: IPutter;
+}
