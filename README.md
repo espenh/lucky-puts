@@ -114,10 +114,11 @@ Svein  Erlend Marius  |  Svein  Erlend Marius
 
 Records
 -----------------------------------------------------------------
-* Best week:     24 Erlend | 13-20. dec. 2017
-* Best month:    36 Svein  | feb. 2018
-* Most puts:      9 Svein  |
-* Longest streak: 3 Erlend | **# from 12h dec. 2017 
+* Best week:     24   Erlend | 13-20. dec. 2017
+* Best month:    36   Svein  | feb. 2018
+* Most puts:      9   Svein  |
+* Average daily:  1.2 Marius |
+* Longest streak: 3 Erlend   | **# from 12h dec. 2017 
 
 - Streak. Try to ignore weekends and red days. Include red day if a score/round exists on that day.
 - Highlight that most puts are in the cup, not just attempts. Cup icon?

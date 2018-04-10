@@ -16,8 +16,9 @@ class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
 }
 
 const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
+    const nonZeroPuts = state.score.scores.filter(s => s.score > 0);
     return {
-        totalPuts: state.score.scores.filter(s => s.score > 0).length
+        totalPuts: nonZeroPuts.length
     };
 };
 

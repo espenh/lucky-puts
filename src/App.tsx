@@ -24,6 +24,7 @@ import MonthlyPutter from './components/monthlyPutter';
 import TotalPuts from './components/totalPuts';
 import LatestPuts from './components/latestPuts';
 import MonthlyWinner from './components/monthlyWinner';
+import PuttingRecords from './components/puttingRecords';
 
 export default class AppContainer extends React.Component {
 
@@ -94,6 +95,7 @@ export class Dashboard extends React.Component<{}, {}> {
       <TotalPuts />
       <LatestPuts />
       <MonthlyWinner />
+      <PuttingRecords />
     </section>;
   }
 }
