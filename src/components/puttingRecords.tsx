@@ -2,19 +2,14 @@ import * as _ from 'lodash';
 import * as moment from "moment";
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
+import { IApplicationState, IPutter } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
-import { Continuous, DateUtils } from '../utils/dateUtils';
 
 interface IPuttingRecordsPropFields {
     mostPuts?: { count: number, putter: IPutter };
     longestStreak?: { putter: IPutter, streak: { length: number, start: moment.Moment } };
+    bestWeek?: { week: string, putter: IPutter }
 }
-
-const weekDays = {
-    saturday: 6,
-    sunday: 7
-};
 
 class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> {
 
@@ -52,61 +47,15 @@ const mapStateToProps = (state: IApplicationState): IPuttingRecordsPropFields =>
         };
     });
 
-    const isContinuous = (previousScore: IRoundScore, currentScore: IRoundScore) => {
-        // Ignore weekends
-        // Ignore red days
-        // - except where a round has been played.
-
-        const previousDay = moment(previousScore.round.dateInUnixMsTicks);
-        const currentDay = moment(currentScore.round.dateInUnixMsTicks);
-
-        const dayRange = DateUtils.getDatesBetween(previousDay, currentDay);
-
-        const candidateDays = dayRange.filter(day => {
-            const isoWeekDay = day.isoWeekday();
-            if (isoWeekDay === weekDays.saturday || isoWeekDay === weekDays.sunday) {
-                return false;
-            }
-
-            // TODO - Quick example. Move red days to a separate module.
-            if (day.month() === 5 && day.daysInMonth() === 17) {
-                return false;
-            }
-
-            return true;
-        });
-
-        // Removing all red days, we should be left with only the startDay of the range.
-        return candidateDays.length === 1;
-    };
-
-    const cont: { [id: string]: Continuous<IRoundScore> } = {};
+    // Best week.
+    const bestWeeks = ScoreSelectors.getBest(state, "isoWeek");
     
-    const allNonZeroScoresSorted = _.sortBy(allNonZeroScores, s=>s.round.dateInUnixMsTicks, "asc");
-    allNonZeroScoresSorted.forEach(s => {
-        if (!cont.hasOwnProperty(s.putter.id)) {
-            cont[s.putter.id] = new Continuous(isContinuous);
-        }
-
-        cont[s.putter.id].addOrdered(s);
-    });
-
-    const playersAndStreaks = Object.keys(cont).map(putterId => {
-        const longestChain = cont[putterId].longest;
-        return {
-            putter: state.putters.puttersById[putterId],
-            streak: longestChain && {
-                length: longestChain.length,
-                start: moment(longestChain[0].round.dateInUnixMsTicks)
-            }
-        };
-    });
-
-    const longestStreak = _.maxBy(playersAndStreaks, p => p.streak.length);
 
     return {
+        // Prefer the last putter, if equal
         mostPuts: _.first(_.orderBy(countForPlayer, [s => s.count, s => s.latestScore], "desc")),
-        longestStreak: longestStreak
+        longestStreak: _.maxBy(ScoreSelectors.getStreaks(state), p => p.streak.length),
+        bestWeek: bestWeeks && bestWeeks.scoresAndPutters
     };
 };
 

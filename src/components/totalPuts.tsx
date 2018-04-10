@@ -4,6 +4,7 @@ import { IApplicationState } from '../contracts/common';
 
 interface ITotalPutsPropFields {
     totalPuts: number;
+    everything: IApplicationState;
 }
 
 class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
@@ -18,7 +19,8 @@ class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
 const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
     const nonZeroPuts = state.score.scores.filter(s => s.score > 0);
     return {
-        totalPuts: nonZeroPuts.length
+        totalPuts: nonZeroPuts.length,
+        everything: state
     };
 };
 

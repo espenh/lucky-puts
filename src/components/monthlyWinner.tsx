@@ -62,15 +62,7 @@ const mapStateToProps = (state: IApplicationState): IMonthlyWinnerPropFields => 
         const monthTick = parseInt(tickAsString, 10);
 
         // Find the best x putters for the month.
-        const monthScoresByPutter = _.groupBy(monthlyScores, score => score.putter.id);
-        const scoresAndPutters = _.map(monthScoresByPutter, (scoresForPutter, putterId) => {
-            return {
-                scoreSum: _.sumBy(scoresForPutter, s => s.score.score),
-                scores: scoresForPutter,
-                highestScore: _.maxBy(scoresForPutter, s => s.score.score),
-                putter: state.putters.puttersById[putterId]
-            };
-        });
+        const scoresAndPutters = ScoreSelectors.getBestByPlayer(monthlyScores);
 
         // Sort by score. If equal, take whoever has the longest put.
         // TODO - What if multiple putters have the longest put. Sort by count?
