@@ -2,12 +2,13 @@ import * as _ from 'lodash';
 import * as moment from "moment";
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IApplicationState, IPutter, IScoreAggregation } from '../contracts/common';
+import { IApplicationState, IPutter, IScoreAggregation, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
+import ScoreBulletList from "./scoreBulletList";
 
 interface IPuttingRecordsPropFields {
     mostPuts?: { count: number, putter: IPutter };
-    longestStreak?: { putter: IPutter, streak: { length: number, start: moment.Moment } };
+    longestStreak?: { putter: IPutter, streak: { length: number, start: moment.Moment, scores: IRoundScore[] } };
     bestWeek?: { week: moment.Moment, score: IScoreAggregation };
     bestMonth?: { month: moment.Moment, score: IScoreAggregation };
     bestQuarter?: { quarter: moment.Moment, score: IScoreAggregation };
@@ -25,36 +26,42 @@ class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> 
                         <td>{this.props.mostPuts.count}</td>
                         <td>{this.props.mostPuts.putter.name}</td>
                         <td>{}</td>
+                        <td>{}</td>
                     </tr>}
                     {this.props.longestStreak && <tr>
                         <td>Longest streak</td>
                         <td>{this.props.longestStreak.streak.length}</td>
                         <td>{this.props.longestStreak.putter.name}</td>
                         <td>{this.props.longestStreak.streak.start.format("DD MMM YY")}</td>
+                        <td><ScoreBulletList scores={this.props.longestStreak.streak.scores} /></td>
                     </tr>}
                     {this.props.bestWeek && <tr>
                         <td>Best week</td>
                         <td>{this.props.bestWeek.score.scoreSum}</td>
                         <td>{this.props.bestWeek.score.putter.name}</td>
                         <td>From: {this.props.bestWeek.week.format("DD MMM YY")}</td>
+                        <td><ScoreBulletList scores={this.props.bestWeek.score.scores} /></td>
                     </tr>}
                     {this.props.bestMonth && <tr>
                         <td>Best month</td>
                         <td>{this.props.bestMonth.score.scoreSum}</td>
                         <td>{this.props.bestMonth.score.putter.name}</td>
                         <td>{this.props.bestMonth.month.format("MMMM YY")}</td>
+                        <td><ScoreBulletList scores={this.props.bestMonth.score.scores} /></td>
                     </tr>}
                     {this.props.bestQuarter && <tr>
                         <td>Best quarter</td>
                         <td>{this.props.bestQuarter.score.scoreSum}</td>
                         <td>{this.props.bestQuarter.score.putter.name}</td>
                         <td>Q{this.props.bestQuarter.quarter.quarter() + " " + this.props.bestQuarter.quarter.format("YY")}</td>
+                        <td>{}</td>
                     </tr>}
                     {this.props.bestYear && <tr>
                         <td>Best year</td>
                         <td>{this.props.bestYear.score.scoreSum}</td>
                         <td>{this.props.bestYear.score.putter.name}</td>
                         <td>{this.props.bestYear.year.format("YYYY")}</td>
+                        <td>{}</td>
                     </tr>}
                 </tbody>
             </table>

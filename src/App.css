@@ -130,3 +130,8 @@ grid-row: 2;
   background-color: gray;
   margin: 1px;
 }
+
+.score-bullet-list {
+  display: flex;
+  flex-direction: row;
+}

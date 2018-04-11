@@ -65,7 +65,8 @@ export class ScoreSelectors {
                 putter: state.putters.puttersById[putterId],
                 streak: longestChain && {
                     length: longestChain.length,
-                    start: moment(longestChain[0].round.dateInUnixMsTicks)
+                    start: moment(longestChain[0].round.dateInUnixMsTicks),
+                    scores: longestChain
                 }
             };
         });

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
-import ScoreBullet from "./scoreBullet";
+import ScoreBulletList from "./scoreBulletList";
 
 interface IMonthlyWinnerPropFields {
     bestPuttersMonthly: IScoreGrouping[];
@@ -39,14 +39,12 @@ class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, {}> {
                             2: "bronze"
                         };
 
-                        const scoresAscending = _.orderBy(putterAndScore.scores, s => s.round.dateInUnixMsTicks, "asc");
-
                         return <div key={putterAndScore.putter.id} className={"podium " + classes[index]}>
                             <div className="name">{putterAndScore.putter.name}</div>
                             <div className="scoreSum">{putterAndScore.scoreSum}</div>
-                            <div className="scores">{scoresAscending.map(scoreForRound => {
-                                return <ScoreBullet key={scoreForRound.round.id} score={scoreForRound.score.score} />;
-                            })}</div>
+                            <div className="scores">
+                                <ScoreBulletList scores={putterAndScore.scores} />
+                            </div>
                         </div>;
                     })}
                 </div>;
