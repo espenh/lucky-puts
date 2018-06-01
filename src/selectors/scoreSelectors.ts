@@ -74,20 +74,27 @@ export class ScoreSelectors {
         return playersAndStreaks;
     }
 
-    public static getBestPartition(state: IApplicationState, partition: "isoWeek" | "month" | "quarter" | "year") {
+    public static getPartitioned(state: IApplicationState, partition: "isoWeek" | "month" | "quarter" | "year") {
         const allNonZeroScores = ScoreSelectors.getScoresMapped(state).filter(score => score.score.score > 0);
         const scoresByPartition = _.groupBy(allNonZeroScores, s => moment(s.round.dateInUnixMsTicks).startOf(partition).valueOf());
 
-        const bestByPartition = _.map(scoresByPartition, (scoresForPartition, partitionTickAsString) => {
+        const allPartitions = _.map(scoresByPartition, (scoresForPartition, partitionTickAsString) => {
             const scoresAndPutters = ScoreSelectors.getBestByPlayer(scoresForPartition);
             return {
                 partitionTick: parseInt(partitionTickAsString, 10),
                 scoresAndPutters: scoresAndPutters,
+                scoresForPartition: scoresForPartition,
                 bestPutter: _.maxBy(scoresAndPutters, s => s.scoreSum) as IScoreAggregation
             };
         });
 
-        const bestPartition = _.maxBy(bestByPartition, p => p.bestPutter.scoreSum);
+        return allPartitions;
+    }
+
+    public static getBestPartition(state: IApplicationState, partition: "isoWeek" | "month" | "quarter" | "year") {
+
+        const allPartitions = ScoreSelectors.getPartitioned(state, partition);
+        const bestPartition = _.maxBy(allPartitions, p => p.bestPutter.scoreSum);
 
         return bestPartition && {
             partitionTick: bestPartition.partitionTick,

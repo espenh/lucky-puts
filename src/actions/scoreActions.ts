@@ -7,7 +7,7 @@ export enum ScoreActionsType {
 
 export interface ISetScoreForRound {
     type: ScoreActionsType.setScoreForRound;
-    score: IPutterScore;
+    scores: IPutterScore[];
 }
 
 export type ScoreAction = ISetScoreForRound;

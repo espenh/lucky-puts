@@ -7,15 +7,18 @@ const initialPutterState: IScoreState = {
     scores: []
 };
 
-export const scoreReducer: Reducer<IScoreState> = (state: IScoreState = initialPutterState, action: ScoreAction | any) => {
+export const scoreReducer: Reducer<IScoreState> = (state: IScoreState = initialPutterState, actionAsAny: ScoreAction | any) => {
+    const action = actionAsAny as ScoreAction;
     switch (action.type) {
         case ScoreActionsType.setScoreForRound:
-            const scoreToRemove = _.find(state.scores, (score) => score.putterId === action.score.putterId && score.roundId === action.score.roundId);
+            const key = (score: IPutterScore) => [score.putterId, score.roundId].join("|");
+            const newScores = new Set(action.scores.map(score => key(score)));
+            const scoreToRemove = _.find(state.scores, (score) => newScores.has(key(score)));
             const scoresWithoutOld = _.without(state.scores, scoreToRemove) as IPutterScore[];
 
             return {
                 ...state,
-                scores: scoresWithoutOld.concat([action.score])
+                scores: scoresWithoutOld.concat(action.scores)
             };
         default:
             return state;

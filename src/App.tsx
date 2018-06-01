@@ -19,19 +19,22 @@ import ScoreChart from './components/scoreChart';
 import TopPutters from './components/topPutters';
 import FirebaseProvider from './firebaseProvider';
 import { StoreSyncer } from './storeSyncer';
-import { Tabs, Tab, Paper } from 'material-ui';
+import { Tabs, Tab, Paper } from '@material-ui/core';
 import MonthlyPutter from './components/monthlyPutter';
 import TotalPuts from './components/totalPuts';
 import LatestPuts from './components/latestPuts';
 import MonthlyWinner from './components/monthlyWinner';
 import PuttingRecords from './components/puttingRecords';
+import PutGrid from './components/putGrid';
+import TrendChart from './components/trendChart';
+import { IApplicationState } from './contracts/common';
 
 export default class AppContainer extends React.Component {
 
   public app: firebase.app.App;
   public syncer: StoreSyncer;
 
-  private store: Store<any>;
+  private store: Store<IApplicationState>;
   private history: History;
 
   constructor(props: {}) {
@@ -67,7 +70,7 @@ export class AppMain extends React.Component {
       <main>
         <Switch>
           <Route path="/grid">
-            <DataGrid />
+            <PutGrid />
           </Route>
           <Route>
             <Dashboard />
@@ -96,6 +99,7 @@ export class Dashboard extends React.Component<{}, {}> {
       <LatestPuts />
       <MonthlyWinner />
       <PuttingRecords />
+      <TrendChart />
     </section>;
   }
 }

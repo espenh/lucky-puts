@@ -6,12 +6,13 @@ const initialPutterState: IRoundState = {
     rounds: []
 };
 
-export const roundReducer: Reducer<IRoundState> = (state: IRoundState = initialPutterState, action: RoundAction | any) => {
+export const roundReducer: Reducer<IRoundState> = (state: IRoundState = initialPutterState, actionAsAny: RoundAction | any) => {
+    const action = actionAsAny as RoundAction;
     switch (action.type) {
         case RoundActionsType.addNewRound:
             return {
                 ...state,
-                rounds: state.rounds.concat([action.round])
+                rounds: state.rounds.concat(action.rounds)
             };
         default:
             return state;

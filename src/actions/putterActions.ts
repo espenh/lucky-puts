@@ -4,7 +4,7 @@ import FirebaseProvider from "../firebaseProvider";
 
 export interface IAddPutterAction {
     type: PutterActionsType.addNewPutter;
-    putter: IPutter;
+    putters: IPutter[];
 }
 
 export enum PutterActionsType {

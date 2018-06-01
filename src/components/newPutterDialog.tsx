@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from 'material-ui';
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@material-ui/core';
 
 
 import 'react-dates/lib/css/_datepicker.css';

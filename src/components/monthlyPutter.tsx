@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IApplicationState } from '../contracts/common';
-import { Table, TableBody, TableCell, TableRow } from "material-ui";
+import { Table, TableBody, TableCell, TableRow } from "@material-ui/core";
 
 interface IMontlyPutterPropFields {
     everything: IApplicationState;

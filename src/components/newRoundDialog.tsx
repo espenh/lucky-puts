@@ -1,9 +1,9 @@
 import 'react-dates/initialize';
 import * as moment from "moment";
 import * as React from 'react';
-import { Button, Popover } from 'material-ui';
+import { Button, Popover } from '@material-ui/core';
 import { DayPickerSingleDateController } from 'react-dates';
-import GolfIcon from 'material-ui-icons/GolfCourse';
+import { GolfCourse } from '@material-ui/icons';
 
 import 'react-dates/lib/css/_datepicker.css';
 
@@ -65,7 +65,7 @@ export default class NewRoundDialog extends React.Component<INewPlayerDialog, IN
             color="secondary"
             aria-label="add"
         >
-            <GolfIcon />
+            <GolfCourse />
             Add round
         </Button>
             {

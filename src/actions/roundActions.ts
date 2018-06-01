@@ -4,7 +4,7 @@ import { IRound } from "../contracts/common";
 
 export interface IAddRoundAction {
     type: RoundActionsType.addNewRound;
-    round: IRound;
+    rounds: IRound[];
 }
 
 export enum RoundActionsType {

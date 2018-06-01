@@ -1,3 +1,4 @@
+import { RouterState } from "react-router-redux";
 
 export interface IStringDictionary<T> {
     [key: string]: T;
@@ -8,10 +9,10 @@ export interface INumberDictionary<T> {
 }
 
 export interface IApplicationState {
-    sync: ISyncState;
     putters: IPutterState;
     round: IRoundState;
     score: IScoreState;
+    router: RouterState;
 }
 
 export interface IPutterState {
@@ -24,10 +25,6 @@ export interface IScoreState {
 
 export interface IRoundState {
     rounds: IRound[];
-}
-
-export interface ISyncState {
-    isSyncing: boolean;
 }
 
 export interface IRound {

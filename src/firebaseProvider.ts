@@ -20,6 +20,7 @@ export default class FirebaseProvider {
         const app = FirebaseProvider.getAppInstance();
         if (FirebaseProvider.firestoreInstance === undefined) {
             FirebaseProvider.firestoreInstance = firebase.firestore(app);
+            FirebaseProvider.firestoreInstance.settings({ timestampsInSnapshots: true });
         }
 
         return FirebaseProvider.firestoreInstance;

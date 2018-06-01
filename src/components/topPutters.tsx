@@ -4,7 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { IApplicationState } from "../contracts/common";
 import "./topPuttersStyle.css";
-import { blueGrey } from "material-ui/colors";
+import { blueGrey } from "@material-ui/core/colors";
 
 interface ITopPuttersProps {
     everything: IApplicationState;

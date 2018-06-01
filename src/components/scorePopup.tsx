@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Popover, Button } from 'material-ui';
+import { Popover, Button } from '@material-ui/core';
 import { Score } from '../contracts/common';
 import ScoreCell from './scoreCell';
 

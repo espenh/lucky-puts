@@ -2,10 +2,6 @@ import * as moment from "moment";
 import * as _ from "lodash";
 import * as React from 'react';
 
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import { Button } from 'material-ui';
-import PersonIcon from 'material-ui-icons/Person';
 import { connect, Dispatch } from 'react-redux';
 import { IApplicationState, Score } from '../contracts/common';
 import { addNewPutter } from '../actions/putterActions';
@@ -15,6 +11,10 @@ import NewPutterDialog from "./newPutterDialog";
 import { ScorePopup } from "./scorePopup";
 import NewRoundDialog from "./newRoundDialog";
 import ScoreCell from "./scoreCell";
+import { Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from "@material-ui/core";
+import { Person } from "@material-ui/icons";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 
 interface IScoreTablePropFields {
     everything: IApplicationState;
@@ -116,7 +116,7 @@ class ScoreTableView extends React.Component<ScoreTableProps, IScoreTableState> 
 
         return <Paper className="score-table" style={{ overflow: "auto" }}>
             <Button onClick={this.showNewPutterDialog} color="primary" aria-label="add">
-                <PersonIcon />
+                <Person />
                 Add player
             </Button>
             <NewRoundDialog handleNewRound={this.handleNewRound} illegalDates={days} />
@@ -195,7 +195,7 @@ const mapStateToProps = (state: IApplicationState): IScoreTablePropFields => {
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<IApplicationState>): IScoreTablePropActions => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<IApplicationState, {}, AnyAction>): IScoreTablePropActions => {
     return {
         addPutter: (newPutterName: string) => {
             addNewPutter(newPutterName);
