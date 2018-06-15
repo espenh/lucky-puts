@@ -1,11 +1,11 @@
-import 'react-dates/initialize';
+import { Button, Popover } from '@material-ui/core';
+import { GolfCourse } from '@material-ui/icons';
 import * as moment from "moment";
 import * as React from 'react';
-import { Button, Popover } from '@material-ui/core';
 import { DayPickerSingleDateController } from 'react-dates';
-import { GolfCourse } from '@material-ui/icons';
-
+import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
+
 
 interface INewPlayerDialog {
     handleNewRound: (dateAsUnixMs: number) => void;
@@ -79,7 +79,6 @@ export default class NewRoundDialog extends React.Component<INewPlayerDialog, IN
                     }}
                 >
                     <DayPickerSingleDateController
-                        id={"roundpicker"}
                         date={moment()}
                         onDateChange={this.handleNewDate}
                         focused={this.state.popover.isOpen}
@@ -90,9 +89,4 @@ export default class NewRoundDialog extends React.Component<INewPlayerDialog, IN
             }
         </>;
     }
-}
-
-// Missing types for DayPickerSingleDateController. Fake it here.
-declare module 'react-dates' {
-    export let DayPickerSingleDateController: React.ClassicComponentClass<SingleDatePickerShape>;
 }

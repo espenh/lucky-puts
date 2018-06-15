@@ -19,7 +19,7 @@ import ScoreChart from './components/scoreChart';
 import TopPutters from './components/topPutters';
 import FirebaseProvider from './firebaseProvider';
 import { StoreSyncer } from './storeSyncer';
-import { Tabs, Tab, Paper } from '@material-ui/core';
+import { Tabs, Tab, Paper, CssBaseline } from '@material-ui/core';
 import MonthlyPutter from './components/monthlyPutter';
 import TotalPuts from './components/totalPuts';
 import LatestPuts from './components/latestPuts';
@@ -28,6 +28,7 @@ import PuttingRecords from './components/puttingRecords';
 import PutGrid from './components/putGrid';
 import TrendChart from './components/trendChart';
 import { IApplicationState } from './contracts/common';
+import AdminScreen from './components/adminScreen';
 
 export default class AppContainer extends React.Component {
 
@@ -52,7 +53,11 @@ export default class AppContainer extends React.Component {
     return (
       <Provider store={this.store}>
         <ConnectedRouter history={this.history}>
-          <AppMain />
+
+          <React.Fragment>
+            <CssBaseline />
+            <AppMain />
+          </React.Fragment>
         </ConnectedRouter>
       </Provider>
     );
@@ -69,6 +74,9 @@ export class AppMain extends React.Component {
       </nav>
       <main>
         <Switch>
+        <Route path="/admin">
+            <AdminScreen />
+          </Route>
           <Route path="/grid">
             <PutGrid />
           </Route>

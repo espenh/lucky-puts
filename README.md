@@ -105,12 +105,23 @@ y: total score, grouped by score (distance)
 Monthly winners
 -----------------------------------------------------------------
        April *        |         March          
-Svein  Erlend Marius  |  Svein  Erlend Marius  
- 36      24     12    |   36      24     12    
- ***      !     ##    |   ***      !     ##    
+Svein  Erlend Marius  |  Erlend  Svein Marius  
+ 36      24     12    |   24      12     12    
+ ***      !     ##    |   ###      &     ##    
 
 - Fade 2. and 3. place points. 0.7 and 0.5 opacity perhaps.
 - Highlight winner. Bold? Trophy icon?
+
+Monthly winners (vertical)
+------------------
+APR  |  [Svein]
+     |   36 ***
+------------------
+MAR  |  [Erlend]
+     |   24 ###
+------------------
+
+- Add year subscript under month if first or last month in year and prev/next exists (transition).
 
 Records
 -----------------------------------------------------------------
@@ -122,3 +133,26 @@ Records
 
 - Streak. Try to ignore weekends and red days. Include red day if a score/round exists on that day.
 - Highlight that most puts are in the cup, not just attempts. Cup icon?
+- Support playoff puts (on same day). Highlight on put-bullet?
+- Support multiple scores per day.
+- Support putter photos + circle avatar.
+
+----------
+|        |
+|   1 2  |
+|        |
+|   # #  |
+|        |
+----------
+
+
+----------------------------------------------------------
+| [gradient dark to light vertical]
+| -----------------------------------
+|        L U C K Y   P U T S 
+| --- Statkraft Golf Championship ---
+|
+|---------------------------------------------------------------
+| [white-ish]
+|
+|

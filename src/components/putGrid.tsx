@@ -115,57 +115,38 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
             return scoresBy[key].score;
         };
 
-        const rows = puttersSorted.map((putter, index) => {
-            return {
-                key: index.toString(),
-                putterName: putter.name,
-                putterId: putter.id,
-                scores: dates.map(date => {
-                    return getScoreForPlayer(putter.id, date.valueOf());
-                })
-            };
-        });
-
-        const columns = [
-            {
-                title: "Name",
-                dataIndex: "putterName",
-                key: "putterName"
-            }
-        ];
-
-        let Tablex: any;
-
         return < div className="grid-container" >
             <h3>{title}</h3>
             <Button onClick={this.prevous}>Previous</Button>
             <button onClick={this.next}>Next</button>
             <br />
-            <Table className="put-grid" onMouseOver={this.handleMouseOver}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell component="th">
+            <table className="put-grid" onMouseOver={this.handleMouseOver}>
+                <thead>
+                    <tr>
+                        <th>
                             {/* Putter name */}
-                        </TableCell>
-                        {dates.map(d => {
-                            return <TableCell key={d.valueOf()}>{d.format("DD  ")}</TableCell>;
+                        </th>
+                        {dates.map(date => {
+                            const dateTick = date.valueOf();
+                            const highlight = tickToHighlight === dateTick;
+                            return <th {...{ tick: dateTick }} className={"head-day-cell" + (highlight ? " crosshair" : "")} key={date.valueOf()}>{date.format("DD")}</th>;
                         })}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
+                    </tr>
+                </thead>
+                <tbody>
                     {puttersSorted.map(putter => {
-                        return <TableRow key={putter.id}>
-                            <TableCell component="th" scope="row">{putter.name}</TableCell>
+                        return <tr key={putter.id}>
+                            <th scope="row">{putter.name}</th>
                             {dates.map(date => {
                                 const dateTick = date.valueOf();
                                 const highlight = tickToHighlight === dateTick;
-                                return <TableCell {...{tick: dateTick}} className={highlight ? "crosshair": ""} key={date.valueOf()}>{getScoreForPlayer(putter.id, date.valueOf())}</TableCell>;
+                                return <td {...{ tick: dateTick }} className={highlight ? "crosshair" : ""} key={date.valueOf()}>{getScoreForPlayer(putter.id, date.valueOf())}</td>;
                             })}
-                        </TableRow>;
+                        </tr>;
                     })}
 
-                </TableBody>
-            </Table>
+                </tbody>
+            </table>
         </div >;
     }
 }
