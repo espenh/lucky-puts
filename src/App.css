@@ -199,3 +199,8 @@ overflow: auto;
 .put-grid tr:hover, .put-grid td.crosshair, .put-grid th.crosshair {
   background-color: #eee;
 }
+
+.score-bullet-flow {
+  display: flex;
+  flex-wrap: wrap;
+}

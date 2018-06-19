@@ -10,10 +10,19 @@ import { Button, Table, TableHead, TableRow, TableCell, TableBody } from '@mater
 import ScoreCell from './scoreCell';
 import { ScorePopup } from './scorePopup';
 import ScoreBullet from './scoreBullet';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { setScoreForRoundV2 } from '../actions/scoreActions';
+import { addNewPutter } from '../actions/putterActions';
 
 interface IPutGridPropFields {
     putters: IPutterState;
     scores: IRoundScore[];
+}
+
+interface IPutGridPropActions {
+    addPutter(newPutterName: string): void;
+    setScore(roundDate: number, putterId: string, score: number): void;
 }
 
 interface IPutGridState {
@@ -33,10 +42,12 @@ interface IPutGridState {
     };
 }
 
-class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
+type PutGridProps = IPutGridPropFields & IPutGridPropActions;
+
+class PutGridView extends React.Component<PutGridProps, IPutGridState> {
     public state: IPutGridState;
 
-    constructor(props: IPutGridPropFields) {
+    constructor(props: PutGridProps) {
         super(props);
 
         this.state = {
@@ -130,8 +141,8 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
         });
     }
 
-    public handleSetScore = (roundId: string, putterId: string, score: number | undefined) => {
-        //this.props.setScore(roundId, putterId, score);
+    public handleSetScore = (roundDate: number, putterId: string, score: number | undefined) => {
+        this.props.setScore(roundDate, putterId, score || 0);
         this.handleScorePopoverDeselect();
     }
 
@@ -146,9 +157,8 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
         const tickToHighlight = this.state.mouseOver.date;
 
         const scoresBy = _.groupBy(this.props.scores, score => {
-            const partitionedDate = ScoreSelectors.getDate(score.score.roundDate).startOf("day");
-            const key = [score.putter.id, partitionedDate.valueOf()].join("|");
-            return [key, score.score];
+            const key = [score.putter.id, score.score.roundDate].join("|");
+            return key;
         });
 
         const getScoreForPlayer = (putterId: string, roundTick: number) => {
@@ -174,7 +184,8 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
                         {dates.map(date => {
                             const dateTick = date.valueOf();
                             const highlight = tickToHighlight === dateTick;
-                            return <th {...{ tick: dateTick }} className={"head-day-cell" + (highlight ? " crosshair" : "")} key={date.valueOf()}>{date.format("DD")}</th>;
+                            const roundDate = parseInt(date.format("YYYYMMDD"), 10);
+                            return <th {...{ tick: roundDate }} className={"head-day-cell" + (highlight ? " crosshair" : "")} key={roundDate}>{date.format("DD")}</th>;
                         })}
                     </tr>
                 </thead>
@@ -183,14 +194,13 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
                         return <tr key={putter.id}>
                             <th scope="row">{putter.name}</th>
                             {dates.map(date => {
-                                const dateTick = date.valueOf();
-                                const highlight = tickToHighlight === dateTick;
-                                const scores = getScoreForPlayer(putter.id, date.valueOf());
                                 const roundDate = parseInt(date.format("YYYYMMDD"), 10);
+                                const highlight = tickToHighlight === roundDate;
+                                const scores = getScoreForPlayer(putter.id, roundDate);
                                 const crosshairClass = highlight ? "crosshair" : "";
                                 //return <td {...{ tick: dateTick }} className={} key={date.valueOf()}>{getScoreForPlayer(putter.id, date.valueOf())}</td>;
-                                return <td key={date.valueOf()} {...{ tick: dateTick }} className={crosshairClass}>
-                                    <div onClick={this.createClickHandler(roundDate, putter.id)} className={"score-cell"}>
+                                return <td onClick={this.createClickHandler(roundDate, putter.id)} key={date.valueOf()} {...{ tick: roundDate }} className={crosshairClass}>
+                                    <div className={"score-cell"}>
                                         {scores !== undefined ? <ScoreSum scores={scores} /> : <></>}
                                     </div>
                                 </td>;
@@ -210,9 +220,9 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
                 isOpen={this.state.scorePopover.isOpen}
                 handleCancel={this.handleScorePopoverDeselect}
                 handleSetScore={(score: number | undefined) => {
-                    /*if (this.state.scorePopover.roundId && this.state.scorePopover.putterId) {
-                        this.handleSetScore(this.state.scorePopover.roundId, this.state.scorePopover.putterId, score);
-                    }*/
+                    if (this.state.scorePopover.roundDate && this.state.scorePopover.putterId) {
+                        this.handleSetScore(this.state.scorePopover.roundDate, this.state.scorePopover.putterId, score);
+                    }
                 }}
                 anchorElement={this.state.scorePopover.anchor}
             />
@@ -227,10 +237,24 @@ class ScoreSum extends React.Component<{ scores: IRoundScore[] }, {}> {
         const sum = _.sumBy(this.props.scores, score => score.score.score);
         return <div>
             <span>{sum}</span>
-            {this.props.scores.map((score, index) => <ScoreBullet key={index} score={score.score.score} />)}
+            <div className="score-bullet-flow">
+                {this.props.scores.map((score, index) => <ScoreBullet key={index} score={score.score.score} />)}
+            </div>
         </div>;
     }
 }
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<IApplicationState, {}, AnyAction>): IPutGridPropActions => {
+    // TODO - Use dispatch...
+    return {
+        addPutter: (newPutterName: string) => {
+            addNewPutter(newPutterName);
+        },
+        setScore: (roundDate: number, putterId: string, score: number) => {
+            setScoreForRoundV2(roundDate, putterId, score, moment().valueOf());
+        }
+    };
+};
 
 const mapStateToProps = (state: IApplicationState): IPutGridPropFields => {
     return {
@@ -239,5 +263,5 @@ const mapStateToProps = (state: IApplicationState): IPutGridPropFields => {
     };
 };
 
-const PutGrid = connect(mapStateToProps)(PutGridView);
+const PutGrid = connect(mapStateToProps, mapDispatchToProps)(PutGridView);
 export default PutGrid;
