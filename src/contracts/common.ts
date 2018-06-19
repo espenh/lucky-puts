@@ -21,6 +21,7 @@ export interface IPutterState {
 
 export interface IScoreState {
     scores: IPutterScore[];
+    scoresv2: IPutterScoreV2[];
 }
 
 export interface IRoundState {
@@ -44,12 +45,18 @@ export interface IPutterScore {
     score: Score;
 }
 
+export interface IPutterScoreV2 {
+    putterId: string;
+    registerDateInUnixMs: number;
+    roundDate: number;
+    score: number;
+}
+
 export type Score = number;
 
 export interface IRoundScore {
-    round: IRound;
     putter: IPutter;
-    score: IPutterScore;
+    score: IPutterScoreV2;
 }
 
 export interface IScoreAggregation {

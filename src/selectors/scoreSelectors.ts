@@ -6,16 +6,18 @@ import { Continuous, DateUtils } from "../utils/dateUtils";
 export class ScoreSelectors {
 
     public static getScoresMapped(state: IApplicationState): IRoundScore[] {
-        const rounds = _.keyBy(state.round.rounds, round => round.id);
         const playerById = state.putters.puttersById;
 
-        return state.score.scores.map(score => {
+        return state.score.scoresv2.map(score => {
             return {
                 score: score,
-                putter: playerById[score.putterId],
-                round: rounds[score.roundId]
+                putter: playerById[score.putterId]
             };
         });
+    }
+
+    public static getDate(date: number) {
+        return moment(date, "YYYYMMDD");
     }
 
     public static getStreaks(state: IApplicationState) {
@@ -25,8 +27,8 @@ export class ScoreSelectors {
             // Ignore weekends
             // Ignore red days
 
-            const previousDay = moment(previousScore.round.dateInUnixMsTicks);
-            const currentDay = moment(currentScore.round.dateInUnixMsTicks);
+            const previousDay = this.getDate(previousScore.score.roundDate);
+            const currentDay = this.getDate(currentScore.score.roundDate);
 
             const dayRange = DateUtils.getDatesBetween(previousDay, currentDay);
 
@@ -50,7 +52,7 @@ export class ScoreSelectors {
 
         const cont: { [id: string]: Continuous<IRoundScore> } = {};
 
-        const allNonZeroScoresSorted = _.sortBy(allNonZeroScores, s => s.round.dateInUnixMsTicks, "asc");
+        const allNonZeroScoresSorted = _.sortBy(allNonZeroScores, s => s.score.roundDate, "asc");
         allNonZeroScoresSorted.forEach(s => {
             if (!cont.hasOwnProperty(s.putter.id)) {
                 cont[s.putter.id] = new Continuous(isContinuous);
@@ -65,7 +67,7 @@ export class ScoreSelectors {
                 putter: state.putters.puttersById[putterId],
                 streak: longestChain && {
                     length: longestChain.length,
-                    start: moment(longestChain[0].round.dateInUnixMsTicks),
+                    start: this.getDate(longestChain[0].score.roundDate),
                     scores: longestChain
                 }
             };
@@ -76,7 +78,7 @@ export class ScoreSelectors {
 
     public static getPartitioned(state: IApplicationState, partition: "isoWeek" | "month" | "quarter" | "year") {
         const allNonZeroScores = ScoreSelectors.getScoresMapped(state).filter(score => score.score.score > 0);
-        const scoresByPartition = _.groupBy(allNonZeroScores, s => moment(s.round.dateInUnixMsTicks).startOf(partition).valueOf());
+        const scoresByPartition = _.groupBy(allNonZeroScores, s => this.getDate(s.score.roundDate).startOf(partition).valueOf());
 
         const allPartitions = _.map(scoresByPartition, (scoresForPartition, partitionTickAsString) => {
             const scoresAndPutters = ScoreSelectors.getBestByPlayer(scoresForPartition);

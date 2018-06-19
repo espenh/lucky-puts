@@ -1,7 +1,9 @@
 import * as moment from "moment";
 import * as React from 'react';
+import * as _ from "lodash";
 import { connect } from 'react-redux';
-import { IApplicationState } from '../contracts/common';
+import { IApplicationState, IPutterScoreV2 } from '../contracts/common';
+import { setScoreForRoundV2 } from "../actions/scoreActions";
 
 interface IAdminScreenPropFields {
     state: IApplicationState;
@@ -29,9 +31,33 @@ class AdminScreenView extends React.Component<IAdminScreenPropFields, {}> {
         this.downloadObjectAsJson(stateToBackup, moment().format("YYYYMMDD_HHmmss" + "_luckyputs"));
     }
 
+    private runV2Migration = () => {
+        // We're removing the "rounds" concept.
+        // Rounds provide nothing more than the date, so we put the date on the score.
+        // The upshot is that we can then have multiple scores for a player for the same day.
+        const roundsById = _.keyBy(this.props.state.round.rounds, round => round.id);
+        const scoresv2: IPutterScoreV2[] = this.props.state.score.scores.map((score): IPutterScoreV2 => {
+
+            const matchingRound = roundsById[score.roundId];
+            const matchingRoundDate = moment(matchingRound.dateInUnixMsTicks);
+            const roundDate = parseInt(matchingRoundDate.format("YYYYMMDD"), 10);
+            return {
+                putterId: score.putterId,
+                registerDateInUnixMs: matchingRound.dateInUnixMsTicks,
+                roundDate: roundDate,
+                score: score.score
+            };
+        });
+
+        scoresv2.forEach(score => {
+            setScoreForRoundV2(score.roundDate, score.putterId, score.score, score.registerDateInUnixMs);
+        });
+    }
+
     public render() {
         return <div>
             <button onClick={this.runBackup}>Backup data</button>
+            <button onClick={this.runV2Migration}>Migrate to v2</button>
         </div>;
     }
 }

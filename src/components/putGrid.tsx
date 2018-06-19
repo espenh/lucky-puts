@@ -101,7 +101,7 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
         const tickToHighlight = this.state.mouseOver.date;
 
         const scoresBy: Dictionary<IPutterScore> = _.fromPairs(_.map(this.props.scores, score => {
-            const partitionedDate = moment(score.round.dateInUnixMsTicks).startOf("day");
+            const partitionedDate = ScoreSelectors.getDate(score.score.roundDate).startOf("day");
             const key = [score.putter.id, partitionedDate.valueOf()].join("|");
             return [key, score.score];
         }));

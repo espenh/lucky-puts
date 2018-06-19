@@ -77,7 +77,7 @@ const mapStateToProps = (state: IApplicationState): IPuttingRecordsPropFields =>
         return {
             putter: state.putters.puttersById[putterId],
             count: scores.length,
-            latestScore: _.maxBy(scores, s => s.round.dateInUnixMsTicks)
+            latestScore: _.maxBy(scores, s => s.score.roundDate)
         };
     });
 

@@ -14,7 +14,7 @@ export default class ScoreBulletList extends React.Component<IScoreBulletListPro
     }
 
     public render() {
-        const sortedScores = _.orderBy(this.props.scores, s => s.round.dateInUnixMsTicks, "asc");
+        const sortedScores = _.orderBy(this.props.scores, s => s.score.roundDate, "asc");
         return <div className="score-bullet-list">
             {sortedScores.map((s, index) => {
                 return <ScoreBullet key={index} score={s.score.score} />;
