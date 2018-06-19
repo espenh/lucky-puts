@@ -7,6 +7,9 @@ import { ScoreSelectors } from '../selectors/scoreSelectors';
 import { DateUtils } from "../utils/dateUtils";
 import { Dictionary } from "lodash";
 import { Button, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
+import ScoreCell from './scoreCell';
+import { ScorePopup } from './scorePopup';
+import ScoreBullet from './scoreBullet';
 
 interface IPutGridPropFields {
     putters: IPutterState;
@@ -21,6 +24,12 @@ interface IPutGridState {
     };
     mouseOver: {
         date: number | undefined;
+    };
+    scorePopover: {
+        isOpen: boolean,
+        anchor: HTMLElement | undefined,
+        roundDate?: number,
+        putterId?: string
     };
 }
 
@@ -38,6 +47,12 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
             },
             mouseOver: {
                 date: undefined
+            },
+            scorePopover: {
+                isOpen: false,
+                anchor: undefined,
+                roundDate: undefined,
+                putterId: undefined
             }
         };
     }
@@ -90,6 +105,36 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
         }
     }
 
+    public createClickHandler = (roundDate: number, putterId: string) => {
+        // Wrap the round and putter id in a closure used by the score click handler.
+        return (event: React.MouseEvent<any>) => {
+            this.setState({
+                scorePopover: {
+                    isOpen: true,
+                    anchor: event.currentTarget,
+                    roundDate: roundDate,
+                    putterId: putterId
+                }
+            });
+        };
+    }
+
+    public handleScorePopoverDeselect = () => {
+        this.setState({
+            scorePopover: {
+                isOpen: false,
+                anchor: undefined,
+                roundDate: undefined,
+                putterId: undefined
+            }
+        });
+    }
+
+    public handleSetScore = (roundId: string, putterId: string, score: number | undefined) => {
+        //this.props.setScore(roundId, putterId, score);
+        this.handleScorePopoverDeselect();
+    }
+
     public render() {
         const title = this.state.partition.currentDate.format(this.state.partition.titleFormat);
 
@@ -100,11 +145,11 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
         const dates = DateUtils.getDatesBetween(fromDate, toDate);
         const tickToHighlight = this.state.mouseOver.date;
 
-        const scoresBy: Dictionary<IPutterScore> = _.fromPairs(_.map(this.props.scores, score => {
+        const scoresBy = _.groupBy(this.props.scores, score => {
             const partitionedDate = ScoreSelectors.getDate(score.score.roundDate).startOf("day");
             const key = [score.putter.id, partitionedDate.valueOf()].join("|");
             return [key, score.score];
-        }));
+        });
 
         const getScoreForPlayer = (putterId: string, roundTick: number) => {
             const key = [putterId, roundTick].join("|");
@@ -112,7 +157,7 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
                 return undefined;
             }
 
-            return scoresBy[key].score;
+            return scoresBy[key];
         };
 
         return < div className="grid-container" >
@@ -140,14 +185,50 @@ class PutGridView extends React.Component<IPutGridPropFields, IPutGridState> {
                             {dates.map(date => {
                                 const dateTick = date.valueOf();
                                 const highlight = tickToHighlight === dateTick;
-                                return <td {...{ tick: dateTick }} className={highlight ? "crosshair" : ""} key={date.valueOf()}>{getScoreForPlayer(putter.id, date.valueOf())}</td>;
+                                const scores = getScoreForPlayer(putter.id, date.valueOf());
+                                const roundDate = parseInt(date.format("YYYYMMDD"), 10);
+                                const crosshairClass = highlight ? "crosshair" : "";
+                                //return <td {...{ tick: dateTick }} className={} key={date.valueOf()}>{getScoreForPlayer(putter.id, date.valueOf())}</td>;
+                                return <td key={date.valueOf()} {...{ tick: dateTick }} className={crosshairClass}>
+                                    <div onClick={this.createClickHandler(roundDate, putter.id)} className={"score-cell"}>
+                                        {scores !== undefined ? <ScoreSum scores={scores} /> : <></>}
+                                    </div>
+                                </td>;
+
+                                /*return <ScoreCell
+                                            className={highlight ? "crosshair" : ""}
+                                            key={dateTick}
+                                            onClick={this.createClickHandler(roundDate, putter.id)}
+                                            score={score}
+                                        />;*/
                             })}
                         </tr>;
                     })}
-
                 </tbody>
             </table>
+            <ScorePopup
+                isOpen={this.state.scorePopover.isOpen}
+                handleCancel={this.handleScorePopoverDeselect}
+                handleSetScore={(score: number | undefined) => {
+                    /*if (this.state.scorePopover.roundId && this.state.scorePopover.putterId) {
+                        this.handleSetScore(this.state.scorePopover.roundId, this.state.scorePopover.putterId, score);
+                    }*/
+                }}
+                anchorElement={this.state.scorePopover.anchor}
+            />
         </div >;
+    }
+}
+
+class ScoreSum extends React.Component<{ scores: IRoundScore[] }, {}> {
+
+
+    public render() {
+        const sum = _.sumBy(this.props.scores, score => score.score.score);
+        return <div>
+            <span>{sum}</span>
+            {this.props.scores.map((score, index) => <ScoreBullet key={index} score={score.score.score} />)}
+        </div>;
     }
 }
 

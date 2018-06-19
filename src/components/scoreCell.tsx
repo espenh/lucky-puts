@@ -3,6 +3,7 @@ import { TableCell } from '@material-ui/core';
 import { Score } from '../contracts/common';
 
 interface IScoreCellProps {
+    className?: string;
     onClick(event: React.MouseEvent<any>): void;
     score: Score | undefined;
 }
@@ -37,8 +38,8 @@ export default class ScoreCell extends React.Component<IScoreCellProps, {}> {
     }
 
     public render() {
-        return <TableCell onClick={this.props.onClick} className={"score-cell " + ScoreCell.getClassForScore(this.props.score)}>
+        return <td onClick={this.props.onClick} className={this.props.className + " score-cell " + ScoreCell.getClassForScore(this.props.score)}>
             {this.props.score}
-        </TableCell>;
+        </td>;
     }
 }
