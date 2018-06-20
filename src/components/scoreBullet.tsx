@@ -1,13 +1,12 @@
 import * as React from 'react';
 import * as chroma from "chroma-js";
+import { possiblePutPoints } from '../utils/globals';
 
 interface IScoreBulletPropFields {
     score: number;
 }
 
-const scores = [1, 3, 6, 12, 24];
-
-const colors = chroma.scale(["#fafa6e", "dodgerblue", "purple", "red"]).mode("lch").colors(scores.length);
+const colors = chroma.scale(["#fafa6e", "dodgerblue", "purple", "red"]).mode("lch").colors(possiblePutPoints.length);
 
 export default class ScoreBullet extends React.Component<IScoreBulletPropFields, {}> {
 
@@ -16,7 +15,7 @@ export default class ScoreBullet extends React.Component<IScoreBulletPropFields,
     }
 
     private getClassForScore(score: number) {
-        const scoreIndex = scores.indexOf(score);
+        const scoreIndex = possiblePutPoints.indexOf(score);
         if (scoreIndex < 0) {
             return "gray";
         }

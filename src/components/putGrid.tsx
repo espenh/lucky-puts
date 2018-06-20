@@ -100,7 +100,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         });
     }
 
-    private handleMouseOver = (event: React.MouseEvent<HTMLTableElement>) => {
+    private handleMouseOver = (event: React.MouseEvent<HTMLTableCellElement>) => {
         const target = event.target as HTMLTableCellElement;
         if (!target.parentNode) {
             // Some sort of typeguard.
@@ -185,16 +185,15 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
             <Button onClick={this.prevous}>Previous</Button>
             <button onClick={this.next}>Next</button>
             <br />
-            <table className="put-grid" onMouseOver={this.handleMouseOver}>
+            <table className="put-grid">
                 <thead>
                     <tr>
                         <th>
                             {/* Putter name */}
                         </th>
                         {dates.map(date => {
-                            const dateTick = date.valueOf();
-                            const highlight = tickToHighlight === dateTick;
                             const roundDate = parseInt(date.format("YYYYMMDD"), 10);
+                            const highlight = tickToHighlight === roundDate;
                             return <th {...{ tick: roundDate }} className={"head-day-cell" + (highlight ? " crosshair" : "")} key={roundDate}>{date.format("DD")}</th>;
                         })}
                     </tr>
@@ -209,7 +208,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                                 const scores = getScoreForPlayer(putter.id, roundDate);
                                 const crosshairClass = highlight ? "crosshair" : "";
                                 //return <td {...{ tick: dateTick }} className={} key={date.valueOf()}>{getScoreForPlayer(putter.id, date.valueOf())}</td>;
-                                return <td onClick={this.createClickHandler(roundDate, putter.id)} key={date.valueOf()} {...{ tick: roundDate }} className={crosshairClass}>
+                                return <td onMouseEnter={this.handleMouseOver} onClick={this.createClickHandler(roundDate, putter.id)} key={date.valueOf()} {...{ tick: roundDate }} className={crosshairClass}>
                                     <div className={"score-cell"}>
                                         {scores !== undefined ? <ScoreSum scores={scores} /> : <></>}
                                     </div>
@@ -243,10 +242,9 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                     <div className="grid-score-popup">
                         <span><h3>{DateUtils.getFriendlyRelativeDate(DateUtils.getDate(popoverData.roundDate))}</h3>
                             <p>{popoverPutter && popoverPutter.name}</p></span>
-                        {hasExistingScores && <h4>Existing scores</h4>}
+                        {hasExistingScores && <h4>Existing score</h4>}
                         <div style={{ display: "flex" }}>
                             {existingScoresForPopup.map(score => {
-
                                 return <div key={score.score.id}>
                                     <ScoreBulletWithText score={score.score.score} />
                                     <IconButton aria-label="Delete" onClick={() => this.props.deleteScore(score.score.id)}>
