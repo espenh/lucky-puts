@@ -2,11 +2,12 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import * as moment from 'moment';
-import { IApplicationState, IRoundScore, IPutterState, IPutterScore } from '../contracts/common';
+import { IApplicationState, IRoundScore, IPutterState, IPutterScore, IRound } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import { DateUtils } from "../utils/dateUtils";
 import { Dictionary } from "lodash";
-import { Button, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
+import { Button, Table, TableHead, TableRow, TableCell, TableBody, Popover, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, IconButton } from '@material-ui/core';
+import { Delete } from "@material-ui/icons";
 import ScoreCell from './scoreCell';
 import { ScorePopup } from './scorePopup';
 import ScoreBullet from './scoreBullet';
@@ -14,6 +15,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { setScoreForRoundV2, deleteScore } from '../actions/scoreActions';
 import { addNewPutter } from '../actions/putterActions';
+import ScoreBulletWithText from './scoreBulletWithText';
 
 interface IPutGridPropFields {
     putters: IPutterState;
@@ -23,6 +25,7 @@ interface IPutGridPropFields {
 interface IPutGridPropActions {
     addPutter(newPutterName: string): void;
     setScore(roundDate: number, putterId: string, score: number): void;
+    deleteScore(scoreId: string): void;
 }
 
 interface IPutGridState {
@@ -37,8 +40,10 @@ interface IPutGridState {
     scorePopover: {
         isOpen: boolean,
         anchor: HTMLElement | undefined,
-        roundDate?: number,
-        putterId?: string
+        data?: {
+            roundDate: number,
+            putterId: string
+        }
     };
 }
 
@@ -54,7 +59,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
             partition: {
                 titleFormat: "MMM",
                 partition: "month",
-                currentDate: moment()
+                currentDate: moment().startOf("month")
             },
             mouseOver: {
                 date: undefined
@@ -62,8 +67,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
             scorePopover: {
                 isOpen: false,
                 anchor: undefined,
-                roundDate: undefined,
-                putterId: undefined
+                data: undefined
             }
         };
     }
@@ -123,8 +127,10 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                 scorePopover: {
                     isOpen: true,
                     anchor: event.currentTarget,
-                    roundDate: roundDate,
-                    putterId: putterId
+                    data: {
+                        putterId,
+                        roundDate
+                    }
                 }
             });
         };
@@ -135,8 +141,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
             scorePopover: {
                 isOpen: false,
                 anchor: undefined,
-                roundDate: undefined,
-                putterId: undefined
+                data: undefined
             }
         });
     }
@@ -169,6 +174,11 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
 
             return scoresBy[key];
         };
+
+        const popoverData = this.state.scorePopover.data;
+        const existingScoresForPopup = (popoverData && getScoreForPlayer(popoverData.putterId, popoverData.roundDate)) || [];
+        const popoverPutter = popoverData && this.props.putters.puttersById[popoverData.putterId];
+        const hasExistingScores = existingScoresForPopup.length > 0;
 
         return < div className="grid-container" >
             <h3>{title}</h3>
@@ -216,23 +226,64 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                     })}
                 </tbody>
             </table>
-            <ScorePopup
-                isOpen={this.state.scorePopover.isOpen}
-                handleCancel={this.handleScorePopoverDeselect}
-                handleSetScore={(score: number | undefined) => {
-                    if (this.state.scorePopover.roundDate && this.state.scorePopover.putterId) {
-                        this.handleSetScore(this.state.scorePopover.roundDate, this.state.scorePopover.putterId, score);
-                    }
+            <Popover
+                open={this.state.scorePopover.isOpen}
+                onClose={this.handleScorePopoverDeselect}
+                anchorEl={this.state.scorePopover.anchor}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center'
                 }}
-                anchorElement={this.state.scorePopover.anchor}
-            />
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left'
+                }}
+            >
+                {popoverData !== undefined ? <>
+                    <div className="grid-score-popup">
+                        <span><h3>{DateUtils.getFriendlyRelativeDate(DateUtils.getDate(popoverData.roundDate))}</h3>
+                            <p>{popoverPutter && popoverPutter.name}</p></span>
+                        {hasExistingScores && <h4>Existing scores</h4>}
+                        <div style={{ display: "flex" }}>
+                            {existingScoresForPopup.map(score => {
+
+                                return <div key={score.score.id}>
+                                    <ScoreBulletWithText score={score.score.score} />
+                                    <IconButton aria-label="Delete" onClick={() => this.props.deleteScore(score.score.id)}>
+                                        <Delete />
+                                    </IconButton>
+                                </div>;
+                            })}
+                        </div>
+
+                        {
+                            /* Show score picker for registering new scores */
+                            hasExistingScores && <h4>Add another put</h4>
+                        }
+                        {
+                            [0, 1, 3, 6, 12, 24].map(score => {
+                                return <Button
+                                    key={"score-" + score}
+                                    onClick={() => {
+                                        const { roundDate, putterId } = popoverData;
+                                        if (roundDate && putterId) {
+                                            this.handleSetScore(roundDate, putterId, score);
+                                        }
+                                    }}
+                                    className={ScoreCell.getClassForScore(score)}
+                                ><ScoreBulletWithText score={score} />
+                                </Button>;
+                            })
+                        }
+                    </div></> : <span />}
+
+            </Popover>
         </div >;
     }
+
 }
 
 class ScoreSum extends React.Component<{ scores: IRoundScore[] }, {}> {
-
-
     public render() {
         const sum = _.sumBy(this.props.scores, score => score.score.score);
         return <div>

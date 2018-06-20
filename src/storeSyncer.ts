@@ -4,7 +4,7 @@ import { Store } from "react-redux";
 
 import { IAddPutterAction, PutterActionsType } from "./actions/putterActions";
 import { IAddRoundAction, RoundActionsType } from "./actions/roundActions";
-import { ISetScoreForRound, ScoreActionsType, ISetScoreForRoundV2 } from "./actions/scoreActions";
+import { ISetScoreForRound, ScoreActionsType, ISetScoreForRoundV2, IDeleteScore } from "./actions/scoreActions";
 import { IPutter, IPutterScore, IRound, IPutterScoreV2 } from "./contracts/common";
 
 export class StoreSyncer {
@@ -60,11 +60,10 @@ export class StoreSyncer {
             const removedChanges = _.filter(changes, change => change.type === "removed");
             const deletedScoreIds = _.map(removedChanges, change => change.doc.id);
 
-            console.log("DELETED SCORES: " + deletedScoreIds.join(", "));
-            /*this.store.dispatch<ISetScoreForRoundV2>({
-                type: ScoreActionsType.setScoreForRoundV2,
-                scores: addedScores
-            });*/
+            this.store.dispatch<IDeleteScore>({
+                type: ScoreActionsType.deleteScore,
+                scoresId: deletedScoreIds
+            });
         });
     }
 }

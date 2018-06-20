@@ -16,10 +16,6 @@ export class ScoreSelectors {
         });
     }
 
-    public static getDate(date: number) {
-        return moment(date, "YYYYMMDD");
-    }
-
     public static getStreaks(state: IApplicationState) {
         const allNonZeroScores = ScoreSelectors.getScoresMapped(state).filter(score => score.score.score > 0);
 
@@ -27,8 +23,13 @@ export class ScoreSelectors {
             // Ignore weekends
             // Ignore red days
 
-            const previousDay = this.getDate(previousScore.score.roundDate);
-            const currentDay = this.getDate(currentScore.score.roundDate);
+            const previousDay = DateUtils.getDate(previousScore.score.roundDate);
+            const currentDay = DateUtils.getDate(currentScore.score.roundDate);
+
+            // We support multiple scores per day.
+            if (previousScore.score.roundDate === currentScore.score.roundDate) {
+                return true;
+            }
 
             const dayRange = DateUtils.getDatesBetween(previousDay, currentDay);
 
@@ -67,7 +68,7 @@ export class ScoreSelectors {
                 putter: state.putters.puttersById[putterId],
                 streak: longestChain && {
                     length: longestChain.length,
-                    start: this.getDate(longestChain[0].score.roundDate),
+                    start: DateUtils.getDate(longestChain[0].score.roundDate),
                     scores: longestChain
                 }
             };
@@ -78,7 +79,7 @@ export class ScoreSelectors {
 
     public static getPartitioned(state: IApplicationState, partition: "isoWeek" | "month" | "quarter" | "year") {
         const allNonZeroScores = ScoreSelectors.getScoresMapped(state).filter(score => score.score.score > 0);
-        const scoresByPartition = _.groupBy(allNonZeroScores, s => this.getDate(s.score.roundDate).startOf(partition).valueOf());
+        const scoresByPartition = _.groupBy(allNonZeroScores, s => DateUtils.getDate(s.score.roundDate).startOf(partition).valueOf());
 
         const allPartitions = _.map(scoresByPartition, (scoresForPartition, partitionTickAsString) => {
             const scoresAndPutters = ScoreSelectors.getBestByPlayer(scoresForPartition);

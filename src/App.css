@@ -203,4 +203,21 @@ overflow: auto;
 .score-bullet-flow {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  zoom: 0.7;
+}
+
+.grid-score-popup {
+  padding: 10px;
+}
+
+.score-bullet-with-text {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.score-bullet-with-text span {
+  padding-bottom: 2px;
 }

@@ -16,6 +16,29 @@ export class DateUtils {
 
         return dates;
     }
+
+    public static getDate(date: number) {
+        return moment(date, "YYYYMMDD");
+    }
+
+    public static getFriendlyRelativeDate(date: moment.Moment) {
+        const now = moment().startOf("day");
+        const diffInDays = now.diff(date, "day");
+
+        if (diffInDays === 0) {
+            return "Today";
+        }
+
+        if (diffInDays === -1) {
+            return "Tomorrow";
+        }
+
+        if (diffInDays === 1) {
+            return "Yesterday";
+        }
+
+        return date.format("dddd, Do MMMM YYYY");
+    }
 }
 
 export class Continuous<Thing> {

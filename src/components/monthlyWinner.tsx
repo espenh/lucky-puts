@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import ScoreBulletList from "./scoreBulletList";
+import { DateUtils } from '../utils/dateUtils';
 
 interface IMonthlyWinnerPropFields {
     bestPuttersMonthly: IScoreGrouping[];
@@ -55,7 +56,7 @@ class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, {}> {
 
 const mapStateToProps = (state: IApplicationState): IMonthlyWinnerPropFields => {
     const allNonZeroScores = ScoreSelectors.getScoresMapped(state).filter(score => score.score.score > 0);
-    const scoresByMonth = _.groupBy(allNonZeroScores, score => ScoreSelectors.getDate(score.score.roundDate).startOf("month").valueOf());
+    const scoresByMonth = _.groupBy(allNonZeroScores, score => DateUtils.getDate(score.score.roundDate).startOf("month").valueOf());
     const bestPutterByMonth = _.map(scoresByMonth, (monthlyScores, tickAsString): IScoreGrouping => {
         const monthTick = parseInt(tickAsString, 10);
 

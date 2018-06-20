@@ -35,6 +35,13 @@ export const scoreReducer: Reducer<IScoreState> = (state: IScoreState = initialP
                 ...state,
                 scoresv2: scoresv2WithoutOld.concat(action.scores)
             };
+
+        case ScoreActionsType.deleteScore:
+            const scoresToRemove = new Set(action.scoresId);
+            return {
+                ...state,
+                scoresv2: state.scoresv2.filter(s => !scoresToRemove.has(s.id))
+            };
         default:
             return state;
     }

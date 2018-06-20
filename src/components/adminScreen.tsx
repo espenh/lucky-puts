@@ -36,13 +36,12 @@ class AdminScreenView extends React.Component<IAdminScreenPropFields, {}> {
         // Rounds provide nothing more than the date, so we put the date on the score.
         // The upshot is that we can then have multiple scores for a player for the same day.
         const roundsById = _.keyBy(this.props.state.round.rounds, round => round.id);
-        const scoresv2: IPutterScoreV2[] = this.props.state.score.scores.map((score): IPutterScoreV2 => {
+        const scoresv2 = this.props.state.score.scores.map((score) => {
 
             const matchingRound = roundsById[score.roundId];
             const matchingRoundDate = moment(matchingRound.dateInUnixMsTicks);
             const roundDate = parseInt(matchingRoundDate.format("YYYYMMDD"), 10);
             return {
-                id: uuid(), // AUTOGEN? :*
                 putterId: score.putterId,
                 registerDateInUnixMs: matchingRound.dateInUnixMsTicks,
                 roundDate: roundDate,

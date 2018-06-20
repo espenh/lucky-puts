@@ -1,10 +1,12 @@
 import * as moment from "moment";
+import { v4 } from "uuid";
 import { Score, IPutterScore, IPutterScoreV2 } from "../contracts/common";
 import FirebaseProvider from "../firebaseProvider";
 
 export enum ScoreActionsType {
     setScoreForRound = "set-score-for-round",
-    setScoreForRoundV2 = "set-scorev2-for-round"
+    setScoreForRoundV2 = "set-scorev2-for-round",
+    deleteScore = "delete-score"
 }
 
 export interface ISetScoreForRound {
@@ -17,7 +19,12 @@ export interface ISetScoreForRoundV2 {
     scores: IPutterScoreV2[];
 }
 
-export type ScoreAction = ISetScoreForRound | ISetScoreForRoundV2;
+export interface IDeleteScore {
+    type: ScoreActionsType.deleteScore;
+    scoresId: string[];
+}
+
+export type ScoreAction = ISetScoreForRound | ISetScoreForRoundV2 | IDeleteScore;
 
 export const setScoreForRound = (roundId: string, putterId: string, score: Score) => {
     const newScore: IPutterScore = {
@@ -36,16 +43,12 @@ export const deleteScore = (scoreId: string) => {
 
 export const setScoreForRoundV2 = (roundDate: number, putterId: string, score: number, registerDateInUnixMs: number) => {
     const newScore: IPutterScoreV2 = {
+        id: v4(),
         registerDateInUnixMs: registerDateInUnixMs,
         roundDate: roundDate,
         putterId: putterId,
         score: score
     };
 
-    const id = getScoreKey(newScore.putterId, newScore.registerDateInUnixMs);
-    return FirebaseProvider.getFirestoreInstance().collection("scores_v2").doc(id).set(newScore);
-};
-
-const getScoreKey = (putterId: string, registerDateInUnixMs: number) => {
-    return [putterId, registerDateInUnixMs].join("|");
+    return FirebaseProvider.getFirestoreInstance().collection("scores_v2").doc(newScore.id).set(newScore);
 };
