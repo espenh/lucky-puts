@@ -12,7 +12,9 @@ export class StoreSyncer {
 
         this.fireStore.collection("putters").onSnapshot((snapshot) => {
             const addedChanges = _.filter(snapshot.docChanges(), change => change.type === "added" || change.type === "modified");
-            const addedPutters = _.map(addedChanges, change => change.doc.data() as IPutter);
+            const addedPutters = _.map(addedChanges, change => {
+                return change.doc.data() as IPutter;
+            });
 
             this.store.dispatch<IAddPutterAction>({
                 type: PutterActionsType.addNewPutter,
@@ -41,13 +43,28 @@ export class StoreSyncer {
         });
 
         this.fireStore.collection("scores_v2").onSnapshot((snapshot) => {
-            const addedChanges = _.filter(snapshot.docChanges(), change => change.type === "added" || change.type === "modified");
-            const addedScores = _.map(addedChanges, change => change.doc.data() as IPutterScoreV2);
+            const changes = snapshot.docChanges();
+
+            // Added and modified.
+            const addedChanges = _.filter(changes, change => change.type === "added" || change.type === "modified");
+            const addedScores = _.map(addedChanges, change => {
+                return change.doc.data() as IPutterScoreV2;
+            });
 
             this.store.dispatch<ISetScoreForRoundV2>({
                 type: ScoreActionsType.setScoreForRoundV2,
                 scores: addedScores
             });
+
+            // Removed.
+            const removedChanges = _.filter(changes, change => change.type === "removed");
+            const deletedScoreIds = _.map(removedChanges, change => change.doc.id);
+
+            console.log("DELETED SCORES: " + deletedScoreIds.join(", "));
+            /*this.store.dispatch<ISetScoreForRoundV2>({
+                type: ScoreActionsType.setScoreForRoundV2,
+                scores: addedScores
+            });*/
         });
     }
 }

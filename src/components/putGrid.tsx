@@ -12,7 +12,7 @@ import { ScorePopup } from './scorePopup';
 import ScoreBullet from './scoreBullet';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { setScoreForRoundV2 } from '../actions/scoreActions';
+import { setScoreForRoundV2, deleteScore } from '../actions/scoreActions';
 import { addNewPutter } from '../actions/putterActions';
 
 interface IPutGridPropFields {
@@ -252,6 +252,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IApplicationState, {}, AnyAc
         },
         setScore: (roundDate: number, putterId: string, score: number) => {
             setScoreForRoundV2(roundDate, putterId, score, moment().valueOf());
+        },
+        deleteScore: (scoreId: string) => {
+            deleteScore(scoreId);
         }
     };
 };

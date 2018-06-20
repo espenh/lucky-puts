@@ -46,6 +46,7 @@ export interface IPutterScore {
 }
 
 export interface IPutterScoreV2 {
+    id: string;
     putterId: string;
     registerDateInUnixMs: number;
     roundDate: number;

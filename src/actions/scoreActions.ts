@@ -30,6 +30,10 @@ export const setScoreForRound = (roundId: string, putterId: string, score: Score
     return FirebaseProvider.getFirestoreInstance().collection("scores").doc(id).set(newScore);
 };
 
+export const deleteScore = (scoreId: string) => {
+    return FirebaseProvider.getFirestoreInstance().collection("scores_v2").doc(scoreId).delete();
+};
+
 export const setScoreForRoundV2 = (roundDate: number, putterId: string, score: number, registerDateInUnixMs: number) => {
     const newScore: IPutterScoreV2 = {
         registerDateInUnixMs: registerDateInUnixMs,
@@ -38,6 +42,10 @@ export const setScoreForRoundV2 = (roundDate: number, putterId: string, score: n
         score: score
     };
 
-    const id = [newScore.putterId, newScore.registerDateInUnixMs].join("|");
+    const id = getScoreKey(newScore.putterId, newScore.registerDateInUnixMs);
     return FirebaseProvider.getFirestoreInstance().collection("scores_v2").doc(id).set(newScore);
+};
+
+const getScoreKey = (putterId: string, registerDateInUnixMs: number) => {
+    return [putterId, registerDateInUnixMs].join("|");
 };

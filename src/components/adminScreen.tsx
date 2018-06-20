@@ -42,6 +42,7 @@ class AdminScreenView extends React.Component<IAdminScreenPropFields, {}> {
             const matchingRoundDate = moment(matchingRound.dateInUnixMsTicks);
             const roundDate = parseInt(matchingRoundDate.format("YYYYMMDD"), 10);
             return {
+                id: uuid(), // AUTOGEN? :*
                 putterId: score.putterId,
                 registerDateInUnixMs: matchingRound.dateInUnixMsTicks,
                 roundDate: roundDate,
