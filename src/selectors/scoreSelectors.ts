@@ -34,13 +34,8 @@ export class ScoreSelectors {
             const dayRange = DateUtils.getDatesBetween(previousDay, currentDay);
 
             const candidateDays = dayRange.filter(day => {
-                const isoWeekDay = day.isoWeekday();
-                if (isoWeekDay === 6 /* saturday */ || isoWeekDay === 7 /* sunday */) {
-                    return false;
-                }
 
-                // TODO - Quick 17th of may example. Move red days to a separate module. Note .month is 0-based.
-                if (day.month() === 4 && day.date() === 17) {
+                if (DateUtils.isRedDay(day)) {
                     return false;
                 }
 

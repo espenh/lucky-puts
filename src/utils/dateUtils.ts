@@ -21,6 +21,24 @@ export class DateUtils {
         return moment(date, "YYYYMMDD");
     }
 
+    public static getDateAsNumber(date: moment.Moment) {
+        return parseInt(date.format("YYYYMMDD"), 10);
+    }
+
+    public static isRedDay(day: moment.Moment) {
+        const isoWeekDay = day.isoWeekday();
+        if (isoWeekDay === 6 /* saturday */ || isoWeekDay === 7 /* sunday */) {
+            return true;
+        }
+
+        // TODO - Quick 17th of may example. Move red days to a separate module. Note .month is 0-based.
+        if (day.month() === 4 && day.date() === 17) {
+            return true;
+        }
+
+        return false;
+    }
+
     public static getFriendlyRelativeDate(date: moment.Moment) {
         const now = moment().startOf("day");
         const diffInDays = now.diff(date, "day");

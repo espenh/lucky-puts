@@ -6,7 +6,7 @@ import { IApplicationState, IRoundScore, IPutterState, IPutterScore, IRound } fr
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import { DateUtils } from "../utils/dateUtils";
 import { Dictionary } from "lodash";
-import { Button, Table, TableHead, TableRow, TableCell, TableBody, Popover, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, IconButton } from '@material-ui/core';
+import { Button, Table, TableHead, TableRow, TableCell, TableBody, Popover, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, IconButton, FormControlLabel, Checkbox, Typography } from '@material-ui/core';
 import { Delete } from "@material-ui/icons";
 import ScoreCell from './scoreCell';
 import { ScorePopup } from './scorePopup';
@@ -45,6 +45,7 @@ interface IPutGridState {
             putterId: string
         }
     };
+    showRedDays: boolean;
 }
 
 type PutGridProps = IPutGridPropFields & IPutGridPropActions;
@@ -68,7 +69,8 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                 isOpen: false,
                 anchor: undefined,
                 data: undefined
-            }
+            },
+            showRedDays: false
         };
     }
 
@@ -158,13 +160,26 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         const puttersSorted = _.orderBy(putters, p => p.name, "asc");
         const fromDate = this.state.partition.currentDate;
         const toDate = fromDate.clone().add(1, this.state.partition.partition);
-        const dates = DateUtils.getDatesBetween(fromDate, toDate);
+        let dates = DateUtils.getDatesBetween(fromDate, toDate);
         const tickToHighlight = this.state.mouseOver.date;
 
         const scoresBy = _.groupBy(this.props.scores, score => {
             const key = [score.putter.id, score.score.roundDate].join("|");
             return key;
         });
+
+        if (!this.state.showRedDays) {
+            // Remove red days, except the ones with scores.
+            const datesWithScores = new Set(_.uniq(this.props.scores.map(s => s.score.roundDate)));
+            dates = _.filter(dates, date => {
+                const dateAsNumber = DateUtils.getDateAsNumber(date);
+                if (datesWithScores.has(dateAsNumber)) {
+                    return true;
+                }
+
+                return !DateUtils.isRedDay(date);
+            });
+        }
 
         const getScoreForPlayer = (putterId: string, roundTick: number) => {
             const key = [putterId, roundTick].join("|");
@@ -181,9 +196,23 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         const hasExistingScores = existingScoresForPopup.length > 0;
 
         return < div className="grid-container" >
-            <h3>{title}</h3>
-            <Button onClick={this.prevous}>Previous</Button>
-            <button onClick={this.next}>Next</button>
+            <div>
+                <Typography variant="title">
+                    {title}
+                </Typography>
+                <Button onClick={this.prevous}>Previous</Button>
+                <Button onClick={this.next}>Next</Button>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.showRedDays}
+                            onChange={() => this.setState({ showRedDays: !this.state.showRedDays })}
+                            color="primary"
+                        />
+                    }
+                    label="Show red days"
+                />
+            </div>
             <br />
             <table className="put-grid">
                 <thead>
@@ -193,8 +222,17 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                         </th>
                         {dates.map(date => {
                             const roundDate = parseInt(date.format("YYYYMMDD"), 10);
-                            const highlight = tickToHighlight === roundDate;
-                            return <th {...{ tick: roundDate }} className={"head-day-cell" + (highlight ? " crosshair" : "")} key={roundDate}>{date.format("DD")}</th>;
+                            const classes = ["head-day-cell"];
+
+                            if (DateUtils.isRedDay(date)) {
+                                classes.push("red-day");
+                            }
+
+                            if (tickToHighlight === roundDate) {
+                                classes.push("crosshair");
+                            }
+
+                            return <th {...{ tick: roundDate }} className={classes.join(" ")} key={roundDate}>{date.format("DD")}</th>;
                         })}
                     </tr>
                 </thead>
@@ -242,7 +280,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                     <div className="grid-score-popup">
                         <span><h3>{DateUtils.getFriendlyRelativeDate(DateUtils.getDate(popoverData.roundDate))}</h3>
                             <p>{popoverPutter && popoverPutter.name}</p></span>
-                        {hasExistingScores && <h4>Existing score</h4>}
+                        {hasExistingScores && <h4>Existing puts</h4>}
                         <div style={{ display: "flex" }}>
                             {existingScoresForPopup.map(score => {
                                 return <div key={score.score.id}>

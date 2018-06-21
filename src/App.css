@@ -204,6 +204,10 @@ overflow: auto;
   background-color: #eee;
 }
 
+.put-grid tbody td:hover {
+  outline: 2px solid dodgerblue;
+}
+
 .score-bullet-flow {
   display: flex;
   flex-wrap: wrap;
@@ -234,4 +238,8 @@ overflow: auto;
 .put-grid tbody th {
   text-align: left;
   font-weight: normal;
+}
+
+.put-grid thead th.red-day {
+  color: red;
 }

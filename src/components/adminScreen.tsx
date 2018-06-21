@@ -4,6 +4,7 @@ import * as _ from "lodash";
 import { connect } from 'react-redux';
 import { IApplicationState, IPutterScoreV2 } from '../contracts/common';
 import { setScoreForRoundV2 } from "../actions/scoreActions";
+import { DateUtils } from "../utils/dateUtils";
 
 interface IAdminScreenPropFields {
     state: IApplicationState;
@@ -40,7 +41,7 @@ class AdminScreenView extends React.Component<IAdminScreenPropFields, {}> {
 
             const matchingRound = roundsById[score.roundId];
             const matchingRoundDate = moment(matchingRound.dateInUnixMsTicks);
-            const roundDate = parseInt(matchingRoundDate.format("YYYYMMDD"), 10);
+            const roundDate = DateUtils.getDateAsNumber(matchingRoundDate);
             return {
                 putterId: score.putterId,
                 registerDateInUnixMs: matchingRound.dateInUnixMsTicks,
