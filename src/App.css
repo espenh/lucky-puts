@@ -47,6 +47,7 @@ overflow: auto;
   border-radius: 2px;
   box-shadow: 1px 1px 10px 1px #eee;
   margin: 5px;
+  position: relative;
 }
 
 .widget-padding {
@@ -325,4 +326,18 @@ overflow: auto;
 
 .records-table tr:nth-child(even) {
     background: #eee;
+}
+
+.widget:hover .widget-toolbar {
+  opacity: 1;
+}
+
+.widget-toolbar {
+  background-color: red;
+  opacity: 0;
+  position: absolute;
+  top: 5px;
+  left:5px;
+  margin: 5px;
+  transition: opacity .3s ease-in-out;
 }

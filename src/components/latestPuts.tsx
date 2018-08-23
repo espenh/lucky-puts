@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { IApplicationState, IRoundScore } from '../contracts/common';
 import * as _ from 'lodash';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
-import WidgetHeader from "./widgetHeader";
+import Widget from "./widget";
 import ScoreBullet from "./scoreBullet";
 
 interface ILatestPutsPropFields {
@@ -13,15 +13,23 @@ interface ILatestPutsPropFields {
 class LatestPutsView extends React.Component<ILatestPutsPropFields, {}> {
     public render() {
         // TODO - Format nicely with dates. Use friendly dates (today, yesterday) for dates near in time.
-        return <div className="widget widget-padding latestPuts">
+        /*return <div className="widget widget-padding latestPuts">
             <WidgetHeader title="Latest puts" />
+            
+        </div>;*/
+
+        return <Widget
+            containerClass="latestPuts"
+            title={{ text: "Latest puts" }}
+            toolbar={<button>x</button>}
+        >
             {this.props.last.map(p => {
                 return <div key={p.score.id}>
                     <span>{p.putter.name}</span>
                     <ScoreBullet score={p.score.score} />
                 </div>;
             })}
-        </div>;
+        </Widget>;
     }
 }
 
