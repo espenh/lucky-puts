@@ -15,7 +15,7 @@ interface ITotalPutsPropFields {
 class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
 
     public render() {
-        return <div className="widget totalPuts">
+        return <div className="widget widget-padding totalPuts">
             <div className="label">
                 <WidgetHeader title="Total puts" />
                 <span className="value">{this.props.totalPuts}</span>

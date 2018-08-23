@@ -20,7 +20,7 @@ interface IPuttingRecordsPropFields {
 class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> {
 
     public render() {
-        return <div className="widget records">
+        return <div className="widget widget-padding records">
             <WidgetHeader title="Records" icon={faTrophy} />
             <table className="records-table">
                 <tbody>

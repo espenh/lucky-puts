@@ -6,6 +6,10 @@ import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import ScoreBulletList from "./scoreBulletList";
 import { DateUtils } from '../utils/dateUtils';
+import { Button } from "@material-ui/core";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExpand } from "@fortawesome/free-solid-svg-icons";
 
 interface IMonthlyWinnerPropFields {
     bestPuttersMonthly: IScoreGrouping[];
@@ -20,20 +24,37 @@ interface IScoreGrouping {
     }[];
 }
 
-class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, {}> {
+interface IMonthlyWinnerState {
+    showPodium: boolean;
+}
+
+class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, IMonthlyWinnerState> {
+    public state: IMonthlyWinnerState = {
+        showPodium: false
+    };
+
+    public togglePodium = () => {
+        const currentState = this.state;
+        this.setState({
+            showPodium: !currentState.showPodium
+        });
+    }
+
     public render() {
         const sortedScores = _.orderBy(this.props.bestPuttersMonthly, s => s.tick, "desc");
         const currentMonthTick = moment().startOf("month").valueOf();
 
         return <div className="widget monthlyWinners">
+            <Button onClick={this.togglePodium}><FontAwesomeIcon icon={faExpand} /></Button>
             {sortedScores.map(monthAndPutters => {
                 const scoreMonth = moment(monthAndPutters.tick);
                 const monthName = scoreMonth.format("MMM YY");
                 const isCurrent = currentMonthTick === monthAndPutters.tick;
+                const putterScores = this.state.showPodium ? monthAndPutters.bestPutters : _.take(monthAndPutters.bestPutters, 1);
 
                 return <div className="monthly-winner-month-container" key={monthName}>
                     <div className="header"><span className={isCurrent ? "ongoing" : ""}>{monthName}</span></div>
-                    {monthAndPutters.bestPutters.map((putterAndScore, index) => {
+                    {putterScores.map((putterAndScore, index) => {
                         const classes = {
                             0: "gold",
                             1: "silver",
