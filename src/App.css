@@ -32,12 +32,13 @@ overflow: auto;
 }
 
 .stats-container {
-  height: 100%;
-  width: 100%;
+  height: calc(100% - 12px);
+  width: calc(100% - 12px);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
+  grid-gap: 6px;
   grid-auto-rows: minmax(100px, 1fr);
+  margin: 6px;
 }
 
 .stats-container > .widget {
@@ -46,8 +47,9 @@ overflow: auto;
   border: 1px solid #ddd;
   border-radius: 2px;
   box-shadow: 1px 1px 10px 1px #eee;
-  margin: 5px;
   position: relative;
+  display: grid;
+  grid-template-rows: min-content 1fr;
 }
 
 .widget-padding {
@@ -79,7 +81,7 @@ overflow: auto;
   display: inline-block;
 }
 
-.widget-title {
+.widget-header {
   font-variant: small-caps;
   font-variant-caps: all-petite-caps;
   font-weight: bold;
@@ -100,6 +102,9 @@ overflow: auto;
 .stats-container > .widget.monthlyWinners {
   grid-column: 1 / span 2;
   grid-row: 2;
+}
+
+.stats-container >.widget.monthlyWinners .widget-content {
   display: flex;
   flex-direction: row;
 }
@@ -124,7 +129,7 @@ overflow: auto;
 }
 
 .monthly-winner-month-container:nth-of-type(odd) {
-  background-color: #eee;
+  /*background-color: #eee;*/
 }
 
 .monthly-winner-month-container > .header {
@@ -333,11 +338,30 @@ overflow: auto;
 }
 
 .widget-toolbar {
-  background-color: red;
-  opacity: 0;
+  background-color: #f3f3f3;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0 0 0 2px;
+  opacity: 0; 
   position: absolute;
-  top: 5px;
-  left:5px;
-  margin: 5px;
-  transition: opacity .3s ease-in-out;
+  top: 0px;
+  right: 0px;
+  width: auto;
+  padding: 5px;
+  transition: opacity .2s ease-in-out;
+  text-align: right;
+  z-index: 100000;
+}
+
+.widget-toolbar-zoom {
+  zoom: 0.6;
+}
+
+.widget .widget-header {
+  grid-row: 1;
+}
+
+.widget .widget-content {
+  grid-row: 2;
+  overflow: auto;
 }

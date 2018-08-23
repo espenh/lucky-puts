@@ -16,13 +16,17 @@ export default class Widget extends React.Component<IWidgetHeaderProps, {}> {
         return <div className={"widget widget-padding " + (this.props.containerClass || "")}>
             <WidgetHeader title={this.props.title.text} icon={this.props.title.icon} />
             {this.props.toolbar && <WidgetToolbar>{this.props.toolbar}</WidgetToolbar>}
-            {this.props.children}
+            <div className="widget-content">
+                {this.props.children}
+            </div>
         </div>;
     }
 }
 
 class WidgetToolbar extends React.Component<{}, {}> {
     public render() {
-        return <div className="widget-toolbar">test</div>;
+        return <div className="widget-toolbar">
+            <div className="widget-toolbar-zoom">{this.props.children}</div>
+        </div>;
     }
 }

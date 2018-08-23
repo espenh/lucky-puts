@@ -6,10 +6,11 @@ import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import ScoreBulletList from "./scoreBulletList";
 import { DateUtils } from '../utils/dateUtils';
-import { Button } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpand } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faCompress } from "@fortawesome/free-solid-svg-icons";
+import Widget from './widget';
 
 interface IMonthlyWinnerPropFields {
     bestPuttersMonthly: IScoreGrouping[];
@@ -44,8 +45,13 @@ class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, IMonth
         const sortedScores = _.orderBy(this.props.bestPuttersMonthly, s => s.tick, "desc");
         const currentMonthTick = moment().startOf("month").valueOf();
 
-        return <div className="widget monthlyWinners">
-            <Button onClick={this.togglePodium}><FontAwesomeIcon icon={faExpand} /></Button>
+        return <Widget
+            containerClass="monthlyWinners"
+            title={{ text: "Monthly winners" }}
+            toolbar={<IconButton onClick={this.togglePodium}>
+                <FontAwesomeIcon icon={this.state.showPodium ? faCompress : faExpand} />
+            </IconButton>}
+        >
             {sortedScores.map(monthAndPutters => {
                 const scoreMonth = moment(monthAndPutters.tick);
                 const monthName = scoreMonth.format("MMM YY");
@@ -71,7 +77,7 @@ class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, IMonth
                     })}
                 </div>;
             })}
-        </div>;
+        </Widget>;
     }
 }
 

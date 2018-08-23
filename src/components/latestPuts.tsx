@@ -13,15 +13,9 @@ interface ILatestPutsPropFields {
 class LatestPutsView extends React.Component<ILatestPutsPropFields, {}> {
     public render() {
         // TODO - Format nicely with dates. Use friendly dates (today, yesterday) for dates near in time.
-        /*return <div className="widget widget-padding latestPuts">
-            <WidgetHeader title="Latest puts" />
-            
-        </div>;*/
-
         return <Widget
             containerClass="latestPuts"
             title={{ text: "Latest puts" }}
-            toolbar={<button>x</button>}
         >
             {this.props.last.map(p => {
                 return <div key={p.score.id}>
