@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 import * as _ from "lodash";
-import { Store } from "react-redux";
+import { Store } from "redux";
 
 import { IAddPutterAction, PutterActionsType } from "./actions/putterActions";
 import { IAddRoundAction, RoundActionsType } from "./actions/roundActions";

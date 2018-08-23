@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Provider, Store } from 'react-redux';
+import { Provider } from 'react-redux';
+import { Store } from "redux";
 import { Route, Switch } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { ConfigureStore } from './configureStore';
 import createHistory from 'history/createBrowserHistory';
@@ -53,7 +54,6 @@ export default class AppContainer extends React.Component {
     return (
       <Provider store={this.store}>
         <ConnectedRouter history={this.history}>
-
           <React.Fragment>
             <CssBaseline />
             <AppMain />
@@ -68,13 +68,17 @@ export class AppMain extends React.Component {
   public render() {
     return <div className="app">
       <nav>
-        <h3>Lucky puts</h3>
-        <Link to="/grid">Grid</Link>
-        <Link to="/dash">Dash</Link>
+        <div className="header-and-links"><h3>Lucky puts</h3>
+          <div className="nav-links">
+            <NavLink to="/grid" activeClassName="active"><span>Grid</span></NavLink>
+            <NavLink to="/dash" activeClassName="active"><span>Dash</span></NavLink>
+            <NavLink to="/admin" activeClassName="active"><span>Admin</span></NavLink>
+          </div>
+        </div>
       </nav>
       <main>
         <Switch>
-        <Route path="/admin">
+          <Route path="/admin">
             <AdminScreen />
           </Route>
           <Route path="/grid">
@@ -102,7 +106,6 @@ export class DataGrid extends React.Component<{}, {}> {
 export class Dashboard extends React.Component<{}, {}> {
   public render() {
     return <section className="stats-container">
-      <div className="header">header</div>
       <TotalPuts />
       <LatestPuts />
       <MonthlyWinner />

@@ -11,10 +11,16 @@
 }
 
 .app nav {
-background: lightgray;
 grid-row: 1;
+position: relative;
+backdrop-filter: blur(5px);
 }
 
+.header-and-links {
+  display: flex;
+  align-items: center;
+}
+  
 .app main {
 grid-row: 2;
 overflow: auto;
@@ -39,38 +45,34 @@ overflow: auto;
 .stats-container > .widget {
   border: 1px dashed red;
   overflow: auto;
-}
-
-.stats-container > .header {
-  grid-column: 1 / 2;
-  grid-row: 1;
+  background: white;
 }
 
 .stats-container > .widget.totalPuts {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 1;
 }
 
 .stats-container > .widget.latestPuts {
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 1;
 }
 
 .stats-container > .widget.monthlyWinners {
   grid-column: 1 / 2;
-  grid-row: 3;
+  grid-row: 2;
   display: flex;
   flex-direction: row;
 }
 
 .stats-container > .widget.records {
   grid-column: 2;
-  grid-row: 3;
+  grid-row: 2;
 }
 
 .stats-container > .widget.trend-chart {
   grid-column: 1/2;
-  grid-row: 4;
+  grid-row: 3;
 }
 
 .monthly-winner-month-container {
@@ -242,4 +244,29 @@ overflow: auto;
 
 .put-grid thead th.red-day {
   color: red;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.nav-links span {
+  padding: 10px;
+}
+
+.nav-links .active {
+  font-weight: bold;
+}
+
+.put-point-buttons {
+  display: flex;
+}
+
+.put-point-buttons button:hover > * {
+  zoom: 1.5;
+}
+
+.put-calendar-header {
+  min-width: 80px;
+  display:inline-block;
 }

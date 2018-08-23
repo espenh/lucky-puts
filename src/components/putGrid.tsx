@@ -7,7 +7,7 @@ import { ScoreSelectors } from '../selectors/scoreSelectors';
 import { DateUtils } from "../utils/dateUtils";
 import { Dictionary } from "lodash";
 import { Button, Table, TableHead, TableRow, TableCell, TableBody, Popover, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, IconButton, FormControlLabel, Checkbox, Typography } from '@material-ui/core';
-import { Delete } from "@material-ui/icons";
+import { Delete, ChevronLeft, ChevronRight } from "@material-ui/icons";
 import ScoreCell from './scoreCell';
 import { ScorePopup } from './scorePopup';
 import ScoreBullet from './scoreBullet';
@@ -16,6 +16,7 @@ import { AnyAction } from 'redux';
 import { setScoreForRoundV2, deleteScore } from '../actions/scoreActions';
 import { addNewPutter } from '../actions/putterActions';
 import ScoreBulletWithText from './scoreBulletWithText';
+import { possiblePutPoints } from '../utils/globals';
 
 interface IPutGridPropFields {
     putters: IPutterState;
@@ -88,7 +89,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         });
     }
 
-    private prevous = () => {
+    private previous = () => {
         const previousDate = this.state.partition.currentDate.clone()
             .subtract(1, this.state.partition.partition)
             .startOf(this.state.partition.partition);
@@ -196,29 +197,19 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         const hasExistingScores = existingScoresForPopup.length > 0;
 
         return < div className="grid-container" >
-            <div>
-                <Typography variant="title">
-                    {title}
-                </Typography>
-                <Button onClick={this.prevous}>Previous</Button>
-                <Button onClick={this.next}>Next</Button>
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={this.state.showRedDays}
-                            onChange={() => this.setState({ showRedDays: !this.state.showRedDays })}
-                            color="primary"
-                        />
-                    }
-                    label="Show red days"
-                />
-            </div>
-            <br />
             <table className="put-grid">
                 <thead>
                     <tr>
                         <th>
-                            {/* Putter name */}
+                            <IconButton onClick={this.previous}>
+                                <ChevronLeft />
+                            </IconButton>
+
+                            <span className="put-calendar-header">{title}</span>
+
+                            <IconButton onClick={this.next}>
+                                <ChevronRight />
+                            </IconButton>
                         </th>
                         {dates.map(date => {
                             const roundDate = parseInt(date.format("YYYYMMDD"), 10);
@@ -263,6 +254,18 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                     })}
                 </tbody>
             </table>
+            <div>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.showRedDays}
+                            onChange={() => this.setState({ showRedDays: !this.state.showRedDays })}
+                            color="primary"
+                        />
+                    }
+                    label="Show red days"
+                />
+            </div>
             <Popover
                 open={this.state.scorePopover.isOpen}
                 onClose={this.handleScorePopoverDeselect}
@@ -296,21 +299,25 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                             /* Show score picker for registering new scores */
                             hasExistingScores && <h4>Add another put</h4>
                         }
-                        {
-                            [0, 1, 3, 6, 12, 24].map(score => {
-                                return <Button
-                                    key={"score-" + score}
-                                    onClick={() => {
-                                        const { roundDate, putterId } = popoverData;
-                                        if (roundDate && putterId) {
-                                            this.handleSetScore(roundDate, putterId, score);
-                                        }
-                                    }}
-                                    className={ScoreCell.getClassForScore(score)}
-                                ><ScoreBulletWithText score={score} />
-                                </Button>;
-                            })
-                        }
+
+                        <div className="put-point-buttons">
+                            {
+                                [0].concat(possiblePutPoints).map(score => {
+                                    return <Button
+                                        key={"score-" + score}
+                                        onClick={() => {
+                                            const { roundDate, putterId } = popoverData;
+                                            if (roundDate && putterId) {
+                                                this.handleSetScore(roundDate, putterId, score);
+                                            }
+                                        }}
+                                        className={ScoreCell.getClassForScore(score)}
+                                    ><ScoreBulletWithText score={score} />
+                                    </Button>;
+                                })
+                            }
+                        </div>
+
                     </div></> : <span />}
 
             </Popover>
