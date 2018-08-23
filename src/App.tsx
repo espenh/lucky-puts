@@ -70,8 +70,8 @@ export class AppMain extends React.Component {
       <nav>
         <div className="header-and-links"><h3>Lucky puts</h3>
           <div className="nav-links">
+            <NavLink to="/" activeClassName="active"><span>Dash</span></NavLink>
             <NavLink to="/grid" activeClassName="active"><span>Grid</span></NavLink>
-            <NavLink to="/dash" activeClassName="active"><span>Dash</span></NavLink>
             <NavLink to="/admin" activeClassName="active"><span>Admin</span></NavLink>
           </div>
         </div>

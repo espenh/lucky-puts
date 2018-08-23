@@ -1,13 +1,17 @@
 import * as _ from "lodash";
 import * as React from 'react';
 import * as highcharts from "highcharts";
-import { connect } from 'react-redux';
-import { IApplicationState } from '../contracts/common';
 
 import "./scoreChartStyle.css";
 
+export interface ICompactChartISeries {
+    name: string;
+    data: [number, number][];
+    color?: string;
+}
+
 interface IScoreTablePropFields {
-    seriesData: [number,number];
+    series: ICompactChartISeries[];
 }
 
 export default class CompactLineChart extends React.Component<IScoreTablePropFields, {}> {
@@ -24,11 +28,14 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
                     text: undefined
                 },
                 chart: {
-                    type: "spline"
+                    type: "areaspline"
                 },
                 plotOptions: {
+                    areaspline: {
+                        fillOpacity: 0.1
+                    },
                     series: {
-                        lineWidth: 3,
+                        lineWidth: 1.5,
                         marker: {
                             enabled: false
                         }
@@ -39,20 +46,27 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
                 },
                 xAxis: {
                     type: 'datetime',
-                    minTickInterval: 24 * 3600 * 1000
+                    visible: false
                 },
                 yAxis: {
                     allowDecimals: false,
                     title: {
                         text: undefined
 
-                    }
+                    },
+                    visible: false
                 },
-                series: [
-                    {
-                        data:[]
-                    }
-                ]
+                tooltip: {
+                    shared: true,
+                    xDateFormat: "%b \'%y"
+                },
+                series: this.props.series.map(series => {
+                    return {
+                        id: series.name,
+                        data: series.data,
+                        name: series.name
+                    };
+                })
             });
         }
 
@@ -76,11 +90,10 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
 
         const chartElement = this.chart;
 
-const series = chartElement.series[0];
-
-        
-
-            series.setData(putterAndScore.scores, false);
+        this.props.series.forEach(series => {
+            const chartSeries = chartElement.get(series.name) as highcharts.SeriesObject;
+            chartSeries.setData(series.data, false);
+        });
 
         chartElement.redraw();
         window.dispatchEvent(new Event('resize'));

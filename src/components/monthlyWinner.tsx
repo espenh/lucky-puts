@@ -28,7 +28,7 @@ class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, {}> {
         return <div className="widget monthlyWinners">
             {sortedScores.map(monthAndPutters => {
                 const scoreMonth = moment(monthAndPutters.tick);
-                const monthName = scoreMonth.format("MMM");
+                const monthName = scoreMonth.format("MMM YY");
                 const isCurrent = currentMonthTick === monthAndPutters.tick;
 
                 return <div className="monthly-winner-month-container" key={monthName}>

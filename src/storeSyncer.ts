@@ -31,8 +31,8 @@ export class StoreSyncer {
                 rounds: addedRounds
             });
         });
-
         this.fireStore.collection("scores").onSnapshot((snapshot) => {
+
             const addedChanges = _.filter(snapshot.docChanges(), change => change.type === "added" || change.type === "modified");
             const addedScores = _.map(addedChanges, change => change.doc.data() as IPutterScore);
 

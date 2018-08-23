@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { IApplicationState, IPutter, IScoreAggregation, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import ScoreBulletList from "./scoreBulletList";
+import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import WidgetHeader from "./widgetHeader";
 
 interface IPuttingRecordsPropFields {
     mostPuts?: { count: number, putter: IPutter };
@@ -19,7 +21,8 @@ class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> 
 
     public render() {
         return <div className="widget records">
-            <table>
+            <WidgetHeader title="Records" icon={faTrophy} />
+            <table className="records-table">
                 <tbody>
                     {this.props.mostPuts && <tr>
                         <td>Most puts</td>

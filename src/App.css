@@ -4,7 +4,6 @@
 }
 
 .app {
-  border: 2px solid yellow;
   display: grid;
   grid-template-rows: auto 1fr;
   grid-auto-columns: minmax(100px, auto);
@@ -13,7 +12,6 @@
 .app nav {
 grid-row: 1;
 position: relative;
-backdrop-filter: blur(5px);
 }
 
 .header-and-links {
@@ -37,20 +35,57 @@ overflow: auto;
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(100px, 1fr);
 }
 
 .stats-container > .widget {
-  border: 1px dashed red;
   overflow: auto;
   background: white;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  box-shadow: 1px 1px 10px 1px #eee;
+  margin: 5px;
+  padding: 5px;
 }
 
 .stats-container > .widget.totalPuts {
   grid-column: 1;
   grid-row: 1;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  overflow: hidden;
+}
+
+.stats-container > .widget.totalPuts .label {
+  grid-row: 1;
+  text-align: center;
+}
+
+.widget.totalPuts p.description {
+  font-variant: small-caps;
+  font-variant-caps: all-petite-caps;
+  font-weight: bold;
+  opacity: 0.5;
+}
+
+.widget.totalPuts span.value {
+  font-size: 2em;
+  display: inline-block;
+}
+
+.widget-title {
+  font-variant: small-caps;
+  font-variant-caps: all-petite-caps;
+  font-weight: bold;
+  opacity: 0.5;
+}
+
+.stats-container > .widget.totalPuts .content {
+  grid-row: 2;
+  min-width: 0;
+  min-height: 0;
 }
 
 .stats-container > .widget.latestPuts {
@@ -59,19 +94,20 @@ overflow: auto;
 }
 
 .stats-container > .widget.monthlyWinners {
-  grid-column: 1 / 2;
+  grid-column: 1 / span 2;
   grid-row: 2;
   display: flex;
   flex-direction: row;
 }
 
 .stats-container > .widget.records {
-  grid-column: 2;
-  grid-row: 2;
+  grid-column: 3 / span 2;
+  grid-row: 1 / span 2;
+  grid-auto-rows: min-content 1fr;
 }
 
 .stats-container > .widget.trend-chart {
-  grid-column: 1/2;
+  grid-column: 1 / span 2;
   grid-row: 3;
 }
 
@@ -91,6 +127,10 @@ overflow: auto;
   grid-column: 1/4;
   grid-row: 1;
   text-align: center;
+  font-variant: small-caps;
+  font-variant-caps: all-petite-caps;
+  font-weight: bold;
+  opacity: 0.5;
 }
 
 .monthly-winner-month-container > .header >span.ongoing {
@@ -269,4 +309,17 @@ overflow: auto;
 .put-calendar-header {
   min-width: 80px;
   display:inline-block;
+}
+
+.compact-line-chart {
+  width:100% !important;
+  height:100% !important;
+}
+
+.records-table {
+
+}
+
+.records-table tr:nth-child(even) {
+    background: #eee;
 }
