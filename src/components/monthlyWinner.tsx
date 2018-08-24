@@ -56,7 +56,7 @@ class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, IMonth
                 const scoreMonth = moment(monthAndPutters.tick);
                 const monthName = scoreMonth.format("MMM YY");
                 const isCurrent = currentMonthTick === monthAndPutters.tick;
-                const putterScores = this.state.showPodium ? monthAndPutters.bestPutters : _.take(monthAndPutters.bestPutters, 1);
+                const putterScores = isCurrent || this.state.showPodium ? monthAndPutters.bestPutters : _.take(monthAndPutters.bestPutters, 1);
 
                 return <div className="monthly-winner-month-container" key={monthName}>
                     <div className="header"><span className={isCurrent ? "ongoing" : ""}>{monthName}</span></div>

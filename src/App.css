@@ -123,9 +123,12 @@ overflow: auto;
 .monthly-winner-month-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, auto);
-  border-left: 1px solid #ddd;
+  grid-template-rows: auto 1fr;
   padding: 5px;
+}
+
+.monthly-winner-month-container:not(:first-child):not(:last-child) {
+  border-left: 1px solid #ddd;
 }
 
 .monthly-winner-month-container:nth-of-type(odd) {
@@ -140,6 +143,7 @@ overflow: auto;
   font-variant-caps: all-petite-caps;
   font-weight: bold;
   opacity: 0.5;
+  font-size: 1.2em;
 }
 
 .monthly-winner-month-container > .header >span.ongoing {
@@ -148,12 +152,18 @@ overflow: auto;
 
 .monthly-winner-month-container > .podium {
   padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  /*height: 100%;*/
 }
 
 .monthly-winner-month-container > .podium > .name {
   text-align: center;
   padding: 2px;
   min-width: 3cm;
+  flex-grow: 1;
 }
 
 .monthly-winner-month-container > .podium > .scoreSum {
@@ -359,6 +369,11 @@ overflow: auto;
 
 .widget .widget-header {
   grid-row: 1;
+}
+
+.widget .widget-header p {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .widget .widget-content {
