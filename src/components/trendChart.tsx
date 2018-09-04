@@ -1,18 +1,18 @@
 import * as highcharts from "highcharts";
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IApplicationState } from '../contracts/common';
+import { IApplicationState, IPutter } from '../contracts/common';
 import { ScoreSelectors } from "../selectors/scoreSelectors";
 import * as _ from "lodash";
 
+interface IScoreDistributionForPutter {
+    putter: IPutter;
+    countByPutScore: { [score: number]: number };
+    scoreSum: number;
+}
+
 interface ITrendChartPropFields {
-    scoresPerPartition: {
-        partitionTick: number,
-        scoreDistributionInPartition: {
-            score: number,
-            sum: number
-        }[]
-    }[];
+    putterScores: IScoreDistributionForPutter[];
 }
 
 class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
@@ -72,12 +72,12 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
 
         chartElement.addSeries({
             title: "s1",
-            data: [1,2,3]
+            data: [1, 2, 3]
         });
 
         chartElement.addSeries({
             title: "s2",
-            data: [3,2,1]
+            data: [3, 2, 1]
         });
 
         chartElement.redraw();
@@ -90,25 +90,26 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
 }
 
 const mapStateToProps = (state: IApplicationState): ITrendChartPropFields => {
-    const partitions = ScoreSelectors.getPartitioned(state, "isoWeek");
-    const scoresPerPartition = partitions.map(p => {
-        const scoresByScore = _.groupBy(p.scoresForPartition, s => s.score.score);
-        const scoreDistributionInPartition = _.map(scoresByScore, (scores, scoreAsString) => {
-            const score = parseInt(scoreAsString, 10);
-            return {
-                score: score,
-                sum: _.sum(scores)
-            };
-        });
+    const allPuts = ScoreSelectors.getScoresMapped(state);
+    const putsByPutter = _.groupBy(allPuts, score => score.putter.id);
+    const scoreDistributionForPutters = _.map(putsByPutter, (puts): IScoreDistributionForPutter => {
+        const putsByScore = _.groupBy(puts, put => put.score.score);
+
+        const what = _.reduce(putsByScore, (result, value, key) => {
+            const scoreSum = _.sumBy(value, put => put.score.score);
+            result[key] = scoreSum;
+            return result;
+        }, {} as { [score: number]: number });
 
         return {
-            partitionTick: p.partitionTick,
-            scoreDistributionInPartition: scoreDistributionInPartition
+            putter: puts[0].putter,
+            countByPutScore: what,
+            scoreSum: _.sumBy(puts, put => put.score.score)
         };
     });
 
     return {
-        scoresPerPartition
+        putterScores: scoreDistributionForPutters
     };
 };
 
