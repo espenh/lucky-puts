@@ -17,6 +17,8 @@ import { setScoreForRoundV2, deleteScore } from '../actions/scoreActions';
 import { addNewPutter } from '../actions/putterActions';
 import ScoreBulletWithText from './scoreBulletWithText';
 import { possiblePutPoints } from '../utils/globals';
+import { Person } from "@material-ui/icons";
+import NewPutterDialog from "./newPutterDialog";
 
 interface IPutGridPropFields {
     putters: IPutterState;
@@ -47,6 +49,7 @@ interface IPutGridState {
         }
     };
     showRedDays: boolean;
+    showNewPutterDialog: boolean;
 }
 
 type PutGridProps = IPutGridPropFields & IPutGridPropActions;
@@ -71,7 +74,8 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                 anchor: undefined,
                 data: undefined
             },
-            showRedDays: false
+            showRedDays: false,
+            showNewPutterDialog: false
         };
     }
 
@@ -154,6 +158,23 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         this.handleScorePopoverDeselect();
     }
 
+    public hideNewPutterDialog = () => {
+        this.setState({
+            showNewPutterDialog: false
+        });
+    }
+
+    public showNewPutterDialog = () => {
+        this.setState({
+            showNewPutterDialog: true
+        });
+    }
+
+    public handleNewPutter = (newPutterName: string) => {
+        this.props.addPutter(newPutterName);
+        this.hideNewPutterDialog();
+    }
+
     public render() {
         const title = this.state.partition.currentDate.format(this.state.partition.titleFormat);
 
@@ -197,6 +218,12 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         const hasExistingScores = existingScoresForPopup.length > 0;
 
         return < div className="grid-container" >
+
+            <Button onClick={this.showNewPutterDialog} color="primary" aria-label="add">
+                <Person />
+                Add player
+            </Button>
+
             <table className="put-grid">
                 <thead>
                     <tr>
@@ -236,19 +263,12 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                                 const highlight = tickToHighlight === roundDate;
                                 const scores = getScoreForPlayer(putter.id, roundDate);
                                 const crosshairClass = highlight ? "crosshair" : "";
-                                //return <td {...{ tick: dateTick }} className={} key={date.valueOf()}>{getScoreForPlayer(putter.id, date.valueOf())}</td>;
+
                                 return <td onMouseEnter={this.handleMouseOver} onClick={this.createClickHandler(roundDate, putter.id)} key={date.valueOf()} {...{ tick: roundDate }} className={crosshairClass}>
                                     <div className={"score-cell"}>
                                         {scores !== undefined ? <ScoreSum scores={scores} /> : <></>}
                                     </div>
                                 </td>;
-
-                                /*return <ScoreCell
-                                            className={highlight ? "crosshair" : ""}
-                                            key={dateTick}
-                                            onClick={this.createClickHandler(roundDate, putter.id)}
-                                            score={score}
-                                        />;*/
                             })}
                         </tr>;
                     })}
@@ -321,6 +341,11 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                     </div></> : <span />}
 
             </Popover>
+            <NewPutterDialog
+                isOpen={this.state.showNewPutterDialog}
+                handleCancel={this.hideNewPutterDialog}
+                handleNewPutter={this.handleNewPutter}
+            />
         </div >;
     }
 

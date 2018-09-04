@@ -93,6 +93,11 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
         this.props.series.forEach(series => {
             const chartSeries = chartElement.get(series.name) as highcharts.SeriesObject;
             chartSeries.setData(series.data, false);
+
+            // Show marker for the last point.
+            chartSeries.data.forEach((p, i) => {
+                p.update({ marker: { enabled: i === chartSeries.data.length - 1 } }, false);
+            });
         });
 
         chartElement.redraw();
