@@ -1,9 +1,10 @@
 import * as highcharts from "highcharts";
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IApplicationState, IPutter } from '../contracts/common';
+import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from "../selectors/scoreSelectors";
 import * as _ from "lodash";
+import { DateUtils } from "../utils/dateUtils";
 
 interface IScoreDistributionForPutter {
     putter: IPutter;
@@ -11,8 +12,15 @@ interface IScoreDistributionForPutter {
     scoreSum: number;
 }
 
+interface IScoresForRound {
+    roundDate: number;
+    puts: IRoundScore[];
+}
+
+
 interface ITrendChartPropFields {
-    putterScores: IScoreDistributionForPutter[];
+    //putterScores: IScoreDistributionForPutter[];
+    roundScores: IScoresForRound[];
 }
 
 class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
@@ -41,7 +49,10 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
                     type: "column",
                     zoomType: "x"
                 },
-                series: []
+                series: [],
+                xAxis: {
+                    type: "categories"
+                }
             });
         }
 
@@ -64,7 +75,21 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
         }
 
         const chartElement = this.chart;
-        chartElement.update({
+        const roundsSorted = _.sortBy(this.props.roundScores, round => round.roundDate);
+        roundsSorted.forEach(round => {
+            const data = round.puts.map(put => {
+                return {
+                    x: put.putter.name,
+                    y: put.score.score
+                };
+            });
+
+            chartElement.addSeries({
+                name: round.roundDate.toString(),
+                data: data as any
+            }, false);
+        });
+        /*chartElement.update({
             xAxis: {
                 categories: ["t1", "t2", "t3"]
             }
@@ -78,7 +103,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
         chartElement.addSeries({
             title: "s2",
             data: [3, 2, 1]
-        });
+        });*/
 
         chartElement.redraw();
         window.dispatchEvent(new Event('resize'));
@@ -91,7 +116,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
 
 const mapStateToProps = (state: IApplicationState): ITrendChartPropFields => {
     const allPuts = ScoreSelectors.getScoresMapped(state);
-    const putsByPutter = _.groupBy(allPuts, score => score.putter.id);
+    /*const putsByPutter = _.groupBy(allPuts, score => score.putter.id);
     const scoreDistributionForPutters = _.map(putsByPutter, (puts): IScoreDistributionForPutter => {
         const putsByScore = _.groupBy(puts, put => put.score.score);
 
@@ -106,10 +131,22 @@ const mapStateToProps = (state: IApplicationState): ITrendChartPropFields => {
             countByPutScore: what,
             scoreSum: _.sumBy(puts, put => put.score.score)
         };
+    });*/
+
+    // TODO - Filter for range. const putsToInclude = 
+    const putsByDate = _.groupBy(allPuts, put => put.score.roundDate);
+    const roundStats = _.map(putsByDate, (puts, dateAsString): IScoresForRound => {
+        const roundDate = parseInt(dateAsString, 10);
+        return {
+            roundDate,
+            puts
+        };
     });
 
+
+
     return {
-        putterScores: scoreDistributionForPutters
+        roundScores: roundStats
     };
 };
 
