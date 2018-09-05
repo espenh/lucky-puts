@@ -1,14 +1,11 @@
-import * as moment from "moment";
 import * as _ from "lodash";
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IApplicationState } from '../contracts/common';
-import CompactLineChart, { ICompactChartISeries } from './compactLineChart';
-import { DateUtils } from "../utils/dateUtils";
 
+import { IApplicationState } from '../contracts/common';
+import { DateUtils } from "../utils/dateUtils";
+import CompactLineChart, { ICompactChartISeries } from './compactLineChart';
 import Widget from './widget';
-import WidgetHeader from "./widgetHeader";
-import * as Highcharts from "highcharts";
 
 interface ITotalPutsPropFields {
     totalPuts: number;
@@ -18,7 +15,6 @@ interface ITotalPutsPropFields {
 class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
 
     public render() {
-        const x = ["hei", "hå", "party"];
         return <Widget
             containerClass="totalPuts"
             title={{ text: "Total puts" }}
@@ -28,13 +24,6 @@ class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
             })}
             <CompactLineChart series={this.props.series} />
         </Widget>;
-        /*return <div className="widget ">
-            <div className="label">
-                <WidgetHeader title="Total puts" />
-                <span className="value">{this.props.totalPuts}</span>
-            </div>
-            
-        </div>;*/
     }
 }
 
@@ -46,7 +35,6 @@ const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
     });
 
     const numberOfScoresPerDay = _.sortBy(_.map(putsByWeek, (puts, key) => {
-        const x: [number, number] = [parseInt(key, 10), puts.length];
         return {
             monthTick: parseInt(key, 10),
             puts: puts.length,

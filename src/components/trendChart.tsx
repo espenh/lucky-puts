@@ -1,10 +1,11 @@
 import * as highcharts from "highcharts";
+import * as _ from "lodash";
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from "../selectors/scoreSelectors";
-import * as _ from "lodash";
-import { DateUtils } from "../utils/dateUtils";
+import { getPointColorOrDefault } from "../utils/globals";
+import Widget from './widget';
 
 interface IScoreDistributionForPutter {
     putter: IPutter;
@@ -35,23 +36,37 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
                     enabled: false
                 },
                 title: {
-                    text: "test"
+                    text: undefined
+                },
+                legend: {
+                    enabled: false
                 },
                 plotOptions: {
                     column: {
                         stacking: 'normal',
                         dataLabels: {
-                            enabled: true
-                        }
+                            enabled: false
+                        },
+                        borderWidth: 1,
+                        groupPadding: 0
                     }
                 },
                 chart: {
                     type: "column",
-                    zoomType: "x"
+                    zoomType: "xy"
                 },
                 series: [],
                 xAxis: {
-                    type: "categories"
+                    type: "category"
+                },
+                yAxis: {
+                    //min: 0,
+                    title: {
+                        text: "Score"
+                    }/*,
+                    stackLabels: {
+                        enabled: true
+                    }*/
                 }
             });
         }
@@ -74,64 +89,76 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
             return;
         }
 
+        console.log("syncChartWithProps");
+
         const chartElement = this.chart;
-        const roundsSorted = _.sortBy(this.props.roundScores, round => round.roundDate);
-        roundsSorted.forEach(round => {
-            const data = round.puts.map(put => {
+        chartElement.series = [];
+
+        const roundsSorted = _.sortBy(this.props.roundScores, round => -round.roundDate);
+        roundsSorted.forEach((round, index) => {
+            const sortedPuts = _.sortBy(round.puts, put => put.score.roundDate);
+            const data = sortedPuts.map((put): Highcharts.DataPoint => {
                 return {
-                    x: put.putter.name,
-                    y: put.score.score
+                    id: put.score.id,
+                    name: put.putter.name,
+                    y: put.score.score,
+                    color: getPointColorOrDefault(put.score.score)
                 };
             });
 
             chartElement.addSeries({
                 name: round.roundDate.toString(),
-                data: data as any
+                data: data as any,
+                index: index
             }, false);
         });
-        /*chartElement.update({
-            xAxis: {
-                categories: ["t1", "t2", "t3"]
-            }
-        });
-
-        chartElement.addSeries({
-            title: "s1",
-            data: [1, 2, 3]
-        });
-
-        chartElement.addSeries({
-            title: "s2",
-            data: [3, 2, 1]
-        });*/
 
         chartElement.redraw();
         window.dispatchEvent(new Event('resize'));
     }
 
+    private validate = () => {
+        if (this.chart) {
+            const series = this.chart.series;
+            console.log("party");
+        }
+    }
+
     public render() {
-        return <div className="widget trend-chart" ref={(element) => this.container = element || undefined} />;
+        return <Widget
+            containerClass="trend-chart"
+            title={{ text: "Score distribution" }}
+            toolbar={<><button
+                onClick={() => {
+                    if (this.chart) {
+                        this.chart.redraw();
+                    }
+                }}
+            >RD
+            </button>
+            <button
+                onClick={() => {
+                    if (this.chart) {
+                        this.chart.reflow();
+                    }
+                }}
+            >RF
+            </button>
+            <button
+                onClick={() => {
+                    this.validate();
+                }}
+            >VAL
+            </button>
+            </>}
+        >
+            <div style={{ width: "100%", height: "100%" }} ref={(element) => this.container = element || undefined} />
+        </Widget>;
     }
 }
 
 const mapStateToProps = (state: IApplicationState): ITrendChartPropFields => {
-    const allPuts = ScoreSelectors.getScoresMapped(state);
-    /*const putsByPutter = _.groupBy(allPuts, score => score.putter.id);
-    const scoreDistributionForPutters = _.map(putsByPutter, (puts): IScoreDistributionForPutter => {
-        const putsByScore = _.groupBy(puts, put => put.score.score);
-
-        const what = _.reduce(putsByScore, (result, value, key) => {
-            const scoreSum = _.sumBy(value, put => put.score.score);
-            result[key] = scoreSum;
-            return result;
-        }, {} as { [score: number]: number });
-
-        return {
-            putter: puts[0].putter,
-            countByPutScore: what,
-            scoreSum: _.sumBy(puts, put => put.score.score)
-        };
-    });*/
+    const allPuts = ScoreSelectors.getScoresMapped(state).filter(put => put.score.score > 0);
 
     // TODO - Filter for range. const putsToInclude = 
     const putsByDate = _.groupBy(allPuts, put => put.score.roundDate);
@@ -142,8 +169,6 @@ const mapStateToProps = (state: IApplicationState): ITrendChartPropFields => {
             puts
         };
     });
-
-
 
     return {
         roundScores: roundStats

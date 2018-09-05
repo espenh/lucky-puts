@@ -42,7 +42,7 @@ overflow: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 6px;
-  grid-auto-rows: minmax(100px, 1fr);
+  grid-template-rows: 1fr 0.5fr 1fr;
   margin: 10px;
 }
 
