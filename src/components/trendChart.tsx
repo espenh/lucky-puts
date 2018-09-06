@@ -8,6 +8,7 @@ import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from "../selectors/scoreSelectors";
 import { getPointColorOrDefault } from "../utils/globals";
 import Widget from './widget';
+import { DateUtils } from "../utils/dateUtils";
 
 interface IScoreDistributionForPutter {
     putter: IPutter;
@@ -73,7 +74,8 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
                     stackLabels: {
                         enabled: true,
                         style: {
-                            opacity: 0.4
+                            opacity: 0.4,
+                            fontSize: "0.6em"
                         }
                     },
                     visible: true,
@@ -120,7 +122,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
             });
 
             chartElement.addSeries({
-                name: round.roundDate.toString(),
+                name: DateUtils.getDate(round.roundDate).format("LL"),
                 data: data as any,
                 index: index
             }, false);

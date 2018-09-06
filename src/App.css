@@ -12,12 +12,30 @@
 .app nav {
     grid-row: 1;
     position: relative;
+    
+    background-color: #191B1F;
+    background: linear-gradient(318deg, #16bab8, #084441);
+background-size: 400% 400%;
+
+animation: AnimationName 14s ease infinite;
+}
+
+.app-icon {
+    display: inline-block;
+    margin-right: 5px;
+    padding-top: 2px;
 }
 
 .header-and-links {
-    display: flex;
-    align-items: center;
-    margin: 0 10px;
+    margin: 0;
+    display: grid;
+    grid-auto-columns: auto 1fr;
+}
+
+.header-and-links .header {
+    color: #fff;
+    padding: 0 15px;
+    grid-column: 1;
 }
 
 .header-and-links h3 {
@@ -30,6 +48,7 @@
     overflow: auto;
     display: flex;
     justify-content: center;
+    margin: 10px;
 }
 
 .grid-container {
@@ -40,8 +59,10 @@
 }
 
 .stats-container {
-    height: calc(100% - 12px);
-    width: calc(100% - 12px);
+    /*height: calc(100% - 12px);
+    width: calc(100% - 12px);*/
+    height: 100%;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 6px;
@@ -53,7 +74,7 @@
     background: white;
     border: 1px solid #ddd;
     border-radius: 2px;
-    box-shadow: 1px 1px 10px 1px #eee;
+    box-shadow: 1px 1px 10px 1px #e6e6e6;
     position: relative;
     display: grid;
     grid-template-rows: min-content 1fr;
@@ -94,6 +115,7 @@
     font-weight: bold;
     opacity: 0.5;
     margin: 8px;
+    font-size: 0.8em;
 }
 
 .stats-container>.widget.totalPuts .content {
@@ -164,7 +186,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    /*height: 100%;*/
+    font-size: 0.9em;
 }
 
 .monthly-winner-month-container>.podium>.name {
@@ -222,7 +244,7 @@
 }
 
 .put-grid thead {
-    border-bottom: 2px solid dodgerblue;
+    border-bottom: 2px solid #16BAB8;
 }
 
 /*
@@ -277,7 +299,7 @@
 }
 
 .put-grid tbody td:hover {
-    outline: 2px solid dodgerblue;
+    outline: 2px solid #16BAB8;
 }
 
 .score-bullet-flow {
@@ -318,7 +340,11 @@
 
 .nav-links {
     display: flex;
-    margin-left: 20px;
+    grid-column: 2;
+    align-items: center;
+    font-size: 0.8em;
+    justify-content: flex-end;
+    background: linear-gradient(270deg, hsla(179, 79%, 10%, 1), #44080800);
 }
 
 .nav-links a {
@@ -326,7 +352,7 @@
     text-transform: uppercase;
     text-decoration-line: none !important;
     font-size: 0.8em;
-    color: #333;
+    color: #AEAEB0;
 }
 
 .nav-links span {
@@ -336,7 +362,7 @@
 .nav-links a.active,
 .nav-links a:hover {
     font-weight: bold;
-    color: #000;
+    color: #fff;
 }
 
 .text {
@@ -413,4 +439,20 @@
 .widget .widget-content {
     grid-row: 2;
     overflow: auto;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
 }

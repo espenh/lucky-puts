@@ -41,7 +41,7 @@ const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
 
     const countSeries: ICompactChartISeries = {
         name: "Puts",
-        color: "#4B7EFE",
+        color: "#16bab8",
         data: numberOfScoresPerDay.map(scores => {
             return [scores.monthTick, scores.puts] as [number, number];
         }),
