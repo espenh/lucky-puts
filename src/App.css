@@ -1,226 +1,230 @@
 .app {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .app {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  grid-auto-columns: minmax(100px, auto);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-auto-columns: minmax(100px, auto);
 }
 
 .app nav {
-grid-row: 1;
-position: relative;
+    grid-row: 1;
+    position: relative;
 }
 
 .header-and-links {
-  display: flex;
-  align-items: center;
-  margin: 0 10px;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
 }
 
 .header-and-links h3 {
-  text-transform: uppercase;
+    text-transform: uppercase;
+    margin: 10px 0;
 }
-  
+
 .app main {
-grid-row: 2;
-overflow: auto;
+    grid-row: 2;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .grid-container {
-  /*display: flex;
+    /*display: flex;
   position: relative;
   height: 100%;
   width: 100%;*/
 }
 
 .stats-container {
-  height: calc(100% - 12px);
-  width: calc(100% - 12px);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 6px;
-  grid-template-rows: 1fr 0.5fr 1fr;
-  margin: 10px;
+    height: calc(100% - 12px);
+    width: calc(100% - 12px);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 6px;
+    grid-template-rows: 1fr minmax(190px, 200px) 1fr;
 }
 
-.stats-container > .widget {
-  overflow: auto;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  box-shadow: 1px 1px 10px 1px #eee;
-  position: relative;
-  display: grid;
-  grid-template-rows: min-content 1fr;
+.stats-container>.widget {
+    overflow: auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    box-shadow: 1px 1px 10px 1px #eee;
+    position: relative;
+    display: grid;
+    grid-template-rows: min-content 1fr;
 }
 
 .widget-padding {
-  padding: 5px;
+    padding: 8px;
 }
 
-.stats-container > .widget.totalPuts {
-  grid-column: 1;
-  grid-row: 1;
-  display: grid;
-  grid-template-rows: min-content 1fr;
-  overflow: hidden;
+.stats-container>.widget.totalPuts {
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    overflow: hidden;
 }
 
-.stats-container > .widget.totalPuts .label {
-  grid-row: 1;
-  text-align: center;
+.stats-container>.widget.totalPuts .label {
+    grid-row: 1;
+    text-align: center;
 }
 
 .widget.totalPuts p.description {
-  font-variant: small-caps;
-  font-variant-caps: all-petite-caps;
-  font-weight: bold;
-  opacity: 0.5;
+    font-variant: small-caps;
+    font-variant-caps: all-petite-caps;
+    font-weight: bold;
+    opacity: 0.5;
 }
 
 .widget.totalPuts span.value {
-  font-size: 2em;
-  display: inline-block;
+    font-size: 2em;
+    display: inline-block;
 }
 
 .widget-header {
-  font-variant: small-caps;
-  font-variant-caps: all-petite-caps;
-  font-weight: bold;
-  opacity: 0.5;
+    font-variant: small-caps;
+    font-variant-caps: all-petite-caps;
+    font-weight: bold;
+    opacity: 0.5;
+    margin: 8px;
 }
 
-.stats-container > .widget.totalPuts .content {
-  grid-row: 2;
-  min-width: 0;
-  min-height: 0;
+.stats-container>.widget.totalPuts .content {
+    grid-row: 2;
+    min-width: 0;
+    min-height: 0;
 }
 
-.stats-container > .widget.latestPuts {
-  grid-column: 2;
-  grid-row: 1;
+.stats-container>.widget.latestPuts {
+    grid-column: 2;
+    grid-row: 1;
 }
 
-.stats-container > .widget.monthlyWinners {
-  grid-column: 1 / span 2;
-  grid-row: 2;
+.stats-container>.widget.monthlyWinners {
+    grid-column: 1 / span 2;
+    grid-row: 2;
 }
 
-.stats-container >.widget.monthlyWinners .widget-content {
-  display: flex;
-  flex-direction: row;
+.stats-container>.widget.monthlyWinners .widget-content {
+    display: flex;
+    flex-direction: row;
 }
 
-.stats-container > .widget.records {
-  grid-column: 3 / span 2;
-  grid-row: 1 / span 2;
-  grid-auto-rows: min-content 1fr;
+.stats-container>.widget.records {
+    grid-column: 3 / span 2;
+    grid-row: 1 / span 2;
+    grid-auto-rows: min-content 1fr;
 }
 
-.stats-container > .widget.trend-chart {
-  grid-column: 1 / span 2;
-  grid-row: 3;
+.stats-container>.widget.trend-chart {
+    grid-column: 1 / span 2;
+    grid-row: 3;
 }
 
 .monthly-winner-month-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto 1fr;
-  padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr;
+    padding: 5px;
 }
 
 .monthly-winner-month-container:not(:first-child):not(:last-child) {
-  border-left: 1px solid #ddd;
+    border-left: 1px solid #ddd;
 }
 
 .monthly-winner-month-container:nth-of-type(odd) {
-  /*background-color: #eee;*/
+    /*background-color: #eee;*/
 }
 
-.monthly-winner-month-container > .header {
-  grid-column: 1/4;
-  grid-row: 1;
-  text-align: center;
-  font-variant: small-caps;
-  font-variant-caps: all-petite-caps;
-  font-weight: bold;
-  opacity: 0.5;
-  font-size: 1.2em;
+.monthly-winner-month-container>.header {
+    grid-column: 1/4;
+    grid-row: 1;
+    text-align: center;
+    font-variant: small-caps;
+    font-variant-caps: all-petite-caps;
+    font-weight: bold;
+    opacity: 0.5;
+    font-size: 1.2em;
 }
 
-.monthly-winner-month-container > .header >span.ongoing {
-  font-style: italic;
+.monthly-winner-month-container>.header>span.ongoing {
+    font-style: italic;
 }
 
-.monthly-winner-month-container > .podium {
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  /*height: 100%;*/
+.monthly-winner-month-container>.podium {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    /*height: 100%;*/
 }
 
-.monthly-winner-month-container > .podium > .name {
-  text-align: center;
-  padding: 2px;
-  min-width: 3cm;
-  flex-grow: 1;
+.monthly-winner-month-container>.podium>.name {
+    text-align: center;
+    padding: 2px;
+    min-width: 3cm;
+    flex-grow: 1;
 }
 
-.monthly-winner-month-container > .podium > .scoreSum {
-  text-align: center;
-  font-size: 1.2em;
-  padding: 2px;
+.monthly-winner-month-container>.podium>.scoreSum {
+    text-align: center;
+    font-size: 1.2em;
+    padding: 2px;
 }
 
-.monthly-winner-month-container > .podium > .scores {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+.monthly-winner-month-container>.podium>.scores {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.monthly-winner-month-container > .podium.gold {
-  grid-column: 1;
-  grid-row: 2;
-  font-weight: bold;
+.monthly-winner-month-container>.podium.gold {
+    grid-column: 1;
+    grid-row: 2;
+    font-weight: bold;
 }
 
-.monthly-winner-month-container > .podium.silver {
-  grid-column: 2;
-  grid-row: 2;
-  opacity: 0.7;
+.monthly-winner-month-container>.podium.silver {
+    grid-column: 2;
+    grid-row: 2;
+    opacity: 0.7;
 }
 
-.monthly-winner-month-container > .podium.bronze {
-  grid-column: 3;
-  grid-row: 2;
-  opacity: 0.5;
+.monthly-winner-month-container>.podium.bronze {
+    grid-column: 3;
+    grid-row: 2;
+    opacity: 0.5;
 }
 
 .scoreBullet {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: gray;
-  margin: 1px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: gray;
+    margin: 1px;
 }
 
 .score-bullet-list {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .put-grid {
-  border-collapse: collapse;
+    border-collapse: collapse;
 }
 
 .put-grid thead {
-  border-bottom: 2px solid dodgerblue;
+    border-bottom: 2px solid dodgerblue;
 }
+
 /*
 .put-grid>thead>tr>th {
   margin: 10px auto;
@@ -250,172 +254,163 @@ overflow: auto;
 */
 
 .put-grid thead th.head-day-cell {
-  width: 35px;
-  min-width: 35px;
+    width: 35px;
+    min-width: 35px;
 }
 
 .put-grid tbody tr {
-  height: 35px;
+    height: 35px;
 }
 
 .put-grid tbody td {
-  text-align: center;
+    text-align: center;
 }
 
-.put-grid > tbody > tr > * {
-  border: 1px solid #ddd;
+.put-grid>tbody>tr>* {
+    border: 1px solid #ddd;
 }
 
-.put-grid tr:hover, .put-grid td.crosshair, .put-grid th.crosshair {
-  background-color: #eee;
+.put-grid tr:hover,
+.put-grid td.crosshair,
+.put-grid th.crosshair {
+    background-color: #eee;
 }
 
 .put-grid tbody td:hover {
-  outline: 2px solid dodgerblue;
+    outline: 2px solid dodgerblue;
 }
 
 .score-bullet-flow {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  zoom: 0.7;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    zoom: 0.7;
 }
 
 .grid-score-popup {
-  padding: 0 10px;
-  padding-bottom: 10px;
+    padding: 0 10px;
+    padding-bottom: 10px;
 }
 
 .score-bullet-with-text {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .score-bullet-with-text span {
-  padding-bottom: 2px;
+    padding-bottom: 2px;
 }
 
 .score-cell {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .put-grid tbody th {
-  text-align: left;
-  font-weight: normal;
+    text-align: left;
+    font-weight: normal;
 }
 
 .put-grid thead th.red-day {
-  color: red;
+    color: red;
 }
 
 .nav-links {
-  display: flex;
+    display: flex;
+    margin-left: 20px;
 }
 
 .nav-links a {
-  position: relative;
-  text-transform: uppercase;
-  text-decoration-line: none !important;
+    position: relative;
+    text-transform: uppercase;
+    text-decoration-line: none !important;
+    font-size: 0.8em;
+    color: #333;
 }
 
 .nav-links span {
-  padding: 10px;
+    padding: 10px;
 }
 
-.nav-links .active {
-  /*font-weight: bold;*/
+.nav-links a.active,
+.nav-links a:hover {
+    font-weight: bold;
+    color: #000;
 }
-
-.nav-links .active::before {
-  transform: translateX(-50%);
-  border-radius: 100%;
-  position: absolute;
-  background: #99999988;
-  top: 100%;
-  height: 7px;
-  content: '';
-  width: 7px;
-  left: 50%;
-}
-
 
 .text {
-  display: inline-block;
-  vertical-align: top;
-  padding-bottom: 10px;
-  position: relative;
-  text-align: center;
-  padding: 20px 10px;
-  line-height: 24px;
-  min-width: 100px;
-  background: #333;
-  font-size: 20px;
-  color: #fff;
+    display: inline-block;
+    vertical-align: top;
+    padding-bottom: 10px;
+    position: relative;
+    text-align: center;
+    padding: 20px 10px;
+    line-height: 24px;
+    min-width: 100px;
+    background: #333;
+    font-size: 20px;
+    color: #fff;
 }
-
 
 .put-point-buttons {
-  display: flex;
+    display: flex;
 }
 
-.put-point-buttons button:hover > * {
-  zoom: 1.5;
+.put-point-buttons button:hover>* {
+    zoom: 1.5;
 }
 
 .put-calendar-header {
-  min-width: 80px;
-  display:inline-block;
+    min-width: 80px;
+    display: inline-block;
 }
 
 .compact-line-chart {
-  width:100% !important;
-  height:100% !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
-.records-table {
-
-}
+.records-table {}
 
 .records-table tr:nth-child(even) {
     background: #eee;
 }
 
 .widget:hover .widget-toolbar {
-  opacity: 1;
+    opacity: 1;
 }
 
 .widget-toolbar {
-  background-color: #f3f3f3;
-  border-left: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-radius: 0 0 0 2px;
-  opacity: 0; 
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: auto;
-  padding: 5px;
-  transition: opacity .2s ease-in-out;
-  text-align: right;
-  z-index: 100000;
+    background-color: #f3f3f3;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0 0 0 2px;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: auto;
+    padding: 5px;
+    transition: opacity .2s ease-in-out;
+    text-align: right;
+    z-index: 100000;
 }
 
 .widget-toolbar-zoom {
-  zoom: 0.6;
+    zoom: 0.6;
 }
 
 .widget .widget-header {
-  grid-row: 1;
+    grid-row: 1;
 }
 
 .widget .widget-header p {
-  margin-top: 5px;
-  margin-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .widget .widget-content {
-  grid-row: 2;
-  overflow: auto;
+    grid-row: 2;
+    overflow: auto;
 }

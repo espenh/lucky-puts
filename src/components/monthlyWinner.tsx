@@ -1,16 +1,17 @@
+import { faCompress, faExpand } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconButton } from "@material-ui/core";
 import * as _ from 'lodash';
 import * as moment from "moment";
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
-import ScoreBulletList from "./scoreBulletList";
 import { DateUtils } from '../utils/dateUtils';
-import { Button, IconButton } from "@material-ui/core";
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpand, faCompress } from "@fortawesome/free-solid-svg-icons";
+import ScoreBulletList from "./scoreBulletList";
 import Widget from './widget';
+
 
 interface IMonthlyWinnerPropFields {
     bestPuttersMonthly: IScoreGrouping[];

@@ -1,12 +1,12 @@
+import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import * as _ from 'lodash';
 import * as moment from "moment";
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IApplicationState, IPutter, IScoreAggregation, IRoundScore } from '../contracts/common';
+import { IApplicationState, IPutter, IRoundScore, IScoreAggregation } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import ScoreBulletList from "./scoreBulletList";
-import { faTrophy } from "@fortawesome/free-solid-svg-icons";
-import WidgetHeader from "./widgetHeader";
+import Widget from './widget';
 
 interface IPuttingRecordsPropFields {
     mostPuts?: { count: number, putter: IPutter };
@@ -20,8 +20,10 @@ interface IPuttingRecordsPropFields {
 class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> {
 
     public render() {
-        return <div className="widget widget-padding records">
-            <WidgetHeader title="Records" icon={faTrophy} />
+        return <Widget
+            containerClass="records"
+            title={{ text: "Records", icon: faTrophy }}
+        >
             <table className="records-table">
                 <tbody>
                     {this.props.mostPuts && <tr>
@@ -68,7 +70,7 @@ class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> 
                     </tr>}
                 </tbody>
             </table>
-        </div>;
+        </Widget>;
     }
 }
 

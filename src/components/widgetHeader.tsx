@@ -9,10 +9,10 @@ interface IWidgetHeaderProps {
 export default class WidgetHeader extends React.Component<IWidgetHeaderProps, {}> {
     public render() {
         return <div className="widget-header">
-            <p>
+            <span>
                 {this.props.icon && <FontAwesomeIcon icon={this.props.icon} />}
                 <span style={{ marginLeft: this.props.icon ? "5px" : undefined }}>{this.props.title}</span>
-            </p>
+            </span>
         </div>;
     }
 }

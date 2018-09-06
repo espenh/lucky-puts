@@ -17,11 +17,8 @@ class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
     public render() {
         return <Widget
             containerClass="totalPuts"
-            title={{ text: "Total puts" }}
+            title={{ text: "Trend" }}
         >
-            {this.props.series.map((y, i) => {
-                return <span key={y.name} style={{ color: y.color }}>{y.name}</span>;
-            })}
             <CompactLineChart series={this.props.series} />
         </Widget>;
     }
@@ -44,15 +41,16 @@ const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
 
     const countSeries: ICompactChartISeries = {
         name: "Puts",
-        color: "#f00",
+        color: "#4B7EFE",
         data: numberOfScoresPerDay.map(scores => {
             return [scores.monthTick, scores.puts] as [number, number];
-        })
+        }),
+        type: "column"
     };
 
     const scoreSeries: ICompactChartISeries = {
         name: "Sum score",
-        color: "#0f0",
+        color: "#FEC400",
         data: numberOfScoresPerDay.map(scores => {
             return [scores.monthTick, scores.scoreSum] as [number, number];
         })
@@ -60,7 +58,7 @@ const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
 
     const averageSeries: ICompactChartISeries = {
         name: "Average score",
-        color: "#00f",
+        color: "#FE7F2D",
         data: numberOfScoresPerDay.map(scores => {
             return [scores.monthTick, _.round(scores.scoreSum / scores.puts, 1)] as [number, number];
         })

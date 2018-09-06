@@ -9,14 +9,15 @@ interface IWidgetHeaderProps {
         icon?: any; // TODO
     };
     toolbar?: React.ReactNode;
+    noContentPad?: boolean;
 }
 
 export default class Widget extends React.Component<IWidgetHeaderProps, {}> {
     public render() {
-        return <div className={"widget widget-padding " + (this.props.containerClass || "")}>
+        return <div className={"widget " + (this.props.containerClass || "")}>
             <WidgetHeader title={this.props.title.text} icon={this.props.title.icon} />
             {this.props.toolbar && <WidgetToolbar>{this.props.toolbar}</WidgetToolbar>}
-            <div className="widget-content">
+            <div className={"widget-content " + (this.props.noContentPad ? "" : "widget-padding")}>
                 {this.props.children}
             </div>
         </div>;

@@ -7,7 +7,8 @@ import "./scoreChartStyle.css";
 export interface ICompactChartISeries {
     name: string;
     data: [number, number][];
-    color?: string;
+    color: string;
+    type?: string;
 }
 
 interface IScoreTablePropFields {
@@ -42,11 +43,19 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
                     }
                 },
                 legend: {
-                    enabled: false
+                    enabled: true,
+                    floating: true,
+                    verticalAlign: "top",
+                    align: "right",
+                    itemStyle: {
+                        fontWeight: "normal",
+                        fontFamily: "'Roboto', sans-serif",
+                        fontSize: "0.9em"
+                    }
                 },
                 xAxis: {
                     type: 'datetime',
-                    visible: false
+                    visible: true
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -54,7 +63,7 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
                         text: undefined
 
                     },
-                    visible: false
+                    visible: true
                 },
                 tooltip: {
                     shared: true,
@@ -64,7 +73,9 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
                     return {
                         id: series.name,
                         data: series.data,
-                        name: series.name
+                        name: series.name,
+                        type: series.type,
+                        color: series.color
                     };
                 })
             });
@@ -95,9 +106,11 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
             chartSeries.setData(series.data, false);
 
             // Show marker for the last point.
-            chartSeries.data.forEach((p, i) => {
-                p.update({ marker: { enabled: i === chartSeries.data.length - 1 } }, false);
-            });
+            if (chartSeries.type !== "column") {
+                chartSeries.data.forEach((p, i) => {
+                    p.update({ marker: { enabled: i === chartSeries.data.length - 1 } }, false);
+                });
+            }
         });
 
         chartElement.redraw();

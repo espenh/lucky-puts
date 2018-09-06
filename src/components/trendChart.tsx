@@ -2,6 +2,8 @@ import * as highcharts from "highcharts";
 import * as _ from "lodash";
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Select, MenuItem, FormControl } from "@material-ui/core";
+
 import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from "../selectors/scoreSelectors";
 import { getPointColorOrDefault } from "../utils/globals";
@@ -28,6 +30,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
 
     private container?: HTMLDivElement;
     private chart?: highcharts.ChartObject;
+    private widgetRef: HTMLFormElement | null;
 
     public componentDidMount() {
         if (this.container) {
@@ -48,7 +51,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
                             enabled: false
                         },
                         borderWidth: 1,
-                        groupPadding: 0
+                        groupPadding: 0.1
                     }
                 },
                 chart: {
@@ -60,13 +63,21 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
                     type: "category"
                 },
                 yAxis: {
-                    //min: 0,
+                    min: 0,
                     title: {
-                        text: "Score"
-                    }/*,
+                        text: undefined
+                    },
+                    labels: {
+                        enabled: false
+                    },
                     stackLabels: {
-                        enabled: true
-                    }*/
+                        enabled: true,
+                        style: {
+                            opacity: 0.4
+                        }
+                    },
+                    visible: true,
+                    reversedStacks: false
                 }
             });
         }
@@ -89,12 +100,14 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
             return;
         }
 
-        console.log("syncChartWithProps");
-
+        // TODO - Ideally this should incrementally change the chart, adding/removing/updating series as the data change.
+        // That would give Highcharts the chance to smoothly update the chart instead of resetting the layout completely.
         const chartElement = this.chart;
-        chartElement.series = [];
+        while (chartElement.series.length > 0) {
+            chartElement.series[0].remove(false);
+        }
 
-        const roundsSorted = _.sortBy(this.props.roundScores, round => -round.roundDate);
+        const roundsSorted = _.sortBy(this.props.roundScores, round => round.roundDate);
         roundsSorted.forEach((round, index) => {
             const sortedPuts = _.sortBy(round.puts, put => put.score.roundDate);
             const data = sortedPuts.map((put): Highcharts.DataPoint => {
@@ -124,32 +137,41 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
         }
     }
 
+    private handleFilterChange = () => {
+
+    }
+
     public render() {
         return <Widget
             containerClass="trend-chart"
             title={{ text: "Score distribution" }}
-            toolbar={<><button
-                onClick={() => {
-                    if (this.chart) {
-                        this.chart.redraw();
-                    }
-                }}
-            >RD
-            </button>
-            <button
-                onClick={() => {
-                    if (this.chart) {
-                        this.chart.reflow();
-                    }
-                }}
-            >RF
-            </button>
-            <button
-                onClick={() => {
-                    this.validate();
-                }}
-            >VAL
-            </button>
+            toolbar={<>
+                <form ref={(w => this.widgetRef = w)}>
+                    <FormControl>
+                        <Select
+                            value={"allTime"}
+                            onChange={this.handleFilterChange}
+                            inputProps={{
+                                name: 'age',
+                                id: 'age-simple',
+                            }}
+                            MenuProps={{
+                                getContentAnchorEl: (element) => this.widgetRef || element,
+                                anchorOrigin: {
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }
+                            }}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={"latestMonth"}>Month</MenuItem>
+                            <MenuItem value={"latestYear"}>Year</MenuItem>
+                            <MenuItem value={"allTime"}>All time</MenuItem>
+                        </Select>
+                    </FormControl>
+                </form>
             </>}
         >
             <div style={{ width: "100%", height: "100%" }} ref={(element) => this.container = element || undefined} />
