@@ -231,6 +231,17 @@
     border-radius: 50%;
     background-color: gray;
     margin: 1px;
+    color: #ffffff;
+}
+
+.scoreBullet.large {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font-size: 0.7em;
 }
 
 .score-bullet-list {
@@ -454,4 +465,40 @@
     0%{background-position:0% 50%}
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
+}
+
+.latest-put-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.latest-put-item {
+    display: grid;
+    grid-template-rows: min-content min-content;
+    grid-template-columns: min-content 1fr;
+}
+
+.latest-put-item:not(:first-child):not(:last-child) {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.latest-put-item .putter {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.latest-put-item .date {
+    grid-row: 2;
+    grid-column: 2;
+    font-variant: small-caps;
+    font-variant-caps: all-petite-caps;
+    font-size: 0.9em;
+    opacity: 0.5;
+}
+
+.latest-put-item .score {
+    grid-row: 1 / span 2;
+    grid-column: 1;
+    padding: 5px;
 }
