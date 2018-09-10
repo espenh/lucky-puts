@@ -14,10 +14,9 @@
     position: relative;
     
     background-color: #191B1F;
-    background: linear-gradient(318deg, #16bab8, #084441);
-background-size: 400% 400%;
-
-animation: AnimationName 14s ease infinite;
+    background: linear-gradient(318deg, #7f332c, #045d56);
+    background-size: 400% 400%;
+    animation: AnimationName 20s ease infinite;
 }
 
 .app-icon {
@@ -344,7 +343,7 @@ animation: AnimationName 14s ease infinite;
     align-items: center;
     font-size: 0.8em;
     justify-content: flex-end;
-    background: linear-gradient(270deg, hsla(179, 79%, 10%, 1), #44080800);
+    background: linear-gradient(90deg, #ffffff00 65%, #333333);
 }
 
 .nav-links a {

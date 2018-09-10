@@ -41,7 +41,7 @@ const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
 
     const countSeries: ICompactChartISeries = {
         name: "Puts",
-        color: "#16bab8",
+        color: "#1eb980",
         data: numberOfScoresPerDay.map(scores => {
             return [scores.monthTick, scores.puts] as [number, number];
         }),
@@ -58,7 +58,7 @@ const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
 
     const averageSeries: ICompactChartISeries = {
         name: "Average score",
-        color: "#FE7F2D",
+        color: "#ff6858",
         data: numberOfScoresPerDay.map(scores => {
             return [scores.monthTick, _.round(scores.scoreSum / scores.puts, 1)] as [number, number];
         })
