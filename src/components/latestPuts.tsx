@@ -54,7 +54,7 @@ class LatestPutsView extends React.Component<ILatestPutsPropFields, {}> {
 
 const mapStateToProps = (state: IApplicationState): ILatestPutsPropFields => {
     const stuff = ScoreSelectors.getScoresMapped(state);
-    const sorted = _.orderBy(stuff, s => s.score.roundDate, "desc");
+    const sorted = _.orderBy(stuff, s => [s.score.roundDate, s.score.registerDateInUnixMs], "desc");
     const last = _.take(sorted, 5);
 
     return {

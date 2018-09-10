@@ -180,7 +180,7 @@
 }
 
 .monthly-winner-month-container>.podium {
-    padding: 5px;
+    padding: 2px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -241,7 +241,11 @@
     justify-content: center;
     align-content: center;
     align-items: center;
+}
+
+.scoreBullet.large span {
     font-size: 0.7em;
+    margin-top: 1px;
 }
 
 .score-bullet-list {
@@ -413,6 +417,23 @@
     background: #eee;
 }
 
+.records-table tr {
+    margin: 5px;
+}
+
+.records-table tr th {
+    text-align: left;
+    font-variant-caps: all-small-caps;
+}
+
+.records-table td.value {
+    text-align: right;
+}
+
+.records-table td.when {
+    font-variant-caps: all-small-caps;
+}
+
 .widget:hover .widget-toolbar {
     opacity: 1;
 }
@@ -479,8 +500,8 @@
 }
 
 .latest-put-item:not(:first-child):not(:last-child) {
-    margin-top: 3px;
-    margin-bottom: 3px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .latest-put-item .putter {
@@ -501,4 +522,6 @@
     grid-row: 1 / span 2;
     grid-column: 1;
     padding: 5px;
+    padding-right: 8px;
+    font-weight: bold;
 }

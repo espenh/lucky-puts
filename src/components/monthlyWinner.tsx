@@ -92,8 +92,7 @@ const mapStateToProps = (state: IApplicationState): IMonthlyWinnerPropFields => 
         const scoresAndPutters = ScoreSelectors.getBestByPlayer(monthlyScores);
 
         // Sort by score. If equal, take whoever has the longest put.
-        // TODO - What if multiple putters have the longest put. Sort by count?
-        const bestPutters = _.take(_.orderBy(scoresAndPutters, [s => s.scoreSum, s => s.highestScore], "desc"), 3);
+        const bestPutters = _.take(_.orderBy(scoresAndPutters, [s => s.scoreSum, s => s.highestScore, s=>s.scores.length], "desc"), 3);
 
         return {
             tick: monthTick,

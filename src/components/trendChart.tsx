@@ -147,34 +147,34 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
         return <Widget
             containerClass="trend-chart"
             title={{ text: "Score distribution" }}
-            toolbar={<>
-                <form ref={(w => this.widgetRef = w)}>
-                    <FormControl>
-                        <Select
-                            value={"allTime"}
-                            onChange={this.handleFilterChange}
-                            inputProps={{
-                                name: 'age',
-                                id: 'age-simple',
-                            }}
-                            MenuProps={{
-                                getContentAnchorEl: (element) => this.widgetRef || element,
-                                anchorOrigin: {
-                                    vertical: "top",
-                                    horizontal: "right",
-                                }
-                            }}
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={"latestMonth"}>Month</MenuItem>
-                            <MenuItem value={"latestYear"}>Year</MenuItem>
-                            <MenuItem value={"allTime"}>All time</MenuItem>
-                        </Select>
-                    </FormControl>
-                </form>
-            </>}
+            toolbar={<div>
+                <Select
+                    value={20}
+
+                    inputProps={{
+                        name: "age",
+                        id: "age-simple"
+                    }}
+                    MenuProps={{
+                        anchorOrigin: {
+                            vertical: "bottom",
+                            horizontal: "left"
+                        },
+                        transformOrigin: {
+                            vertical: "top",
+                            horizontal: "left"
+                        },
+                        getContentAnchorEl: null
+                    }}
+                >
+                    <MenuItem value="">
+                        <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+            </div>}
         >
             <div style={{ width: "100%", height: "100%" }} ref={(element) => this.container = element || undefined} />
         </Widget>;
