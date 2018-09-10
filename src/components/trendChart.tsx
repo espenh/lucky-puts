@@ -51,7 +51,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
                         dataLabels: {
                             enabled: false
                         },
-                        borderWidth: 1,
+                        borderWidth: 0.1,
                         groupPadding: 0.1
                     }
                 },
