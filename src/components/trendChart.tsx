@@ -66,7 +66,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
                         enabled: true,
                         style: {
                             opacity: 0.4,
-                            fontSize: "0.6em"
+                            fontSize: "0.75em"
                         }
                     },
                     visible: true,
@@ -127,7 +127,6 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
         return <Widget
             containerClass="trend-chart"
             title={{ text: "Score distribution" }}
-            toolbar={<></>/* Filter here. Current month, last 6 months, last year etc. */}
         >
             <div style={{ width: "100%", height: "100%" }} ref={(element) => this.container = element || undefined} />
         </Widget>;
