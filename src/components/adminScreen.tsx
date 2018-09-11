@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { IApplicationState, IPutterScoreV2 } from '../contracts/common';
 import { setScoreForRoundV2 } from "../actions/scoreActions";
 import { DateUtils } from "../utils/dateUtils";
+import { Button } from "@material-ui/core";
 
 interface IAdminScreenPropFields {
     state: IApplicationState;
@@ -57,8 +58,8 @@ class AdminScreenView extends React.Component<IAdminScreenPropFields, {}> {
 
     public render() {
         return <div>
-            <button onClick={this.runBackup}>Backup data</button>
-            <button onClick={this.runV2Migration}>Migrate to v2</button>
+            <Button onClick={this.runBackup}>Backup data</Button>
+            {/*<Button onClick={this.runV2Migration}>Migrate to v2</Button>*/}
         </div>;
     }
 }
