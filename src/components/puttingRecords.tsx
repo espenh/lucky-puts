@@ -38,7 +38,7 @@ class PuttingRecordsView extends React.Component<IPuttingRecordsPropFields, {}> 
                     return <div className="records-item" key={index}>
                         <div className="what">{record.what}</div>
                         <div className="value">{record.value}</div>
-                        <div className="who">{record.who}</div>
+                        <div className="who">{record.who.name}</div>
                         <div className="when">{record.when}</div>
                         <div className="how">{record.how && <ScoreBulletList scores={record.how} />}</div>
                     </div>;

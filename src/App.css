@@ -12,7 +12,6 @@
 .app nav {
     grid-row: 1;
     position: relative;
-    
     background-color: #191B1F;
     background: linear-gradient(318deg, #7f332c, #045d56);
     background-size: 400% 400%;
@@ -51,10 +50,8 @@
 }
 
 .grid-container {
-    /*display: flex;
-  position: relative;
-  height: 100%;
-  width: 100%;*/
+    height: 100%;
+    width: 100%;
 }
 
 .stats-container {
@@ -246,7 +243,6 @@
 
 .scoreBullet.large span {
     font-size: 0.7em;
-    margin-top: 1px;
 }
 
 .score-bullet-list {
@@ -262,33 +258,13 @@
     border-bottom: 2px solid #16BAB8;
 }
 
-/*
-.put-grid>thead>tr>th {
-  margin: 10px auto;
-  border-collapse: collapse;
-  border: 1px solid #eee;
-  border-bottom: 2px solid #00cccc;
+.put-grid th .month {
+    min-width: 100px;
 }
 
-
-.put-grid th, .put-grid td {
-    color: #999;
-    border: 1px solid #eee;
-    padding: 3px 8px;
-    border-collapse: collapse;
-  }
-
-  .put-grid th {
-    background: #00cccc;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 0.9em;
-  }
-
-  .put-grid tr:not(:hover) {
-    opacity: 0.7;
-  }
-*/
+.put-grid th.today {
+    background-color: lightyellow;
+}
 
 .put-grid thead th.head-day-cell {
     width: 35px;
@@ -474,19 +450,39 @@
 }
 
 @-webkit-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }
+
 @-moz-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }
-@keyframes AnimationName { 
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+
+@keyframes AnimationName {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }
 
 .latest-put-list {
@@ -525,4 +521,57 @@
     padding: 5px;
     padding-right: 8px;
     font-weight: bold;
+}
+
+.records-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.records-item {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    grid-template-rows: max-content max-content max-content;
+    margin: 4px;
+    grid-gap: 2px;
+}
+
+.records-item .what {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+    font-variant-caps: all-small-caps;
+}
+
+.records-item .value {
+    grid-column: 1;
+    grid-row: 2;
+    color: #045d56;
+    font-size: 1.5em;
+    font-weight: bold;
+    min-width: 60px;
+    text-align: right;
+}
+
+.records-item .who {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    align-self: center;
+    margin-left: 2px;
+}
+
+.records-item .when {
+    grid-column: 3;
+    grid-row: 2;
+    display: flex;
+    align-self: center;
+    margin-left: 4px;
+    font-variant-caps: all-small-caps;
+    opacity: 0.5;
+}
+
+.records-item .how {
+    grid-column: 2 / span 2;
+    grid-row: 3;
+    margin-left: 2px;
 }

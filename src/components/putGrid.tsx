@@ -227,7 +227,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
             <table className="put-grid">
                 <thead>
                     <tr>
-                        <th>
+                        <th className="month">
                             <IconButton onClick={this.previous}>
                                 <ChevronLeft />
                             </IconButton>
@@ -244,6 +244,10 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
 
                             if (DateUtils.isRedDay(date)) {
                                 classes.push("red-day");
+                            }
+
+                            if(date.isSame(moment(), "day")) {
+                                classes.push("today");
                             }
 
                             if (tickToHighlight === roundDate) {

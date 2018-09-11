@@ -2,19 +2,12 @@ import * as highcharts from "highcharts";
 import * as _ from "lodash";
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Select, MenuItem, FormControl } from "@material-ui/core";
-
-import { IApplicationState, IPutter, IRoundScore } from '../contracts/common';
+import { IApplicationState, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from "../selectors/scoreSelectors";
+import { DateUtils } from "../utils/dateUtils";
 import { getPointColorOrDefault } from "../utils/globals";
 import Widget from './widget';
-import { DateUtils } from "../utils/dateUtils";
 
-interface IScoreDistributionForPutter {
-    putter: IPutter;
-    countByPutScore: { [score: number]: number };
-    scoreSum: number;
-}
 
 interface IScoresForRound {
     roundDate: number;
@@ -23,7 +16,6 @@ interface IScoresForRound {
 
 
 interface ITrendChartPropFields {
-    //putterScores: IScoreDistributionForPutter[];
     roundScores: IScoresForRound[];
 }
 
@@ -31,7 +23,6 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
 
     private container?: HTMLDivElement;
     private chart?: highcharts.ChartObject;
-    private widgetRef: HTMLFormElement | null;
 
     public componentDidMount() {
         if (this.container) {
@@ -132,49 +123,11 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
         window.dispatchEvent(new Event('resize'));
     }
 
-    private validate = () => {
-        if (this.chart) {
-            const series = this.chart.series;
-            console.log("party");
-        }
-    }
-
-    private handleFilterChange = () => {
-
-    }
-
     public render() {
         return <Widget
             containerClass="trend-chart"
             title={{ text: "Score distribution" }}
-            toolbar={<div>
-                <Select
-                    value={20}
-
-                    inputProps={{
-                        name: "age",
-                        id: "age-simple"
-                    }}
-                    MenuProps={{
-                        anchorOrigin: {
-                            vertical: "bottom",
-                            horizontal: "left"
-                        },
-                        transformOrigin: {
-                            vertical: "top",
-                            horizontal: "left"
-                        },
-                        getContentAnchorEl: null
-                    }}
-                >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-            </div>}
+            toolbar={<></>/* Filter here. Current month, last 6 months, last year etc. */}
         >
             <div style={{ width: "100%", height: "100%" }} ref={(element) => this.container = element || undefined} />
         </Widget>;
@@ -184,7 +137,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
 const mapStateToProps = (state: IApplicationState): ITrendChartPropFields => {
     const allPuts = ScoreSelectors.getScoresMapped(state).filter(put => put.score.score > 0);
 
-    // TODO - Filter for range. const putsToInclude = 
+    // TODO - Filter for range.
     const putsByDate = _.groupBy(allPuts, put => put.score.roundDate);
     const roundStats = _.map(putsByDate, (puts, dateAsString): IScoresForRound => {
         const roundDate = parseInt(dateAsString, 10);
