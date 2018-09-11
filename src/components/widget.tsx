@@ -17,8 +17,11 @@ export default class Widget extends React.Component<IWidgetHeaderProps, {}> {
         return <div className={"widget " + (this.props.containerClass || "")}>
             <WidgetHeader title={this.props.title.text} icon={this.props.title.icon} />
             {this.props.toolbar && <WidgetToolbar>{this.props.toolbar}</WidgetToolbar>}
-            <div className={"widget-content " + (this.props.noContentPad ? "" : "widget-padding")}>
-                {this.props.children}
+            <div className="widget-content">
+                {/* We use a wrapper to enable showing the scrollbar only on hover. */}
+                <div className={"widget-content-scrollbox " + (this.props.noContentPad ? "" : "widget-padding")}>
+                    {this.props.children}
+                </div>
             </div>
         </div>;
     }
