@@ -177,6 +177,7 @@
 
 .monthly-winner-month-container>.header>span.ongoing {
     font-style: italic;
+    color: #045d56;
 }
 
 .monthly-winner-month-container>.podium {
