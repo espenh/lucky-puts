@@ -1,5 +1,5 @@
 import { Button, Checkbox, FormControlLabel, IconButton, Popover } from '@material-ui/core';
-import { ChevronLeft, ChevronRight, Delete, Person } from "@material-ui/icons";
+import { faUser, faChevronLeft, faChevronRight, faTrash } from "@fortawesome/free-solid-svg-icons";
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
@@ -16,6 +16,7 @@ import NewPutterDialog from "./newPutterDialog";
 import ScoreBullet from './scoreBullet';
 import ScoreBulletWithText from './scoreBulletWithText';
 import ScoreCell from './scoreCell';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IPutGridPropFields {
     putters: IPutterState;
@@ -217,7 +218,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         return < div className="grid-container" >
 
             <Button onClick={this.showNewPutterDialog} color="primary" aria-label="add">
-                <Person />
+                <FontAwesomeIcon className="fa-margin-right" icon={faUser} />
                 Add player
             </Button>
 
@@ -226,13 +227,13 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                     <tr>
                         <th className="month">
                             <IconButton onClick={this.previous}>
-                                <ChevronLeft />
+                                <FontAwesomeIcon icon={faChevronLeft} />
                             </IconButton>
 
                             <span className="put-calendar-header">{title}</span>
 
                             <IconButton onClick={this.next}>
-                                <ChevronRight />
+                                <FontAwesomeIcon icon={faChevronRight} />
                             </IconButton>
                         </th>
                         {dates.map(date => {
@@ -243,7 +244,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                                 classes.push("red-day");
                             }
 
-                            if(date.isSame(moment(), "day")) {
+                            if (date.isSame(moment(), "day")) {
                                 classes.push("today");
                             }
 
@@ -310,7 +311,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                                 return <div key={score.score.id}>
                                     <ScoreBulletWithText score={score.score.score} />
                                     <IconButton aria-label="Delete" onClick={() => this.props.deleteScore(score.score.id)}>
-                                        <Delete />
+                                        <FontAwesomeIcon className="fa-margin-right" icon={faTrash} />
                                     </IconButton>
                                 </div>;
                             })}
