@@ -1,5 +1,4 @@
 import * as _ from "lodash";
-import * as moment from "moment";
 import { IApplicationState, IRoundScore, IScoreAggregation } from "../contracts/common";
 import { Continuous, DateUtils } from "../utils/dateUtils";
 

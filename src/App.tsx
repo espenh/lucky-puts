@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from "redux";
 import { Route, Switch } from 'react-router';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { faGolfBall } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ConfigureStore } from './configureStore';
@@ -16,13 +16,9 @@ import "firebase/firestore";
 
 import './App.css';
 
-import ScoreTable from './components/scoreTable';
-import ScoreChart from './components/scoreChart';
-import TopPutters from './components/topPutters';
 import FirebaseProvider from './firebaseProvider';
 import { StoreSyncer } from './storeSyncer';
-import { Tabs, Tab, Paper, CssBaseline } from '@material-ui/core';
-import MonthlyPutter from './components/monthlyPutter';
+import { CssBaseline } from '@material-ui/core';
 import TotalPuts from './components/totalPuts';
 import LatestPuts from './components/latestPuts';
 import MonthlyWinner from './components/monthlyWinner';
@@ -97,16 +93,6 @@ export class AppMain extends React.Component {
     }
 }
 
-interface IOverviewState {
-    currentTab: "trend" | "top-putters" | "monthly-putters";
-}
-
-export class DataGrid extends React.Component<{}, {}> {
-    public render() {
-        return <h1>GRID</h1>;
-    }
-}
-
 export class Dashboard extends React.Component<{}, {}> {
     public render() {
         return <section className="stats-container">
@@ -116,44 +102,5 @@ export class Dashboard extends React.Component<{}, {}> {
             <PuttingRecords />
             <TrendChart />
         </section>;
-    }
-}
-
-export class OverviewArea extends React.Component<{}, IOverviewState> {
-
-    public state: IOverviewState = {
-        currentTab: "trend"
-    };
-
-    private handleTabSelection = (event: React.ChangeEvent<{}>, tab: "trend" | "top-putters" | "monthly-putters") => {
-        this.setState({
-            currentTab: tab
-        });
-
-        event.preventDefault();
-        return false;
-    }
-
-    public render() {
-        const currentTab = this.state.currentTab;
-        return <div className="app container-fluid">
-            <ScoreTable />
-            <Paper className="chart-picker" style={{ height: "500px", display: "flex", flexDirection: "column" }}>
-                <Tabs
-                    value={currentTab}
-                    onChange={this.handleTabSelection}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    centered={true}
-                >
-                    <Tab label="Trend" value={"trend"} />
-                    <Tab label="Top putters" value={"top-putters"} />
-                    <Tab label="Monthly" value={"monthly-putters"} />
-                </Tabs>
-                {currentTab === "trend" && <ScoreChart />}
-                {currentTab === "top-putters" && <TopPutters />}
-                {currentTab === "monthly-putters" && <MonthlyPutter />}
-            </Paper>
-        </div>;
     }
 }

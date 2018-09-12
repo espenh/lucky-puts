@@ -1,5 +1,5 @@
 import { routerReducer } from 'react-router-redux';
-import { combineReducers, Reducer, AnyAction } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 import { IApplicationState } from './contracts/common';
 import { putterReducer } from './reducers/putterReducer';
 import { roundReducer } from './reducers/roundReducer';

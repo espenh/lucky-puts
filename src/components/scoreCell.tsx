@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { TableCell } from '@material-ui/core';
 import { Score } from '../contracts/common';
 
 interface IScoreCellProps {

@@ -1,24 +1,21 @@
+import { Button, Checkbox, FormControlLabel, IconButton, Popover } from '@material-ui/core';
+import { ChevronLeft, ChevronRight, Delete, Person } from "@material-ui/icons";
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as moment from 'moment';
-import { IApplicationState, IRoundScore, IPutterState, IPutterScore, IRound } from '../contracts/common';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { addNewPutter } from '../actions/putterActions';
+import { deleteScore, setScoreForRoundV2 } from '../actions/scoreActions';
+import { IApplicationState, IPutterState, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import { DateUtils } from "../utils/dateUtils";
-import { Dictionary } from "lodash";
-import { Button, Table, TableHead, TableRow, TableCell, TableBody, Popover, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, IconButton, FormControlLabel, Checkbox, Typography } from '@material-ui/core';
-import { Delete, ChevronLeft, ChevronRight } from "@material-ui/icons";
-import ScoreCell from './scoreCell';
-import { ScorePopup } from './scorePopup';
-import ScoreBullet from './scoreBullet';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import { setScoreForRoundV2, deleteScore } from '../actions/scoreActions';
-import { addNewPutter } from '../actions/putterActions';
-import ScoreBulletWithText from './scoreBulletWithText';
 import { possiblePutPoints } from '../utils/globals';
-import { Person } from "@material-ui/icons";
 import NewPutterDialog from "./newPutterDialog";
+import ScoreBullet from './scoreBullet';
+import ScoreBulletWithText from './scoreBulletWithText';
+import ScoreCell from './scoreCell';
 
 interface IPutGridPropFields {
     putters: IPutterState;

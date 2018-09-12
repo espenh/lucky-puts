@@ -20,7 +20,6 @@ export interface IPutterState {
 }
 
 export interface IScoreState {
-    scores: IPutterScore[];
     scoresv2: IPutterScoreV2[];
 }
 
@@ -37,12 +36,6 @@ export interface IPutter {
     id: string;
     name: string;
     image: string | null;
-}
-
-export interface IPutterScore {
-    roundId: string;
-    putterId: string;
-    score: Score;
 }
 
 export interface IPutterScoreV2 {

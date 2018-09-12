@@ -2,8 +2,6 @@ import * as _ from "lodash";
 import * as React from 'react';
 import * as highcharts from "highcharts";
 
-import "./scoreChartStyle.css";
-
 export interface ICompactChartISeries {
     name: string;
     data: [number, number][];

@@ -4,8 +4,8 @@ import { Store } from "redux";
 
 import { IAddPutterAction, PutterActionsType } from "./actions/putterActions";
 import { IAddRoundAction, RoundActionsType } from "./actions/roundActions";
-import { ISetScoreForRound, ScoreActionsType, ISetScoreForRoundV2, IDeleteScore } from "./actions/scoreActions";
-import { IPutter, IPutterScore, IRound, IPutterScoreV2 } from "./contracts/common";
+import { ScoreActionsType, ISetScoreForRoundV2, IDeleteScore } from "./actions/scoreActions";
+import { IPutter, IRound, IPutterScoreV2 } from "./contracts/common";
 
 export class StoreSyncer {
     constructor(private store: Store<any>, private fireStore: firebase.firestore.Firestore) {
@@ -31,17 +31,7 @@ export class StoreSyncer {
                 rounds: addedRounds
             });
         });
-        this.fireStore.collection("scores").onSnapshot((snapshot) => {
-
-            const addedChanges = _.filter(snapshot.docChanges(), change => change.type === "added" || change.type === "modified");
-            const addedScores = _.map(addedChanges, change => change.doc.data() as IPutterScore);
-
-            this.store.dispatch<ISetScoreForRound>({
-                type: ScoreActionsType.setScoreForRound,
-                scores: addedScores
-            });
-        });
-
+        
         this.fireStore.collection("scores_v2").onSnapshot((snapshot) => {
             const changes = snapshot.docChanges();
 

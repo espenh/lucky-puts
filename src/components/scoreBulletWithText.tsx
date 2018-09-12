@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as chroma from "chroma-js";
 import ScoreBullet from './scoreBullet';
 
 interface IScoreBulletWithTextPropFields {

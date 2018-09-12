@@ -59,7 +59,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 0.7fr 0fr 0.7fr;
-    grid-gap: 6px;
+    grid-gap: 8px;
     grid-template-rows: 0.7fr minmax(190px, 200px) 1fr;
 }
 
@@ -256,8 +256,8 @@
     border-bottom: 2px solid #16BAB8;
 }
 
-.put-grid th .month {
-    min-width: 100px;
+.put-grid th.month {
+    min-width: 200px;
 }
 
 .put-grid th.today {
