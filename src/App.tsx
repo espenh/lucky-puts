@@ -35,6 +35,7 @@ export default class AppContainer extends React.Component {
 
     private store: Store<IApplicationState>;
     private history: History;
+    private timeoutHandle: number;
 
     constructor(props: {}) {
         super(props);
@@ -45,6 +46,19 @@ export default class AppContainer extends React.Component {
         this.app = FirebaseProvider.getAppInstance();
 
         this.syncer = new StoreSyncer(this.store, FirebaseProvider.getFirestoreInstance());
+    }
+
+    public componentDidMount() {
+        // There's stuff on the dashboard that's date sensitive (like a put was made "Today").
+        // Forcing an update isn't super smooth, but it'll do for now.
+        // We could have some context state (like current day in local tz) in the redux store, for example.
+        this.timeoutHandle = window.setTimeout(() => {
+            this.forceUpdate();
+        }, 1000 * 60 * 5 /* 5 minutes */);
+    }
+
+    public componentWillUnmount() {
+        clearTimeout(this.timeoutHandle);
     }
 
     public render() {

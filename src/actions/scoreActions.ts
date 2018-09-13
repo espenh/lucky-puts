@@ -3,7 +3,6 @@ import { IPutterScoreV2 } from "../contracts/common";
 import FirebaseProvider from "../firebaseProvider";
 
 export enum ScoreActionsType {
-    setScoreForRound = "set-score-for-round",
     setScoreForRoundV2 = "set-scorev2-for-round",
     deleteScore = "delete-score"
 }

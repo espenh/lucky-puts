@@ -20,7 +20,7 @@ class LatestPutsView extends React.Component<ILatestPutsPropFields, {}> {
             return "Today";
         }
 
-        if (now.subtract(1, "day").isSame(date)) {
+        if (now.clone().subtract(1, "day").isSame(date, "day")) {
             return "Yesterday";
         }
 
