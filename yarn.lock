@@ -262,9 +262,9 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react-redux@6.0.7":
-  version "6.0.7"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-6.0.7.tgz#ac61cd8d137ca7205b831d66e279f42fe2a1c3cd"
+"@types/react-redux@6.0.8":
+  version "6.0.8"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-6.0.8.tgz#29c884174516f0cfab6638d2236fd7d53f45640e"
   dependencies:
     "@types/react" "*"
     redux "^4.0.0"
@@ -4814,7 +4814,11 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.17.10, "lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0:
+lodash@4.17.11:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+
+"lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
