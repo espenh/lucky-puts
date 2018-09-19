@@ -1,11 +1,14 @@
-import { Button, Checkbox, FormControlLabel, IconButton, Popover } from '@material-ui/core';
-import { faUser, faChevronLeft, faChevronRight, faTrash } from "@fortawesome/free-solid-svg-icons";
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+
+import { faChevronLeft, faChevronRight, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Checkbox, FormControlLabel, IconButton, Popover } from '@material-ui/core';
+
 import { addNewPutter } from '../actions/putterActions';
 import { deleteScore, setScoreForRoundV2 } from '../actions/scoreActions';
 import { IApplicationState, IPutterState, IRoundScore } from '../contracts/common';
@@ -15,8 +18,6 @@ import { possiblePutPoints } from '../utils/globals';
 import NewPutterDialog from "./newPutterDialog";
 import ScoreBullet from './scoreBullet';
 import ScoreBulletWithText from './scoreBulletWithText';
-import ScoreCell from './scoreCell';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IPutGridPropFields {
     putters: IPutterState;
@@ -333,7 +334,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
                                                 this.handleSetScore(roundDate, putterId, score);
                                             }
                                         }}
-                                        className={ScoreCell.getClassForScore(score)}
+                                        className={PutGridView.getClassForScore(score)}
                                     ><ScoreBulletWithText score={score} />
                                     </Button>;
                                 })
@@ -351,6 +352,33 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
         </div >;
     }
 
+    public static getClassForScore(score: number | undefined): string {
+        if (score === undefined) {
+            return "";
+        }
+
+        if (score >= 24) {
+            return "score-extreme";
+        }
+
+        if (score >= 12) {
+            return "score-high";
+        }
+
+        if (score >= 3) {
+            return "score-medium";
+        }
+
+        if (score >= 1) {
+            return "score-low";
+        }
+
+        if (score === 0) {
+            return "score-donut";
+        }
+
+        return "";
+    }
 }
 
 class ScoreSum extends React.Component<{ scores: IRoundScore[] }, {}> {

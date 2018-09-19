@@ -6,6 +6,8 @@ export default class FirebaseProvider {
 
     public static getAppInstance() {
         if (FirebaseProvider.firebaseAppInstance === undefined) {
+            // Having the api key here in plain sight looks scary, 
+            // but it's only really used to identify the project on the Google servers.
             FirebaseProvider.firebaseAppInstance = firebase.initializeApp({
                 apiKey: 'AIzaSyDd2RPT_HAghmgE8U-b4yxnwgHgaxMrLIo',
                 authDomain: 'luckyputs-f03bf.firebaseapp.com',

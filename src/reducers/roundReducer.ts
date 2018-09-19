@@ -1,5 +1,6 @@
-import { IRoundState } from "../contracts/common";
 import { Reducer } from "redux";
+
+import { IRoundState } from "../contracts/common";
 import { RoundActionsType, RoundAction } from "../actions/roundActions";
 
 const initialPutterState: IRoundState = {

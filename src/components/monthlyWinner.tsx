@@ -12,7 +12,6 @@ import { DateUtils } from '../utils/dateUtils';
 import ScoreBulletList from "./scoreBulletList";
 import Widget from './widget';
 
-
 interface IMonthlyWinnerPropFields {
     bestPuttersMonthly: IScoreGrouping[];
 }
@@ -62,7 +61,7 @@ class MonthlyWinnerView extends React.Component<IMonthlyWinnerPropFields, IMonth
                 return <div className="monthly-winner-month-container" key={monthName}>
                     <div className="header"><span className={isCurrent ? "ongoing" : ""}>{monthName}</span></div>
                     {putterScores.map((putterAndScore, index) => {
-                        const classes = {
+                        const classes: { [index: number]: string } = {
                             0: "gold",
                             1: "silver",
                             2: "bronze"
@@ -91,8 +90,8 @@ const mapStateToProps = (state: IApplicationState): IMonthlyWinnerPropFields => 
         // Find the best x putters for the month.
         const scoresAndPutters = ScoreSelectors.getBestByPlayer(monthlyScores);
 
-        // Sort by score. If equal, take whoever has the longest put.
-        const bestPutters = _.take(_.orderBy(scoresAndPutters, [s => s.scoreSum, s => s.highestScore, s=>s.scores.length], "desc"), 3);
+        // Sort by score. If equal, take whoever has the longest put, then the most puts.
+        const bestPutters = _.take(_.orderBy(scoresAndPutters, [s => s.scoreSum, s => s.highestScore, s => s.scores.length], "desc"), 3);
 
         return {
             tick: monthTick,

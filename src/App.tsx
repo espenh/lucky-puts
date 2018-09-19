@@ -19,12 +19,8 @@ import './App.css';
 import FirebaseProvider from './firebaseProvider';
 import { StoreSyncer } from './storeSyncer';
 import { CssBaseline } from '@material-ui/core';
-import TotalPuts from './components/totalPuts';
-import LatestPuts from './components/latestPuts';
-import MonthlyWinner from './components/monthlyWinner';
-import PuttingRecords from './components/puttingRecords';
 import PutGrid from './components/putGrid';
-import TrendChart from './components/trendChart';
+import Dashboard from './components/dashboard';
 import { IApplicationState } from './contracts/common';
 import AdminScreen from './components/adminScreen';
 
@@ -35,7 +31,7 @@ export default class AppContainer extends React.Component {
 
     private store: Store<IApplicationState>;
     private history: History;
-    private timeoutHandle: number;
+    private timeoutHandle: number | undefined;
 
     constructor(props: {}) {
         super(props);
@@ -44,7 +40,6 @@ export default class AppContainer extends React.Component {
         this.store = ConfigureStore(this.history);
 
         this.app = FirebaseProvider.getAppInstance();
-
         this.syncer = new StoreSyncer(this.store, FirebaseProvider.getFirestoreInstance());
     }
 
@@ -104,17 +99,5 @@ export class AppMain extends React.Component {
                 </Switch>
             </main>
         </div>;
-    }
-}
-
-export class Dashboard extends React.Component<{}, {}> {
-    public render() {
-        return <section className="stats-container">
-            <TotalPuts />
-            <LatestPuts />
-            <MonthlyWinner />
-            <PuttingRecords />
-            <TrendChart />
-        </section>;
     }
 }

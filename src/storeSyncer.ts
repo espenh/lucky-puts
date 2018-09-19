@@ -5,7 +5,7 @@ import { Store } from "redux";
 import { IAddPutterAction, PutterActionsType } from "./actions/putterActions";
 import { IAddRoundAction, RoundActionsType } from "./actions/roundActions";
 import { ScoreActionsType, ISetScoreForRoundV2, IDeleteScore } from "./actions/scoreActions";
-import { IPutter, IRound, IPutterScoreV2 } from "./contracts/common";
+import { IPutter, IRound, IPutterScore } from "./contracts/common";
 
 export class StoreSyncer {
     constructor(private store: Store<any>, private fireStore: firebase.firestore.Firestore) {
@@ -38,7 +38,7 @@ export class StoreSyncer {
             // Added and modified.
             const addedChanges = _.filter(changes, change => change.type === "added" || change.type === "modified");
             const addedScores = _.map(addedChanges, change => {
-                return change.doc.data() as IPutterScoreV2;
+                return change.doc.data() as IPutterScore;
             });
 
             this.store.dispatch<ISetScoreForRoundV2>({

@@ -25,7 +25,7 @@ class TotalPutsView extends React.Component<ITotalPutsPropFields, {}> {
 }
 
 const mapStateToProps = (state: IApplicationState): ITotalPutsPropFields => {
-    const nonZeroPuts = state.score.scoresv2.filter(s => s.score > 0);
+    const nonZeroPuts = state.score.scores.filter(s => s.score > 0);
     const putsByWeek = _.groupBy(nonZeroPuts, put => {
         const putDate = DateUtils.getDate(put.roundDate);
         return putDate.startOf("month").valueOf();

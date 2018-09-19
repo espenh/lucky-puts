@@ -2,18 +2,17 @@ import * as highcharts from "highcharts";
 import * as _ from "lodash";
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 import { IApplicationState, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from "../selectors/scoreSelectors";
 import { DateUtils } from "../utils/dateUtils";
 import { getPointColorOrDefault } from "../utils/globals";
 import Widget from './widget';
 
-
 interface IScoresForRound {
     roundDate: number;
     puts: IRoundScore[];
 }
-
 
 interface ITrendChartPropFields {
     roundScores: IScoresForRound[];

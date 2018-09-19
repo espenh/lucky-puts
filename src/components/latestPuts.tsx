@@ -28,7 +28,6 @@ class LatestPutsView extends React.Component<ILatestPutsPropFields, {}> {
     }
 
     public render() {
-        // TODO - Format nicely with dates. Use friendly dates (today, yesterday) for dates near in time.
         return <Widget
             containerClass="latestPuts"
             title={{ text: "Latest puts" }}

@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { IPutterScoreV2 } from "../contracts/common";
+import { IPutterScore } from "../contracts/common";
 import FirebaseProvider from "../firebaseProvider";
 
 export enum ScoreActionsType {
@@ -9,7 +9,7 @@ export enum ScoreActionsType {
 
 export interface ISetScoreForRoundV2 {
     type: ScoreActionsType.setScoreForRoundV2;
-    scores: IPutterScoreV2[];
+    scores: IPutterScore[];
 }
 
 export interface IDeleteScore {
@@ -24,7 +24,7 @@ export const deleteScore = (scoreId: string) => {
 };
 
 export const setScoreForRoundV2 = (roundDate: number, putterId: string, score: number, registerDateInUnixMs: number) => {
-    const newScore: IPutterScoreV2 = {
+    const newScore: IPutterScore = {
         id: v4(),
         registerDateInUnixMs: registerDateInUnixMs,
         roundDate: roundDate,

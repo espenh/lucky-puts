@@ -1,7 +1,8 @@
-import { IPutterState } from "../contracts/common";
-import { Reducer } from "redux";
-import { PutterAction, PutterActionsType } from "../actions/putterActions";
 import * as _ from "lodash";
+import { Reducer } from "redux";
+
+import { IPutterState } from "../contracts/common";
+import { PutterAction, PutterActionsType } from "../actions/putterActions";
 
 const initialPutterState: IPutterState = {
     puttersById: {}

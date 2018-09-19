@@ -7,7 +7,7 @@ export class ScoreSelectors {
     public static getScoresMapped(state: IApplicationState): IRoundScore[] {
         const playerById = state.putters.puttersById;
 
-        return state.score.scoresv2.map(score => {
+        return state.score.scores.map(score => {
             return {
                 score: score,
                 putter: playerById[score.putterId]
