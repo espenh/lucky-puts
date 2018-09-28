@@ -4,7 +4,7 @@ import { Store } from "redux";
 
 import { IAddPutterAction, PutterActionsType } from "./actions/putterActions";
 import { IAddRoundAction, RoundActionsType } from "./actions/roundActions";
-import { ScoreActionsType, ISetScoreForRoundV2, IDeleteScore } from "./actions/scoreActions";
+import { ScoreActionsType, ISetScoreForRound, IDeleteScore } from "./actions/scoreActions";
 import { IPutter, IRound, IPutterScore } from "./contracts/common";
 
 export class StoreSyncer {
@@ -41,8 +41,8 @@ export class StoreSyncer {
                 return change.doc.data() as IPutterScore;
             });
 
-            this.store.dispatch<ISetScoreForRoundV2>({
-                type: ScoreActionsType.setScoreForRoundV2,
+            this.store.dispatch<ISetScoreForRound>({
+                type: ScoreActionsType.setScoreForRound,
                 scores: addedScores
             });
 

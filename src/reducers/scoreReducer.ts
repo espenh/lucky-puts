@@ -13,7 +13,7 @@ export const scoreReducer: Reducer<IScoreState> = (state: IScoreState = initialP
 
     const action = actionAsAny as ScoreAction;
     switch (action.type) {
-        case ScoreActionsType.setScoreForRoundV2:
+        case ScoreActionsType.setScoreForRound:
 
             const newScores = new Set(action.scores.map(score => keyv2(score)));
             const scoresNowInvalid = _.find(state.scores, (score) => newScores.has(keyv2(score)));

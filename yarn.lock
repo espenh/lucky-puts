@@ -47,9 +47,9 @@
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/@firebase/auth-types/-/auth-types-0.3.4.tgz#253b1b2d9b520a0b945d4617c8418f0f19a4159f"
 
-"@firebase/auth@0.7.5":
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.7.5.tgz#7cdb83d7ac972b2a026fab5fef6a2bc1c60ebbae"
+"@firebase/auth@0.7.7":
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.7.7.tgz#1bcdf153e2761b88ad9f848b674a2dca69b8cb37"
   dependencies:
     "@firebase/auth-types" "0.3.4"
 
@@ -57,9 +57,9 @@
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@firebase/database-types/-/database-types-0.3.2.tgz#70611a64dd460e0e253c7427f860d56a1afd86fe"
 
-"@firebase/database@0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@firebase/database/-/database-0.3.5.tgz#9a92808862ee03b131be55e2f7f97d8f996ea905"
+"@firebase/database@0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@firebase/database/-/database-0.3.6.tgz#95167bc5d8454ade1619e6b74b823b08370ff2d1"
   dependencies:
     "@firebase/database-types" "0.3.2"
     "@firebase/logger" "0.1.1"
@@ -71,13 +71,13 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@firebase/firestore-types/-/firestore-types-0.7.0.tgz#bded7892868cf6b189a121d0f0cec468f1609995"
 
-"@firebase/firestore@0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.8.0.tgz#a08363b8674336ea704fccabbb5f2e25e8fe5bcb"
+"@firebase/firestore@0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.8.2.tgz#2eb96a383206d3d793b17885507a301c323d9b64"
   dependencies:
     "@firebase/firestore-types" "0.7.0"
     "@firebase/logger" "0.1.1"
-    "@firebase/webchannel-wrapper" "0.2.8"
+    "@firebase/webchannel-wrapper" "0.2.10"
     grpc "1.13.1"
     tslib "1.9.0"
 
@@ -85,9 +85,9 @@
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@firebase/functions-types/-/functions-types-0.2.0.tgz#936d3f77957431a8ef1817975fee26464575802b"
 
-"@firebase/functions@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@firebase/functions/-/functions-0.3.0.tgz#61fbf0ec7fb997c1cd5c726cc16171fa32a9fd3b"
+"@firebase/functions@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@firebase/functions/-/functions-0.3.1.tgz#9b25e84176d4395946ed7a90fec9fdef8032f56a"
   dependencies:
     "@firebase/functions-types" "0.2.0"
     "@firebase/messaging-types" "0.2.3"
@@ -135,9 +135,9 @@
   dependencies:
     tslib "1.9.0"
 
-"@firebase/webchannel-wrapper@0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.8.tgz#38a936b60b898a1ad0f3719543ff1a1031f60f8b"
+"@firebase/webchannel-wrapper@0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.10.tgz#ab43b78da70dfd4d780becb3ae47213d6bd00762"
 
 "@fortawesome/fontawesome-common-types@^0.1.7":
   version "0.1.7"
@@ -172,9 +172,9 @@
     humps "^2.0.1"
     prop-types "^15.5.10"
 
-"@material-ui/core@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-3.1.0.tgz#40c70e0764ef27dca5e149551577eba10c2e79ce"
+"@material-ui/core@3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-3.1.1.tgz#377b406fd26b88df6626c1697eef3f488fddb553"
   dependencies:
     "@babel/runtime" "7.0.0"
     "@types/jss" "^9.5.3"
@@ -204,17 +204,17 @@
     recompose "0.28.0 - 0.30.0"
     warning "^4.0.1"
 
-"@types/chroma-js@1.3.5":
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/@types/chroma-js/-/chroma-js-1.3.5.tgz#984cc86cb515a1879c9102b21e93325f0f02324c"
+"@types/chroma-js@1.3.7":
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/@types/chroma-js/-/chroma-js-1.3.7.tgz#7ef9c15f90066e0731d28a8ae27e2c1025784a95"
 
 "@types/geojson@*":
   version "7946.0.4"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.4.tgz#4e049756383c3f055dd8f3d24e63fb543e98eb07"
 
-"@types/highcharts@5.0.27":
-  version "5.0.27"
-  resolved "https://registry.yarnpkg.com/@types/highcharts/-/highcharts-5.0.27.tgz#1a17263ae6eae6346582cafa5e244bf3b186793b"
+"@types/highcharts@5.0.30":
+  version "5.0.30"
+  resolved "https://registry.yarnpkg.com/@types/highcharts/-/highcharts-5.0.30.tgz#fc745af7adc8bd26d3a8c5497fe3d0732a3f29b2"
   dependencies:
     "@types/geojson" "*"
 
@@ -245,9 +245,9 @@
   version "10.5.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.7.tgz#960d9feb3ade2233bcc9843c918d740b4f78a7cf"
 
-"@types/node@10.9.4":
-  version "10.9.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.4.tgz#0f4cb2dc7c1de6096055357f70179043c33e9897"
+"@types/node@10.11.2":
+  version "10.11.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.2.tgz#59508b88ce90fe2742f7b8414c6f5db3e359570d"
 
 "@types/prop-types@*":
   version "15.5.4"
@@ -255,31 +255,31 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@16.0.7":
-  version "16.0.7"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.7.tgz#54d0f867a76b90597e8432030d297982f25c20ba"
+"@types/react-dom@16.0.8":
+  version "16.0.8"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.8.tgz#6e1366ed629cadf55860cbfcc25db533f5d2fa7d"
   dependencies:
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react-redux@6.0.8":
-  version "6.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-6.0.8.tgz#29c884174516f0cfab6638d2236fd7d53f45640e"
+"@types/react-redux@6.0.9":
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-6.0.9.tgz#96aa7f5b0716bcc3bfb36ceaa1223118d509f79a"
   dependencies:
     "@types/react" "*"
     redux "^4.0.0"
 
-"@types/react-router-dom@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-4.3.0.tgz#c91796d02deb3a5b24bc1c5db4a255df0d18b8b5"
+"@types/react-router-dom@4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-4.3.1.tgz#71fe2918f8f60474a891520def40a63997dafe04"
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
     "@types/react-router" "*"
 
-"@types/react-router-redux@5.0.15":
-  version "5.0.15"
-  resolved "https://registry.yarnpkg.com/@types/react-router-redux/-/react-router-redux-5.0.15.tgz#aebc593bd3426adb6ae2eba6ac8c919ee232ce7b"
+"@types/react-router-redux@5.0.16":
+  version "5.0.16"
+  resolved "https://registry.yarnpkg.com/@types/react-router-redux/-/react-router-redux-5.0.16.tgz#3db2a8f0410fe9d821e6ace87b774c8bdecb39ca"
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
@@ -1726,9 +1726,9 @@ chownr@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.0.1.tgz#e2a75042a9551908bebd25b8523d5f9769d79181"
 
-chroma-js@1.3.7:
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-1.3.7.tgz#38db1b46c99b002b77aa5e6b6744589388f28425"
+chroma-js@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-1.4.0.tgz#695c52e7c97617e5f687db31913503d410481ae4"
 
 ci-info@^1.0.0:
   version "1.1.3"
@@ -3068,15 +3068,15 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-firebase@5.5.0:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.5.0.tgz#2ea18bb3f70f2b47fdb6fe380488e8c02a5c5d35"
+firebase@5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.5.2.tgz#05fa180c058941dcbfc248882e829f2945aa0568"
   dependencies:
     "@firebase/app" "0.3.4"
-    "@firebase/auth" "0.7.5"
-    "@firebase/database" "0.3.5"
-    "@firebase/firestore" "0.8.0"
-    "@firebase/functions" "0.3.0"
+    "@firebase/auth" "0.7.7"
+    "@firebase/database" "0.3.6"
+    "@firebase/firestore" "0.8.2"
+    "@firebase/functions" "0.3.1"
     "@firebase/messaging" "0.3.6"
     "@firebase/polyfill" "0.3.3"
     "@firebase/storage" "0.2.3"
@@ -3484,9 +3484,9 @@ he@1.1.x:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
-highcharts@6.1.3:
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-6.1.3.tgz#913d6def3ff029086eb339972830db8029e0c98a"
+highcharts@6.1.4:
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-6.1.4.tgz#753b6d4b99a279ade28276e1b4dc5a53346c7601"
 
 history@4.7.2, history@^4.7.2:
   version "4.7.2"
@@ -7657,9 +7657,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.3.tgz#4853b3e275ecdaa27f78fda46dc273a7eb7fc1c8"
+typescript@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.1.tgz#3362ba9dd1e482ebb2355b02dfe8bcd19a2c7c96"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"

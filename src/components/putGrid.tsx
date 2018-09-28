@@ -10,13 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Checkbox, FormControlLabel, IconButton, Popover } from '@material-ui/core';
 
 import { addNewPutter } from '../actions/putterActions';
-import { deleteScore, setScoreForRoundV2 } from '../actions/scoreActions';
+import { deleteScore, setScoreForRound } from '../actions/scoreActions';
 import { IApplicationState, IPutterState, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
 import { DateUtils } from "../utils/dateUtils";
 import { possiblePutPoints } from '../utils/globals';
 import NewPutterDialog from "./newPutterDialog";
-import ScoreBullet from './scoreBullet';
+import ScoreSumBullets from './scoreSumBullets';
 import ScoreBulletWithText from './scoreBulletWithText';
 
 interface IPutGridPropFields {
@@ -269,7 +269,7 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
 
                                 return <td onMouseEnter={this.handleMouseOver} onClick={this.createClickHandler(roundDate, putter.id)} key={date.valueOf()} {...{ tick: roundDate }} className={crosshairClass}>
                                     <div className={"score-cell"}>
-                                        {scores !== undefined ? <ScoreSum scores={scores} /> : <></>}
+                                        {scores !== undefined ? <ScoreSumBullets scores={scores} /> : <></>}
                                     </div>
                                 </td>;
                             })}
@@ -381,18 +381,6 @@ class PutGridView extends React.Component<PutGridProps, IPutGridState> {
     }
 }
 
-class ScoreSum extends React.Component<{ scores: IRoundScore[] }, {}> {
-    public render() {
-        const sum = _.sumBy(this.props.scores, score => score.score.score);
-        return <div>
-            <span>{sum}</span>
-            <div className="score-bullet-flow">
-                {this.props.scores.map((score, index) => <ScoreBullet key={index} score={score.score.score} />)}
-            </div>
-        </div>;
-    }
-}
-
 const mapDispatchToProps = (dispatch: ThunkDispatch<IApplicationState, {}, AnyAction>): IPutGridPropActions => {
     // TODO - Use dispatch...
     return {
@@ -400,7 +388,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IApplicationState, {}, AnyAc
             addNewPutter(newPutterName);
         },
         setScore: (roundDate: number, putterId: string, score: number) => {
-            setScoreForRoundV2(roundDate, putterId, score, moment().valueOf());
+            setScoreForRound(roundDate, putterId, score, moment().valueOf());
         },
         deleteScore: (scoreId: string) => {
             deleteScore(scoreId);
