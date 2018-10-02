@@ -14,7 +14,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import * as firebase from "firebase";
 import "firebase/firestore";
 
-import './App.css';
+import './App.scss';
 
 import FirebaseProvider from './firebaseProvider';
 import { StoreSyncer } from './storeSyncer';

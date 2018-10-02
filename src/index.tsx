@@ -4,7 +4,7 @@ import * as Highcharts from 'highcharts';
 
 import { unregister } from './registerServiceWorker';
 
-import './index.css';
+import './index.scss';
 import AppContainer from './App';
 
 // The service worker is currently just annoying (people running old versions etc.),
