@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as moment from "moment";
-import { IApplicationState, IRoundScore } from '../contracts/common';
+import moment from "moment";
 import * as _ from 'lodash';
+
+import { IApplicationState, IRoundScore } from '../contracts/common';
 import { ScoreSelectors } from '../selectors/scoreSelectors';
+import { DateUtils } from "../utils/dateUtils";
+
 import Widget from "./widget";
 import ScoreBullet from "./scoreBullet";
-import { DateUtils } from "../utils/dateUtils";
 
 interface ILatestPutsPropFields {
     last: IRoundScore[];

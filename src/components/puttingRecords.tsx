@@ -1,6 +1,6 @@
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import * as _ from 'lodash';
-import * as moment from "moment";
+import moment from "moment";
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IApplicationState, IPutter, IRoundScore, IScoreAggregation } from '../contracts/common';

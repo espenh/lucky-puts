@@ -1,7 +1,7 @@
 import * as React from "react";
 import WidgetHeader from "./widgetHeader";
 
-interface IWidgetHeaderProps {
+interface IWidgetProps {
     icon?: any; // TODO
     containerClass?: string;
     title: {
@@ -12,7 +12,7 @@ interface IWidgetHeaderProps {
     noContentPad?: boolean;
 }
 
-export default class Widget extends React.Component<IWidgetHeaderProps, {}> {
+export default class Widget extends React.Component<IWidgetProps, {}> {
     public render() {
         return <div className={"widget " + (this.props.containerClass || "")}>
             <WidgetHeader title={this.props.title.text} icon={this.props.title.icon} />

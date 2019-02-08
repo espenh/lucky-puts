@@ -2,18 +2,12 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from "redux";
 import { Route, Switch } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { NavLink, BrowserRouter } from 'react-router-dom';
 import { faGolfBall } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ConfigureStore } from './configureStore';
-import createHistory from 'history/createBrowserHistory';
-import { History } from 'history';
 
-import { ConnectedRouter } from 'react-router-redux';
-
-import * as firebase from "firebase";
 import "firebase/firestore";
-
 import './App.scss';
 
 import FirebaseProvider from './firebaseProvider';
@@ -26,45 +20,25 @@ import AdminScreen from './components/adminScreen';
 
 export default class AppContainer extends React.Component {
 
-    public app: firebase.app.App;
     public syncer: StoreSyncer;
-
     private store: Store<IApplicationState>;
-    private history: History;
-    private timeoutHandle: number | undefined;
 
     constructor(props: {}) {
         super(props);
 
-        this.history = createHistory();
-        this.store = ConfigureStore(this.history);
-
-        this.app = FirebaseProvider.getAppInstance();
+        this.store = ConfigureStore();
         this.syncer = new StoreSyncer(this.store, FirebaseProvider.getFirestoreInstance());
-    }
-
-    public componentDidMount() {
-        // There's stuff on the dashboard that's date sensitive (like a put was made "Today").
-        // Forcing an update isn't super smooth, but it'll do for now.
-        // We could have some context state (like current day in local tz) in the redux store, for example.
-        this.timeoutHandle = window.setTimeout(() => {
-            this.forceUpdate();
-        }, 1000 * 60 * 5 /* 5 minutes */);
-    }
-
-    public componentWillUnmount() {
-        clearTimeout(this.timeoutHandle);
     }
 
     public render() {
         return (
             <Provider store={this.store}>
-                <ConnectedRouter history={this.history}>
+                <BrowserRouter>
                     <React.Fragment>
                         <CssBaseline />
                         <AppMain />
                     </React.Fragment>
-                </ConnectedRouter>
+                </BrowserRouter>
             </Provider>
         );
     }

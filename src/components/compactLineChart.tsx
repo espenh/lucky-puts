@@ -6,7 +6,7 @@ export interface ICompactChartISeries {
     name: string;
     data: [number, number][];
     color: string;
-    type?: string;
+    type?: "line" | "column";
 }
 
 interface IScoreTablePropFields {
@@ -15,7 +15,7 @@ interface IScoreTablePropFields {
 
 export default class CompactLineChart extends React.Component<IScoreTablePropFields, {}> {
     private container?: HTMLDivElement;
-    private chart?: highcharts.ChartObject;
+    private chart?: highcharts.Chart;
 
     public componentDidMount() {
         if (this.container) {
@@ -67,7 +67,9 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
                     shared: true,
                     xDateFormat: "%b \'%y"
                 },
-                series: this.props.series.map(series => {
+                // Cheating with "any" here as it was tricky to make the types flow nicely when
+                // supporting different type of charts (with possibly different data structures)
+                series: this.props.series.map((series): any => {
                     return {
                         id: series.name,
                         data: series.data,
@@ -100,7 +102,7 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
         const chartElement = this.chart;
 
         this.props.series.forEach(series => {
-            const chartSeries = chartElement.get(series.name) as highcharts.SeriesObject;
+            const chartSeries = chartElement.get(series.name) as highcharts.Series;
             chartSeries.setData(series.data, false);
 
             // Show marker for the last point.

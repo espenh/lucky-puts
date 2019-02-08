@@ -21,7 +21,7 @@ interface ITrendChartPropFields {
 class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
 
     private container?: HTMLDivElement;
-    private chart?: highcharts.ChartObject;
+    private chart?: highcharts.Chart;
 
     public componentDidMount() {
         if (this.container) {
@@ -102,7 +102,7 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
         const roundsSorted = _.sortBy(this.props.roundScores, round => round.roundDate);
         roundsSorted.forEach((round, index) => {
             const sortedPuts = _.sortBy(round.puts, put => put.score.roundDate);
-            const data = sortedPuts.map((put): Highcharts.DataPoint => {
+            const data = sortedPuts.map((put) => {
                 return {
                     id: put.score.id,
                     name: put.putter.name,
@@ -114,7 +114,8 @@ class TrendChartView extends React.Component<ITrendChartPropFields, {}> {
             chartElement.addSeries({
                 name: DateUtils.getDate(round.roundDate).format("LL"),
                 data: data as any,
-                index: index
+                index: index,
+                type: "column"
             }, false);
         });
 
