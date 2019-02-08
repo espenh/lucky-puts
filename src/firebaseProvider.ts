@@ -1,4 +1,4 @@
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
 
 export default class FirebaseProvider {
     private static firebaseAppInstance: firebase.app.App;
@@ -22,7 +22,7 @@ export default class FirebaseProvider {
         const app = FirebaseProvider.getAppInstance();
         if (FirebaseProvider.firestoreInstance === undefined) {
             FirebaseProvider.firestoreInstance = firebase.firestore(app);
-            FirebaseProvider.firestoreInstance.settings({ timestampsInSnapshots: true });
+            FirebaseProvider.firestoreInstance.settings({});
         }
 
         return FirebaseProvider.firestoreInstance;
