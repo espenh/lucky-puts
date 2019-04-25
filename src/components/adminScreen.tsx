@@ -1,6 +1,5 @@
 import moment from "moment";
 import * as React from 'react';
-import * as _ from "lodash";
 import { connect } from 'react-redux';
 import { IApplicationState } from '../contracts/common';
 import { Button } from "@material-ui/core";
@@ -28,7 +27,7 @@ class AdminScreenView extends React.Component<IAdminScreenPropFields, {}> {
             score: this.props.state.score
         };
 
-        this.downloadObjectAsJson(stateToBackup, moment().format("YYYYMMDD_HHmmss" + "_luckyputs"));
+        this.downloadObjectAsJson(stateToBackup, moment().format("YYYYMMDD_HHmmss_luckyputs"));
     }
 
     public render() {

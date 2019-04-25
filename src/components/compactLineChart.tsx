@@ -1,4 +1,3 @@
-import * as _ from "lodash";
 import * as React from 'react';
 import * as highcharts from "highcharts";
 
@@ -65,7 +64,7 @@ export default class CompactLineChart extends React.Component<IScoreTablePropFie
                 },
                 tooltip: {
                     shared: true,
-                    xDateFormat: "%b \'%y"
+                    xDateFormat: "%b '%y"
                 },
                 // Cheating with "any" here as it was tricky to make the types flow nicely when
                 // supporting different type of charts (with possibly different data structures)

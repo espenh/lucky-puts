@@ -10,10 +10,6 @@ interface IScoreBulletPropFields {
 
 export default class ScoreBullet extends React.Component<IScoreBulletPropFields, {}> {
 
-    constructor(props: IScoreBulletPropFields) {
-        super(props);
-    }
-
     public render() {
         const contents = <div
             className={"scoreBullet " + (this.props.size || "")}

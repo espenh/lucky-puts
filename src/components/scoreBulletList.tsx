@@ -10,10 +10,6 @@ interface IScoreBulletListPropFields {
 
 export default class ScoreBulletList extends React.Component<IScoreBulletListPropFields, {}> {
 
-    constructor(props: IScoreBulletListPropFields) {
-        super(props);
-    }
-
     public render() {
         const sortedScores = _.orderBy(this.props.scores, s => s.score.roundDate, "asc");
         return <div className="score-bullet-list">
