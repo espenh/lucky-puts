@@ -50,7 +50,9 @@ export class AppMain extends React.Component {
             <nav>
                 <div className="header-and-links">
                     <div className="header">
-                        <h3><span className="app-icon"><FontAwesomeIcon icon={faGolfBall} /></span>Lucky puts</h3>
+                        <h3>
+                            <NavLink exact={true} to="/" activeClassName="active"><span className="app-icon"><FontAwesomeIcon icon={faGolfBall} /></span>Lucky puts</NavLink>
+                        </h3>
                     </div>
                     <div className="nav-links">
                         <NavLink exact={true} to="/" activeClassName="active"><span>Dash</span></NavLink>

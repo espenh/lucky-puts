@@ -41,6 +41,11 @@
     margin: 10px 0;
 }
 
+.header-and-links h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
 .app main {
     grid-row: 2;
     overflow: auto;
